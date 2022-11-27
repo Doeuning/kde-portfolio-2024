@@ -1,11 +1,21 @@
-import React from "react";
+import useFetch from "../hooks/useFetch";
 
-function Sub(props) {
+export default function Sub(props) {
+  const key = "c79521c72b6690785c671f45832e339b";
+  const { data, error, loading } = useFetch(
+    `https://api.themoviedb.org/3/tv/popular?api_key=${key}`
+  );
   return (
     <div>
-      <h1>서브다</h1>
+      {data ? (
+        <ul>
+          {data.results.map((item) => {
+            return <li>{item.original_name}</li>;
+          })}
+        </ul>
+      ) : (
+        <div>loading...</div>
+      )}
     </div>
   );
 }
-
-export default Sub;

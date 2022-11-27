@@ -1,20 +1,40 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-const Inner = styled.div`
-  display: flex;
-  background: ${(p) => p.theme.coral};
+const Header = styled.div`
+  position: sticky;
+  top: 0;
+  background: #000;
+  color: #fff;
 `;
 
-function Header(props) {
+const Inner = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledLink = styled.span`
+  display: block;
+  padding: 20px;
+  font-size: 20px;
+`;
+
+function HeaderWrap(props) {
   return (
-    <header>
+    <Header>
       <Inner>
-        <Link href="/">메인</Link>
-        <Link href="/sub">서브</Link>
+        <Link href="/">
+          <StyledLink>홈</StyledLink>
+        </Link>
+        <Link href="/sub">
+          <StyledLink>서브1</StyledLink>
+        </Link>
+        <Link href="/sub">
+          <StyledLink>서브2</StyledLink>
+        </Link>
       </Inner>
-    </header>
+    </Header>
   );
 }
 
-export default Header;
+export default HeaderWrap;
