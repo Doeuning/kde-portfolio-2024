@@ -10,7 +10,7 @@ export default function Sub(props) {
       {data ? (
         <ul>
           {data.results.map((item) => {
-            return <li>{item.original_name}</li>;
+            return <li key={item.id}>{item.original_name}</li>;
           })}
         </ul>
       ) : (
