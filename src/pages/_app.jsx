@@ -1,3 +1,4 @@
+import "../../wdyr";
 import "../styles/globals.scss";
 import { ThemeProvider } from "styled-components";
 import Layout from "../layouts/Layout";
@@ -10,7 +11,7 @@ const layouts = {
 
 const MyApp = ({ Component, pageProps }) => {
   const mobile = usDetectDevice();
-  console.log(mobile);
+  // console.log(mobile);
   const SetLayout = layouts[Component.layout] || layouts["default"];
   return (
     <ThemeProvider theme={theme}>
