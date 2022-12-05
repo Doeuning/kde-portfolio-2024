@@ -1,5 +1,5 @@
-import Header from "../layouts/Header";
-import Container from "../layouts/Container";
+import Header from "@layouts/Header";
+import Container from "@layouts/Container";
 
 export default function Index({ children }) {
   return (

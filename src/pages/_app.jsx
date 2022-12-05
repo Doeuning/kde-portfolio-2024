@@ -1,8 +1,8 @@
-import "../../wdyr";
-import "../styles/globals.scss";
+import "@root/wdyr";
+import "@styles/globals.scss";
 import { ThemeProvider } from "styled-components";
-import Layout from "../layouts/Layout";
-import usDetectDevice from "../hooks/usDetectDevice";
+import Layout from "@layouts/Layout";
+import usDetectDevice from "@root/hooks/usDetectDevice";
 const theme = require('sass-extract-loader?{"plugins":["sass-extract-js"],"options": {camelCase: true}}!../styles/_variables.scss');
 
 const layouts = {
