@@ -29,9 +29,6 @@ function HeaderWrap(props) {
         <Link href="/sub">
           <StyledLink>서브1</StyledLink>
         </Link>
-        <Link href="/sub">
-          <StyledLink>서브2</StyledLink>
-        </Link>
       </Inner>
     </Header>
   );
