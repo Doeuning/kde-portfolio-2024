@@ -1,5 +1,4 @@
 import "@root/wdyr";
-import "@root/history";
 import "@styles/globals.scss";
 import { ThemeProvider } from "styled-components";
 import Layout from "@layouts/Layout";

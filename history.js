@@ -1,2 +1,10 @@
-// import { createBrowserHistory } from 'history';
-// export default history = createBrowserHistory();
+// import { createBrowserHistory } from "history";
+// import { routeChange } from "./state/actions-creators";
+// import { store } from "./state/storeSetting";
+// const history = createBrowserHistory();
+//
+// history.listen(({ action, location }) => {
+//   store.dispatch(routeChange({ pathname: location.pathname }));
+// });
+//
+// export default history;
