@@ -1,10 +1,10 @@
 import "@root/wdyr";
 import "@styles/globals.scss";
 import { ThemeProvider } from "styled-components";
-import Layout from "@layouts/Layout";
 import usDetectDevice from "@src/hooks/usDetectDevice";
-const theme = require('sass-extract-loader?{"plugins":["sass-extract-js"],"options": {camelCase: true}}!../styles/_variables.scss');
+import Layout from "@layouts/Layout";
 
+const theme = require('sass-extract-loader?{"plugins":["sass-extract-js"],"options": {camelCase: true}}!../styles/_variables.scss');
 const layouts = {
   default: Layout,
 };
