@@ -23,10 +23,10 @@ function HeaderWrap(props) {
   return (
     <Header>
       <Inner>
-        <Link href="/">
+        <Link href="/" scroll={false}>
           <StyledLink>홈</StyledLink>
         </Link>
-        <Link href="/sub">
+        <Link href="/sub" scroll={false}>
           <StyledLink>서브1</StyledLink>
         </Link>
       </Inner>
