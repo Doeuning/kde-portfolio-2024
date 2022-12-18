@@ -41,23 +41,26 @@ const variants = {
 };
 function Container({ children }) {
   const router = useRouter();
-  // const handleRouteChange = (url, { shallow }) => {
-  //   console.log(url, shallow);
-  // };
-  const ex = (url, { shallow }) => {
-    console.log(url, shallow);
-  };
-  useEffect(() => {
-    router.events.on("beforeHistoryChange", ex);
-  }, []);
+  const history = children.props.history;
+  const prev = children.props.prev;
+  console.log(prev, history, history.current === prev ? "prev" : "next");
+  const direction =
+    history.current === prev
+      ? {
+          initial: "prev",
+          exit: "next",
+        }
+      : {
+          initial: "next",
+          exit: "prev",
+        };
   return (
     <AnimatePresence initial={false}>
       <motion.div
         key={router.asPath}
         variants={variants}
         animate="in"
-        initial="next"
-        exit="prev"
+        {...direction}
       >
         <Wrap>{children}</Wrap>
       </motion.div>
