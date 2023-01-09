@@ -4,13 +4,16 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const Wrap = styled.div`
-  position: absolute;
+  // position: absolute;
   width: 100%;
+  background: ${(p) => p.theme.gray80};
+`;
+
+const Inner = styled.div`
   box-sizing: border-box;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background: ${(p) => p.theme.gray80};
 `;
 
 const variants = {
@@ -40,29 +43,31 @@ const variants = {
   },
 };
 function Container({ children }) {
-  const router = useRouter();
-  const history = children.props.history;
-  const prev = children.props.prev;
-  console.log(prev, history, history.current === prev ? "prev" : "next");
-  const direction =
-    history.current === prev
-      ? {
-          initial: "prev",
-          exit: "next",
-        }
-      : {
-          initial: "next",
-          exit: "prev",
-        };
+  // const router = useRouter();
+  // const history = children.props.history;
+  // const prev = children.props.prev;
+  // console.log(prev, history, history.current === prev ? "prev" : "next");
+  // const direction =
+  //   history.current === prev
+  //     ? {
+  //         initial: "prev",
+  //         exit: "next",
+  //       }
+  //     : {
+  //         initial: "next",
+  //         exit: "prev",
+  //       };
   return (
     <AnimatePresence initial={false}>
       <motion.div
-        key={router.asPath}
-        variants={variants}
-        animate="in"
-        {...direction}
+      // key={router.asPath}
+      // variants={variants}
+      // animate="in"
+      // {...direction}
       >
-        <Wrap>{children}</Wrap>
+        <Wrap>
+          <Inner>{children}</Inner>
+        </Wrap>
       </motion.div>
     </AnimatePresence>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import { MdHome } from "react-icons/md";
 
 const Header = styled.div`
   position: sticky;
@@ -10,7 +11,15 @@ const Header = styled.div`
 
 const Inner = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const Gnb = styled.div`
+  display: flex;
+  margin-left: auto;
 `;
 
 const StyledLink = styled.span`
@@ -24,14 +33,18 @@ function HeaderWrap(props) {
     <Header>
       <Inner>
         <Link href="/" scroll={false}>
-          <StyledLink>홈</StyledLink>
+          <StyledLink>
+            <MdHome />
+          </StyledLink>
         </Link>
-        <Link href="/sub" scroll={false}>
-          <StyledLink>서브1</StyledLink>
-        </Link>
-        <Link href="/result" scroll={false}>
-          <StyledLink>결과</StyledLink>
-        </Link>
+        <Gnb>
+          <Link href="/portfolio" scroll={false}>
+            <StyledLink>Portfolio</StyledLink>
+          </Link>
+          <Link href="/result" scroll={false}>
+            <StyledLink>결과</StyledLink>
+          </Link>
+        </Gnb>
       </Inner>
     </Header>
   );
