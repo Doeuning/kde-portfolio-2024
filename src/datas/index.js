@@ -6,6 +6,7 @@ export const portfolioData = [
     period: "2021.11~2022.01",
     type: "project",
     role: "PA",
+    tags: ["React", "Styled Component", "Axios"],
   },
   {
     id: "ananti",
@@ -15,6 +16,7 @@ export const portfolioData = [
     url: "https://eternaljourney.ananti.kr/index",
     type: "project",
     role: "PA",
+    tags: ["jQuery", "gsap"],
   },
   {
     id: "hanafind",
@@ -23,6 +25,7 @@ export const portfolioData = [
     period: "2021.11~2022.05",
     type: "project",
     role: "PA",
+    tags: ["Vue"],
   },
   {
     id: "twd",
@@ -32,6 +35,7 @@ export const portfolioData = [
     url: "https://shop.tworld.co.kr/shop/main",
     type: "maintain",
     role: "PA",
+    tags: ["jQuery"],
   },
   {
     id: "jaju",
@@ -41,6 +45,7 @@ export const portfolioData = [
     url: "https://www.sivillage.com/jaju/main/initMain.siv",
     type: "project",
     role: "PA",
+    tags: ["jQuery"],
   },
   {
     id: "wells",
@@ -50,6 +55,7 @@ export const portfolioData = [
     url: "http://www.kyowonwells.com/",
     type: "project",
     role: "PA",
+    tags: ["jQuery"],
   },
   {
     id: "toyota_compliments",
@@ -58,6 +64,7 @@ export const portfolioData = [
     period: "2019.09~2019.11",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "gc_imed",
@@ -67,6 +74,7 @@ export const portfolioData = [
     url: "https://www.gcimed.com/main",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "yo_toyota",
@@ -76,6 +84,7 @@ export const portfolioData = [
     url: "https://play.google.com/store/apps/details?id=com.yo.toyota&gl=US&pli=1",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "golping",
@@ -85,6 +94,7 @@ export const portfolioData = [
     url: "https://golping.golfzon.com/",
     type: "maintain",
     role: "PL",
+    tags: ["Vue", "jQuery"],
   },
   {
     id: "jaseng",
@@ -94,6 +104,7 @@ export const portfolioData = [
     url: "https://www.jaseng.co.kr/",
     type: "maintain",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "gc_ballance",
@@ -102,6 +113,7 @@ export const portfolioData = [
     period: "2018.08~2018.10",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "snsys",
@@ -111,6 +123,7 @@ export const portfolioData = [
     url: "http://www.snsys.net/",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "sangsangin",
@@ -119,6 +132,7 @@ export const portfolioData = [
     period: "2018.04~2018.07",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "herit",
@@ -127,6 +141,7 @@ export const portfolioData = [
     period: "2018.05~2018.06",
     type: "project",
     role: "PL",
+    tags: ["chart.js", "jQuery"],
   },
   {
     id: "golfzon",
@@ -136,6 +151,7 @@ export const portfolioData = [
     url: "https://www.golfzoncommerce.com/",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "jawsfood",
@@ -145,6 +161,7 @@ export const portfolioData = [
     url: "http://www.jawsfood.com/",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "dreamline",
@@ -154,6 +171,7 @@ export const portfolioData = [
     url: "https://www.dreamline.co.kr/index.php",
     type: "project",
     role: "PL",
+    tags: ["jQuery"],
   },
   {
     id: "brown",
@@ -162,6 +180,7 @@ export const portfolioData = [
     period: "2017.04~2017.07",
     type: "project",
     role: "PA",
+    tags: ["jQuery"],
   },
   {
     id: "smart",
@@ -170,5 +189,6 @@ export const portfolioData = [
     period: "2017.03~2017.04",
     type: "project",
     role: "PA",
+    tags: ["jQuery"],
   },
 ];

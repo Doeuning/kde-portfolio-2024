@@ -2,6 +2,18 @@ import styled from "styled-components";
 import Link from "next/link";
 import { portfolioData } from "../datas";
 
+const Tags = styled.ul`
+  display: flex;
+  margin: -5px 0 10px -5px;
+  li {
+    margin: 5px 0 0 5px;
+    padding: 1px 3px;
+    border-radius: 3px;
+    background: ${(p) => p.theme.gray30};
+    color: #fff;
+    font-weight: 700;
+  }
+`;
 const List = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, minmax(310px, 1fr));
@@ -72,6 +84,14 @@ function Item({ item }) {
         <div className="role">{item.role}</div>
       </div>
       <div className="desc">{item.desc}</div>
+      {item.tags && (
+        <Tags>
+          {item.tags.map((tag) => (
+            <li key={tag}>{tag}</li>
+          ))}
+        </Tags>
+      )}
+
       <div className="info">
         <div className="period">{item.period}</div>
         <div className={`type ${item.type}`}>

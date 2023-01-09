@@ -6,6 +6,7 @@ import { useEffect } from "react";
 const Wrap = styled.div`
   // position: absolute;
   width: 100%;
+  min-height: 100vh;
   background: ${(p) => p.theme.gray80};
 `;
 
