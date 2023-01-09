@@ -41,6 +41,9 @@ function HeaderWrap(props) {
           <Link href="/portfolio" scroll={false}>
             <StyledLink>Portfolio</StyledLink>
           </Link>
+          <Link href="/sub" scroll={false}>
+            <StyledLink>서브</StyledLink>
+          </Link>
           <Link href="/result" scroll={false}>
             <StyledLink>결과</StyledLink>
           </Link>

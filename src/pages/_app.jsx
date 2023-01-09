@@ -3,12 +3,14 @@ import "@styles/globals.scss";
 import { ThemeProvider } from "styled-components";
 import usDetectDevice from "@src/hooks/usDetectDevice";
 import Layout from "@layouts/Layout";
+import CleanLayout from "@layouts/CleanLayout";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 const theme = require('sass-extract-loader?{"plugins":["sass-extract-js"],"options": {camelCase: true}}!../styles/_variables.scss');
 const layouts = {
   default: Layout,
+  clean: CleanLayout,
 };
 
 const MyApp = ({ Component, pageProps }) => {

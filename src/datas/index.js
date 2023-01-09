@@ -1,5 +1,13 @@
 export const portfolioData = [
   {
+    id: "groupware",
+    title: "이모션 그룹웨어",
+    desc: "반응형 웹/모바일웹 사이트 신규 구축",
+    period: "2021.11~2022.01",
+    type: "project",
+    role: "PA",
+  },
+  {
     id: "ananti",
     title: "아난티 온라인 커머스 플랫폼",
     desc: "반응형 웹/모바일웹 사이트 신규 구축",
