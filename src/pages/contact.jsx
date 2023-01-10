@@ -1,6 +1,6 @@
 import useFetch from "../hooks/useFetch";
 
-export default function Sub(props) {
+export default function Contact(props) {
   const key = "c79521c72b6690785c671f45832e339b";
   const { data, error, loading } = useFetch(
     `https://api.themoviedb.org/3/tv/popular?api_key=${key}`

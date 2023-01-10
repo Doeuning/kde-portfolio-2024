@@ -1,4 +1,4 @@
-function Result(props) {
+function Skills(props) {
   return (
     <div>
       <h1>결과</h1>
@@ -6,4 +6,4 @@ function Result(props) {
   );
 }
 
-export default Result;
+export default Skills;

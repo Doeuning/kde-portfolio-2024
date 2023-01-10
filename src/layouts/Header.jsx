@@ -38,14 +38,17 @@ function HeaderWrap(props) {
           </StyledLink>
         </Link>
         <Gnb>
+          <Link href="/aboutme" scroll={false}>
+            <StyledLink>About me</StyledLink>
+          </Link>
           <Link href="/portfolio" scroll={false}>
             <StyledLink>Portfolio</StyledLink>
           </Link>
-          <Link href="/sub" scroll={false}>
-            <StyledLink>서브</StyledLink>
+          <Link href="/skills" scroll={false}>
+            <StyledLink>Skills</StyledLink>
           </Link>
-          <Link href="/result" scroll={false}>
-            <StyledLink>결과</StyledLink>
+          <Link href="/contact" scroll={false}>
+            <StyledLink>Contact</StyledLink>
           </Link>
         </Gnb>
       </Inner>

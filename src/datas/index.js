@@ -1,12 +1,12 @@
 export const portfolioData = [
   {
     id: "groupware",
-    title: "이모션 그룹웨어",
+    title: "이모션 사내 그룹웨어",
     desc: "반응형 웹/모바일웹 사이트 신규 구축",
     period: "2021.11~2022.01",
     type: "project",
     role: "PA",
-    tags: ["React", "Styled Component", "Axios"],
+    tags: ["React", "Next.js", "Styled Component", "Axios"],
   },
   {
     id: "ananti",
