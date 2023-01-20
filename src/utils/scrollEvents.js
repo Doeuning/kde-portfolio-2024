@@ -46,19 +46,22 @@ export const horizontalScroll = (getElements) => {
   //           : 423;
 
   const moveLeft = (element) => {
+    const scrollLeft = element.scrollWidth + element.offsetWidth;
+    console.log(scrollLeft);
     gsap
       .timeline({
         scrollTrigger: {
           trigger: element,
           start: "top 50%",
-          end: () => {
-            return "+=" + window.innerHeight * 2;
-          },
+          end: `${scrollLeft} 50%`,
           scrub: 1,
           pin: true,
           pinSpacing: true,
           toggleActions: "play none none reverse",
           markers: true,
+          onUpdate: (self) => {
+            console.log("progress", self.progress);
+          },
         },
       })
       .to(element, {

@@ -32,10 +32,11 @@ function Index(props) {
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
-      <ScrollTExt className="horizontal-scroll">
-        I'm Going to take you out if you do that again. I'm Going to take you
-        out if you do that again.
-      </ScrollTExt>
+      <Section>
+        <ScrollTExt className="horizontal-scroll">
+          I'm Going to take you out if you do that again.
+        </ScrollTExt>
+      </Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
