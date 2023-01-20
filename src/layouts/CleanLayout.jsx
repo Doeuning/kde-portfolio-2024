@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Container from "@layouts/Container";
 
 const CleanLayout = styled.div`
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   min-height: 100vh;
 `;

@@ -1,6 +1,10 @@
+@mixin fontRaleway {
+  font-family: "Raleway", sans-serif;
+}
+
 @mixin clearFix {
   &:after {
-    content: '';
+    content: "";
     display: block;
     clear: both;
   }
@@ -48,7 +52,7 @@
     position: absolute;
     left: 0;
     top: 0.5rem;
-    content: '';
+    content: "";
     display: inline-block;
     @if $shape == circle {
       width: 4px;
@@ -65,7 +69,7 @@
 }
 
 @mixin sprite($url, $repeat: no-repeat, $position: 0 0) {
-  background-image: url('#{$url}');
+  background-image: url("#{$url}");
   background-repeat: $repeat;
   background-position: $position;
   background-size: 500px auto;
