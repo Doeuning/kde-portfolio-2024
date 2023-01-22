@@ -34,24 +34,26 @@ const ParallaxWrap = styled.section`
 
 const ParallaxBox = styled.div`
   position: relative;
+  will-change: transform, opacity;
   background: ${({ bgColor }) => {
     return bgColor || "lightgray";
   }};
   &.first {
-    left: 100px;
+    left: 60%;
+    z-index: 10;
     width: 200px;
     height: 200px;
   }
   &.second {
-    left: 90%;
-    width: 200px;
-    height: 500px;
+    position: relative;
+    left: 20%;
+    width: 1000px;
+    height: 1000px;
   }
   &.third {
-    position: relative;
-    left: 30%;
+    left: 100px;
     width: 500px;
-    height: 500px;
+    height: 200px;
   }
   &.fourth {
     position: relative;
@@ -105,12 +107,12 @@ function Index(props) {
           data-speed="0.65"
         ></ParallaxBox>
         <ParallaxBox
-          bgColor="lightyellow"
+          bgColor="green"
           className="third"
           data-speed="0.2"
         ></ParallaxBox>
         <ParallaxBox
-          bgColor="beige"
+          bgColor="cornflowerblue"
           className="fourth"
           data-speed="0.4"
         ></ParallaxBox>
