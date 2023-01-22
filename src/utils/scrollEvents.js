@@ -97,7 +97,7 @@ export const horizontalScroll = (getElements, type = "default") => {
 };
 
 export const parallaxElement = (getElements, type = "default") => {
-  const moveParallax = (element) => {
+  const moveParallax = (element, i) => {
     const speed = element.dataset.speed;
     const gap = 200;
     let moveY = element.offsetHeight * speed;
@@ -122,7 +122,23 @@ export const parallaxElement = (getElements, type = "default") => {
           scrollTrigger: {
             trigger: element,
             start: `top bottom`,
+            end: `top bottom-=${gap / 2}`,
             toggleActions: "play none none reverse",
+            onEnter: () => {
+              if (i === 0) {
+                console.log(i, "hello enter");
+              }
+            },
+            onLeave: () => {
+              if (i === 0) {
+                console.log(i, "hello leave");
+              }
+            },
+            onToggle: (self) => {
+              if (i === 0) {
+                console.log("hello----------------------", self.progress);
+              }
+            },
           },
         }
       );
@@ -136,33 +152,64 @@ export const parallaxElement = (getElements, type = "default") => {
           ease: "power2",
           scrollTrigger: {
             trigger: element,
-            start: "top bottom",
-            end: `bottom-=${moveY - element.offsetHeight / 3}px top+=${
-              element.offsetHeight / 3
-            }px`,
+            start: `top bottom-=${gap}`,
+            end: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
             scrub: 1,
+            markers: true,
             toggleActions: "play none none reverse",
+            onEnter: () => {
+              if (i === 0) {
+                console.log(i, "parallax-----enter");
+              }
+            },
+            onLeave: () => {
+              if (i === 0) {
+                console.log(i, "parallax-----leave");
+              }
+            },
+            onToggle: (self) => {
+              if (i === 0) {
+                console.log("----------------------parallax", self.progress);
+              }
+            },
           },
         }
       );
       gsap.fromTo(
         element,
         {
-          y: `-=${moveY}`,
+          y: `-${moveY}`,
           opacity: 1,
         },
         {
-          y: `-=${gap}`,
-          opacity: 0,
+          y: `-${moveY + gap}`,
+          // opacity: 0,
           scrollTrigger: {
             trigger: element,
-            start: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
+            start: `bottom-=${moveY}px top+=${element.offsetHeight / 3 - 10}px`,
+            end: `+=${gap / 2}`,
             toggleActions: "play none none reverse",
+            onEnter: () => {
+              if (i === 0) {
+                console.log(i, "byebye enter");
+                console.log(`-=${moveY + gap}`);
+              }
+            },
+            onLeave: () => {
+              if (i === 0) {
+                console.log(i, "byebye leave");
+              }
+            },
+            onToggle: (self) => {
+              if (i === 0) {
+                console.log(self.progress, "----------------------byebye");
+              }
+            },
           },
         }
       );
     }
   };
   const elements = gsap.utils.toArray(getElements);
-  elements.forEach((element) => moveParallax(element));
+  elements.forEach((element, i) => moveParallax(element, i));
 };

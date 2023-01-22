@@ -93,7 +93,7 @@ function Index(props) {
       </Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
-      <ParallaxWrap className="section parallax-wrap">
+      <ParallaxWrap className="parallax-wrap">
         <ParallaxBox
           bgColor="lightcoral"
           className="first"
