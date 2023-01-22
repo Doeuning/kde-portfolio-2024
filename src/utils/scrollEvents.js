@@ -39,6 +39,34 @@ export const transitionElement = (getElements) => {
   elements.forEach((element) => moveUp(element));
 };
 
+export const staggerElement = (getElements, staggerNum = 0.1) => {
+  const moveUp = (element) => {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: element,
+          start: "top bottom",
+          end: "bottom bottom",
+          toggleActions: "play none none reverse",
+        },
+      })
+      .fromTo(
+        element,
+        {
+          y: 100,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: staggerNum,
+        }
+      );
+  };
+  const elements = gsap.utils.toArray(getElements);
+  moveUp(elements);
+};
+
 // type: default || background
 export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
@@ -48,7 +76,7 @@ export const horizontalScroll = (getElements, type = "default") => {
       .timeline({
         scrollTrigger: {
           trigger: wrap,
-          start: "top 50%",
+          start: `center center`,
           end: `bottom+=${scrollLeft} 50%`,
           scrub: 1,
           pin: true,
@@ -58,6 +86,7 @@ export const horizontalScroll = (getElements, type = "default") => {
       })
       .to(element, {
         x: -scrollLeft,
+        y: "auto",
         immediateRender: false,
         overwrite: "auto",
         duration: 1,
@@ -69,23 +98,22 @@ export const horizontalScroll = (getElements, type = "default") => {
 
 export const parallaxElement = (getElements, type = "default") => {
   const moveParallax = (element) => {
-    window.addEventListener("scroll", (e) => {});
-    const depth = element.dataset.depth;
-    let movement = element.offsetHeight * depth;
-    console.log("movement", movement);
+    const speed = element.dataset.speed;
+    const gap = 200;
+    let moveY = element.offsetHeight * speed;
     if (type === "background") {
       gsap.to(element, {
         scrollTrigger: {
-          scrub: true,
+          scrub: 1,
         },
-        y: -ScrollTrigger.maxScroll(window) * element.dataset.depth,
+        y: -ScrollTrigger.maxScroll(window) * speed,
         ease: "none",
       });
     } else {
       gsap.fromTo(
         element,
         {
-          y: `+=100`,
+          y: `+=${gap}`,
           opacity: 0,
         },
         {
@@ -93,13 +121,8 @@ export const parallaxElement = (getElements, type = "default") => {
           opacity: 1,
           scrollTrigger: {
             trigger: element,
-            start: `top+=100px bottom`,
+            start: `top bottom`,
             toggleActions: "play none none reverse",
-            // markers: true,
-            onEnter: () => {
-              console.log("element enter", element);
-              console.log(element.offsetHeight / depth / 1.5);
-            },
           },
         }
       );
@@ -109,49 +132,32 @@ export const parallaxElement = (getElements, type = "default") => {
           y: 0,
         },
         {
-          y: `-=${movement}`,
+          y: `-=${moveY}`,
+          ease: "power2",
           scrollTrigger: {
             trigger: element,
             start: "top bottom",
-            end: `bottom-=${movement - element.offsetHeight / 3}px top+=${
+            end: `bottom-=${moveY - element.offsetHeight / 3}px top+=${
               element.offsetHeight / 3
             }px`,
-            scrub: true,
+            scrub: 1,
             toggleActions: "play none none reverse",
-            markers: true,
-            onEnter: () => {
-              console.log("parallax start");
-            },
-            onLeave: () => {
-              console.log("parallax end");
-            },
           },
         }
       );
       gsap.fromTo(
         element,
         {
-          y: `-=${movement}`,
+          y: `-=${moveY}`,
           opacity: 1,
         },
         {
-          y: "-=100",
+          y: `-=${gap}`,
           opacity: 0,
           scrollTrigger: {
             trigger: element,
-            start: `bottom-=${movement - element.offsetHeight / 3}px top+=${
-              element.offsetHeight / 3
-            }px`,
+            start: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
             toggleActions: "play none none reverse",
-            // markers: true,
-            onEnter: () => {
-              console.log(
-                `bottom-=${movement - element.offsetHeight / 3}px top+=${
-                  element.offsetHeight / 3
-                }px`
-              );
-              console.log("disappear start");
-            },
           },
         }
       );

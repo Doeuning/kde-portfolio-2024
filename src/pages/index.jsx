@@ -5,6 +5,7 @@ import {
   transitionElement,
   horizontalScroll,
   parallaxElement,
+  staggerElement,
 } from "@utils/scrollEvents";
 
 const MainWrap = styled.div`
@@ -37,13 +38,11 @@ const ParallaxBox = styled.div`
     return bgColor || "lightgray";
   }};
   &.first {
-    top: 0;
     left: 100px;
     width: 200px;
     height: 200px;
   }
   &.second {
-    top: 200px;
     left: 90%;
     width: 200px;
     height: 500px;
@@ -62,11 +61,20 @@ const ParallaxBox = styled.div`
   }
 `;
 
+const StaggerText = styled.div`
+  font-size: 50px;
+  span {
+    display: inline-block;
+  }
+`;
+
 function Index(props) {
   useEffect(() => {
+    horizontalScroll(".horizontal-scroll-bg", "background");
+    parallaxElement(".parallax-wrap div");
+    staggerElement(".stagger-wrap span");
     horizontalScroll(".horizontal-scroll");
     transitionElement(".section");
-    parallaxElement(".parallax-wrap div");
   }, []);
   return (
     <MainWrap>
@@ -75,32 +83,40 @@ function Index(props) {
       </Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
+      <Section className="section">
+        <StaggerText className="stagger-wrap">
+          <span>감</span>
+          <span>자</span>
+          <span>튀</span>
+          <span>김</span>
+        </StaggerText>
+      </Section>
       <Section className="section">sdfsdf</Section>
       <Section className="section">sdfsdf</Section>
       <ParallaxWrap className="section parallax-wrap">
         <ParallaxBox
           bgColor="lightcoral"
           className="first"
-          data-depth="1"
+          data-speed="1"
         ></ParallaxBox>
         <ParallaxBox
           bgColor="lightpink"
           className="second"
-          data-depth="0.65"
+          data-speed="0.65"
         ></ParallaxBox>
         <ParallaxBox
           bgColor="lightyellow"
           className="third"
-          data-depth="0.2"
+          data-speed="0.2"
         ></ParallaxBox>
         <ParallaxBox
           bgColor="beige"
           className="fourth"
-          data-depth="0.4"
+          data-speed="0.4"
         ></ParallaxBox>
       </ParallaxWrap>
       <Section className="section">
-        <ScrollTExt className="horizontal-scroll">
+        <ScrollTExt className="horizontal-scroll-bg">
           I'm Going to take you out if you do that again. I'm Going to take you
           out if you do that again.
         </ScrollTExt>
