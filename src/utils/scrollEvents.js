@@ -20,7 +20,6 @@ export const transitionElement = (getElements) => {
           trigger: element,
           start: "top bottom",
           end: "bottom bottom",
-          scrub: 1,
           toggleActions: "play none none reverse",
         },
       })
@@ -40,33 +39,25 @@ export const transitionElement = (getElements) => {
   elements.forEach((element) => moveUp(element));
 };
 
-export const horizontalScroll = (getElements) => {
-  // const scrollLeft = mobile
-  //           ? $(element).get(0).scrollWidth - $(element).get(0).offsetWidth
-  //           : 423;
-
+// type: default || background
+export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
-    const scrollLeft = element.scrollWidth + element.offsetWidth;
-    console.log(scrollLeft);
+    const scrollLeft = element.scrollWidth; // + element.offsetWidth
+    const wrap = element.parentElement;
     gsap
       .timeline({
         scrollTrigger: {
-          trigger: element,
+          trigger: wrap,
           start: "top 50%",
-          end: `${scrollLeft} 50%`,
+          end: `bottom+=${scrollLeft} 50%`,
           scrub: 1,
           pin: true,
-          pinSpacing: true,
+          pinSpacing: type === "background" ? false : true,
           toggleActions: "play none none reverse",
-          markers: true,
-          onUpdate: (self) => {
-            console.log("progress", self.progress);
-          },
         },
       })
       .to(element, {
-        x: "-100%",
-        y: 0,
+        x: -scrollLeft,
         immediateRender: false,
         overwrite: "auto",
         duration: 1,
@@ -74,4 +65,98 @@ export const horizontalScroll = (getElements) => {
   };
   const elements = gsap.utils.toArray(getElements);
   elements.forEach((element) => moveLeft(element));
+};
+
+export const parallaxElement = (getElements, type = "default") => {
+  const moveParallax = (element) => {
+    window.addEventListener("scroll", (e) => {});
+    const depth = element.dataset.depth;
+    let movement = element.offsetHeight * depth;
+    console.log("movement", movement);
+    if (type === "background") {
+      gsap.to(element, {
+        scrollTrigger: {
+          scrub: true,
+        },
+        y: -ScrollTrigger.maxScroll(window) * element.dataset.depth,
+        ease: "none",
+      });
+    } else {
+      gsap.fromTo(
+        element,
+        {
+          y: `+=100`,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          scrollTrigger: {
+            trigger: element,
+            start: `top+=100px bottom`,
+            toggleActions: "play none none reverse",
+            // markers: true,
+            onEnter: () => {
+              console.log("element enter", element);
+              console.log(element.offsetHeight / depth / 1.5);
+            },
+          },
+        }
+      );
+      gsap.fromTo(
+        element,
+        {
+          y: 0,
+        },
+        {
+          y: `-=${movement}`,
+          scrollTrigger: {
+            trigger: element,
+            start: "top bottom",
+            end: `bottom-=${movement - element.offsetHeight / 3}px top+=${
+              element.offsetHeight / 3
+            }px`,
+            scrub: true,
+            toggleActions: "play none none reverse",
+            markers: true,
+            onEnter: () => {
+              console.log("parallax start");
+            },
+            onLeave: () => {
+              console.log("parallax end");
+            },
+          },
+        }
+      );
+      gsap.fromTo(
+        element,
+        {
+          y: `-=${movement}`,
+          opacity: 1,
+        },
+        {
+          y: "-=100",
+          opacity: 0,
+          scrollTrigger: {
+            trigger: element,
+            start: `bottom-=${movement - element.offsetHeight / 3}px top+=${
+              element.offsetHeight / 3
+            }px`,
+            toggleActions: "play none none reverse",
+            // markers: true,
+            onEnter: () => {
+              console.log(
+                `bottom-=${movement - element.offsetHeight / 3}px top+=${
+                  element.offsetHeight / 3
+                }px`
+              );
+              console.log("disappear start");
+            },
+          },
+        }
+      );
+    }
+  };
+  const elements = gsap.utils.toArray(getElements);
+  elements.forEach((element) => moveParallax(element));
 };
