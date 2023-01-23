@@ -6,6 +6,7 @@ import {
   horizontalScroll,
   parallaxElement,
   staggerElement,
+  staggerText,
 } from "@utils/scrollEvents";
 
 const MainWrap = styled.div`
@@ -14,9 +15,12 @@ const MainWrap = styled.div`
 
 const Section = styled.section`
   box-sizing: border-box;
-  border: 5px solid bisque;
   position: relative;
   padding: 60px 0;
+  .page-tit {
+    font-size: 60px;
+    text-align: center;
+  }
 `;
 
 const ScrollTExt = styled.div`
@@ -72,19 +76,29 @@ const StaggerText = styled.div`
 
 function Index(props) {
   useEffect(() => {
-    horizontalScroll(".horizontal-scroll-bg", "background");
-    parallaxElement(".parallax-wrap div");
-    staggerElement(".stagger-wrap span");
-    horizontalScroll(".horizontal-scroll");
+    // horizontalScroll(".horizontal-scroll-bg", "background");
+    // parallaxElement(".parallax-wrap div");
+    staggerElement(".stagger-wrap");
+    staggerText(".stagger-text");
+    // horizontalScroll(".horizontal-scroll");
     transitionElement(".section");
   }, []);
   return (
     <MainWrap>
       <Section className="section">
+        <h1 className="page-tit">
+          <div className="stagger-text">Frontend Developer</div>
+          <div className="stagger-text">Doeun Kim</div>
+        </h1>
+      </Section>
+      <Section className="section">
         <h1>Doeun Kim</h1>
       </Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
+      <Section className="section">
+        <Link href="/portfolio">포트폴리오</Link>
+      </Section>
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
       <Section className="section">
         <StaggerText className="stagger-wrap">
           <span>감</span>
@@ -93,52 +107,49 @@ function Index(props) {
           <span>김</span>
         </StaggerText>
       </Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <ParallaxWrap className="parallax-wrap">
-        <ParallaxBox
-          bgColor="lightcoral"
-          className="first"
-          data-speed="1"
-        ></ParallaxBox>
-        <ParallaxBox
-          bgColor="lightpink"
-          className="second"
-          data-speed="0.65"
-        ></ParallaxBox>
-        <ParallaxBox
-          bgColor="green"
-          className="third"
-          data-speed="0.2"
-        ></ParallaxBox>
-        <ParallaxBox
-          bgColor="cornflowerblue"
-          className="fourth"
-          data-speed="0.4"
-        ></ParallaxBox>
-      </ParallaxWrap>
-      <Section className="section">
-        <ScrollTExt className="horizontal-scroll-bg">
-          I'm Going to take you out if you do that again. I'm Going to take you
-          out if you do that again.
-        </ScrollTExt>
-      </Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">
-        <ScrollTExt className="horizontal-scroll">
-          I'm Going to take you out if you do that again. I'm Going to take you
-          out if you do that again.
-        </ScrollTExt>
-      </Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">sdfsdf</Section>
-      <Section className="section">
-        <Link href="/portfolio">포트폴리오</Link>
-      </Section>
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<ParallaxWrap className="parallax-wrap">*/}
+      {/*  <ParallaxBox*/}
+      {/*    bgColor="lightcoral"*/}
+      {/*    className="first"*/}
+      {/*    data-speed="1"*/}
+      {/*  ></ParallaxBox>*/}
+      {/*  <ParallaxBox*/}
+      {/*    bgColor="lightpink"*/}
+      {/*    className="second"*/}
+      {/*    data-speed="0.65"*/}
+      {/*  ></ParallaxBox>*/}
+      {/*  <ParallaxBox*/}
+      {/*    bgColor="green"*/}
+      {/*    className="third"*/}
+      {/*    data-speed="0.2"*/}
+      {/*  ></ParallaxBox>*/}
+      {/*  <ParallaxBox*/}
+      {/*    bgColor="cornflowerblue"*/}
+      {/*    className="fourth"*/}
+      {/*    data-speed="0.4"*/}
+      {/*  ></ParallaxBox>*/}
+      {/*</ParallaxWrap>*/}
+      {/*<Section className="section">*/}
+      {/*  <ScrollTExt className="horizontal-scroll-bg">*/}
+      {/*    I'm Going to take you out if you do that again. I'm Going to take you*/}
+      {/*    out if you do that again.*/}
+      {/*  </ScrollTExt>*/}
+      {/*</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">*/}
+      {/*  <ScrollTExt className="horizontal-scroll">*/}
+      {/*    I'm Going to take you out if you do that again. I'm Going to take you*/}
+      {/*    out if you do that again.*/}
+      {/*  </ScrollTExt>*/}
+      {/*</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
+      {/*<Section className="section">sdfsdf</Section>*/}
     </MainWrap>
   );
 }

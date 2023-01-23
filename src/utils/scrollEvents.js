@@ -51,7 +51,7 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
         },
       })
       .fromTo(
-        element,
+        element.childNodes,
         {
           y: 100,
           opacity: 0,
@@ -64,7 +64,45 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
       );
   };
   const elements = gsap.utils.toArray(getElements);
-  moveUp(elements);
+  elements.forEach((element) => moveUp(element));
+};
+
+export const staggerText = (getStringElements, staggerNum = 0.1) => {
+  const moveUp = (element) => {
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: element,
+          start: "top bottom",
+          end: "bottom bottom",
+          toggleActions: "play none none reverse",
+        },
+      })
+      .fromTo(
+        element.childNodes,
+        {
+          display: "inline-block",
+          y: 100,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: staggerNum,
+        }
+      );
+  };
+  const elements = gsap.utils.toArray(getStringElements);
+  elements.forEach((element) => {
+    const textArr = element.textContent
+      .split("")
+      .map((letter) => {
+        return `<span>${letter}</span>`;
+      })
+      .join("");
+    element.innerHTML = textArr;
+    moveUp(element);
+  });
 };
 
 // type: default || background
