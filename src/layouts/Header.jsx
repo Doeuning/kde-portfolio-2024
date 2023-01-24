@@ -50,6 +50,9 @@ function HeaderWrap(props) {
           <Link href="/contact" scroll={false}>
             <StyledLink>Contact</StyledLink>
           </Link>
+          <Link href="/demo" scroll={false}>
+            <StyledLink>Scroll Event Demo</StyledLink>
+          </Link>
         </Gnb>
       </Inner>
     </Header>

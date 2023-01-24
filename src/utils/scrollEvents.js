@@ -67,8 +67,13 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
   elements.forEach((element) => moveUp(element));
 };
 
-export const staggerText = (getStringElements, staggerNum = 0.1) => {
+export const staggerText = (
+  getStringElements,
+  staggerNum = 0.1,
+  yPosition = 20
+) => {
   const moveUp = (element) => {
+    element.style.whiteSpace = "pre";
     gsap
       .timeline({
         scrollTrigger: {
@@ -82,7 +87,7 @@ export const staggerText = (getStringElements, staggerNum = 0.1) => {
         element.childNodes,
         {
           display: "inline-block",
-          y: 100,
+          y: yPosition,
           opacity: 0,
         },
         {
@@ -94,10 +99,18 @@ export const staggerText = (getStringElements, staggerNum = 0.1) => {
   };
   const elements = gsap.utils.toArray(getStringElements);
   elements.forEach((element) => {
-    const textArr = element.textContent
-      .split("")
-      .map((letter) => {
-        return `<span>${letter}</span>`;
+    const textArr = [...element.childNodes]
+      .map((item) => {
+        if (item.nodeType !== 3) {
+          return item.outerHTML;
+        } else {
+          return item.nodeValue
+            .split("")
+            .map((letter) => {
+              return `<span>${letter}</span>`;
+            })
+            .join("");
+        }
       })
       .join("");
     element.innerHTML = textArr;
@@ -245,4 +258,80 @@ export const parallaxElement = (getElements, type = "default") => {
   };
   const elements = gsap.utils.toArray(getElements);
   elements.forEach((element, i) => moveParallax(element, i));
+};
+
+export const IndexScript = () => {
+  const bgEffect = () => {
+    const moving = (element) => {
+      element.style.whiteSpace = "pre";
+      let randomNum =
+        Math.sign(Math.random() - 0.5) * Math.floor(Math.random() * 100);
+      console.log(randomNum);
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: element.parentElement,
+            start: "top top",
+            end: "+=1000",
+            scrub: true,
+            toggleActions: "play none none reverse",
+          },
+        })
+        .fromTo(
+          element.childNodes,
+          {
+            display: "inline-block",
+            opacity: 0,
+            x: "random(-300, 300)",
+            y: "random(-300, 300)",
+          },
+          {
+            duration: 1,
+            scale: 1,
+            opacity: 1,
+            stagger: {
+              from: "random",
+              each: 0.2,
+            },
+            x: 0,
+            y: 0,
+          }
+        );
+    };
+    const elements = gsap.utils.toArray(".bg-text");
+    elements.forEach((element) => {
+      const textArr = [...element.childNodes]
+        .map((item) => {
+          if (item.nodeType !== 3) {
+            return item.outerHTML;
+          } else {
+            return item.nodeValue
+              .split("")
+              .map((letter) => {
+                return `<span>${letter}</span>`;
+              })
+              .join("");
+          }
+        })
+        .join("");
+      element.innerHTML = textArr;
+      moving(element);
+    });
+  };
+  bgEffect();
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: ".page-intro",
+        start: "top top",
+        end: "+=1000",
+        pin: true,
+        pinSpacing: true,
+        toggleActions: "play none none reverse",
+      },
+    })
+    .to(".page-intro", {
+      y: 0,
+      opacity: 1,
+    });
 };
