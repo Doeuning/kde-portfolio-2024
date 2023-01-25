@@ -6,6 +6,9 @@ import Layout from "@layouts/Layout";
 import CleanLayout from "@layouts/CleanLayout";
 import { useRouter } from "next/router";
 import theme from "@styles/theme.js";
+import { useEffect } from "react";
+// import scrollbar from "smooth-scrollbar";
+import ErrorBoundary from "@layouts/ErrorBoundary";
 
 const layouts = {
   default: Layout,
@@ -37,15 +40,21 @@ const MyApp = ({ Component, pageProps }) => {
   //   });
   // }, [router.asPath]);
 
+  useEffect(() => {
+    // scrollbar.init(document.querySelector(".smooth-wrap"));
+  }, []);
+
   return (
-    <ThemeProvider theme={theme}>
-      <div className={mobile ? "mobile" : "pc"}>
-        <SetLayout>
-          <Component {...{ ...pageProps }} />
-          {/*history, prev */}
-        </SetLayout>
-      </div>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
+          <SetLayout>
+            <Component {...{ ...pageProps }} />
+            {/*history, prev */}
+          </SetLayout>
+        </div>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };
 

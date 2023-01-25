@@ -131,6 +131,7 @@ export const horizontalScroll = (getElements, type = "default") => {
           end: `bottom+=${scrollLeft} 50%`,
           scrub: 1,
           pin: true,
+          // pinReparent: true,
           pinSpacing: type === "background" ? false : true,
           toggleActions: "play none none reverse",
         },
@@ -264,15 +265,12 @@ export const IndexScript = () => {
   const bgEffect = () => {
     const moving = (element) => {
       element.style.whiteSpace = "pre";
-      let randomNum =
-        Math.sign(Math.random() - 0.5) * Math.floor(Math.random() * 100);
-      console.log(randomNum);
       gsap
         .timeline({
           scrollTrigger: {
             trigger: element.parentElement,
-            start: "top top",
-            end: "+=1000",
+            start: "+=1000",
+            end: "+=2000",
             scrub: true,
             toggleActions: "play none none reverse",
           },
@@ -281,40 +279,40 @@ export const IndexScript = () => {
           element.childNodes,
           {
             display: "inline-block",
-            opacity: 0,
-            x: "random(-300, 300)",
-            y: "random(-300, 300)",
+            scale: 1,
+            x: 0,
+            y: 0,
           },
           {
-            duration: 1,
-            scale: 1,
-            opacity: 1,
+            duration: 2,
+            opacity: 0,
             stagger: {
               from: "random",
               each: 0.2,
             },
-            x: 0,
-            y: 0,
+            scale: "random(2, 5)",
+            x: "random(-300, 300)",
+            y: "random(-300, 300)",
           }
         );
     };
     const elements = gsap.utils.toArray(".bg-text");
     elements.forEach((element) => {
-      const textArr = [...element.childNodes]
-        .map((item) => {
-          if (item.nodeType !== 3) {
-            return item.outerHTML;
-          } else {
-            return item.nodeValue
-              .split("")
-              .map((letter) => {
-                return `<span>${letter}</span>`;
-              })
-              .join("");
-          }
-        })
-        .join("");
-      element.innerHTML = textArr;
+      // const textArr = [...element.childNodes]
+      //   .map((item) => {
+      //     if (item.nodeType !== 3) {
+      //       return item.outerHTML;
+      //     } else {
+      //       return item.nodeValue
+      //         .split("")
+      //         .map((letter) => {
+      //           return `<span>${letter}</span>`;
+      //         })
+      //         .join("");
+      //     }
+      //   })
+      //   .join("");
+      // element.innerHTML = textArr;
       moving(element);
     });
   };
@@ -324,8 +322,9 @@ export const IndexScript = () => {
       scrollTrigger: {
         trigger: ".page-intro",
         start: "top top",
-        end: "+=1000",
+        end: "+=2000",
         pin: true,
+        // pinReparent: true,
         pinSpacing: true,
         toggleActions: "play none none reverse",
       },

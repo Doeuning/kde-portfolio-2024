@@ -25,10 +25,11 @@ const PageIntro = styled.section`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  .page-tit {
-    font-size: 60px;
-    text-align: center;
-  }
+`;
+
+const PageTitle = styled.h1`
+  font-size: 60px;
+  text-align: center;
 `;
 
 const Background = styled.section`
@@ -48,7 +49,7 @@ const Background = styled.section`
 const HelloWorld = styled.div`
   ${({ theme }) => theme.MIXINS.fontOleoScript};
   width: auto;
-  font-size: 100px;
+  font-size: 150px;
   color: lightpink;
 `;
 
@@ -61,16 +62,16 @@ function Index(props) {
   return (
     <MainWrap>
       <Background>
-        <HelloWorld className="bg-text">HELLO WORLD!</HelloWorld>
+        <HelloWorld className="stagger-text bg-text">HELLO WORLD!</HelloWorld>
       </Background>
       <PageIntro className="page-intro">
-        <h1 className="page-tit">
+        <PageTitle>
           <div className="stagger-text">
             Frontend Developer
             <br />
             Doeun Kim
           </div>
-        </h1>
+        </PageTitle>
       </PageIntro>
       <Section className="section">
         <p>사용자의 경험을 우선시합니다.</p>
