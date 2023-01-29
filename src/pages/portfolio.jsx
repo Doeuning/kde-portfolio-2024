@@ -9,7 +9,7 @@ const Tags = styled.ul`
     margin: 5px 0 0 5px;
     padding: 1px 3px;
     border-radius: 3px;
-    background: ${(p) => p.theme.gray30};
+    background: ${({ theme }) => theme.COLORS.gray30};
     color: #fff;
     font-weight: 700;
   }
@@ -53,10 +53,10 @@ const List = styled.ul`
           font-weight: 700;
           color: #fff;
           &.project {
-            background: ${(p) => p.theme.blue};
+            background: ${({ theme }) => theme.COLORS.blue};
           }
           &.maintain {
-            background: ${(p) => p.theme.green};
+            background: ${({ theme }) => theme.COLORS.green};
           }
         }
       }
@@ -65,7 +65,7 @@ const List = styled.ul`
       opacity: 1;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       background: #fff !important;
-      color: ${(p) => p.theme.gray10};
+      color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.3s;
       &:hover,
       &:focus {

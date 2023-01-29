@@ -7,11 +7,12 @@ const customMediaQuery = (maxWidth) =>
 
 const theme = {
   COLORS: {
+    white: "#fff",
+    black: "#111",
     red: "red",
     coral: "coral",
     blue: "cornflowerblue",
     green: "yellowgreen",
-    black: "#111",
     gray10: "#343a40",
     gray20: "#495057",
     gray30: "#868e96",
