@@ -36,7 +36,7 @@ export default function IndexScript() {
             },
           },
           duration: 2,
-          opacity: 0,
+          opacity: 1,
           stagger: {
             from: "random",
             each: 0.2,

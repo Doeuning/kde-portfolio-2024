@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { portfolioData } from "../datas";
+import { parallaxElement } from "@utils/scrollEvents";
 
 const Tags = styled.ul`
   display: flex;
@@ -8,25 +10,47 @@ const Tags = styled.ul`
   li {
     margin: 5px 0 0 5px;
     padding: 1px 3px;
-    border-radius: 3px;
-    background: ${({ theme }) => theme.COLORS.gray30};
-    color: #fff;
     font-weight: 700;
+    color: ${({ theme }) => theme.COLORS.gray30};
   }
 `;
 const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(310px, 1fr));
-  gap: 20px;
-  li {
+  padding: 200px 0;
+  & > li {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    position: relative;
+    min-height: 50vh;
+    flex: 0 0 auto;
+    &:nth-child(5n) {
+      left: 60%;
+      z-index: 10;
+      height: 200px;
+    }
+    &:nth-child(5n + 1) {
+      width: 600px;
+      left: 20%;
+      height: 1000px;
+    }
+    &:nth-child(5n + 2) {
+      width: 700px;
+      left: 100px;
+      height: 200px;
+    }
+    &:nth-child(5n + 3) {
+      left: 0;
+      height: 600px;
+    }
     .box {
-      display: flex;
-      flex-direction: column;
       box-sizing: border-box;
-      height: 100%;
-      border-radius: 8px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      //height: 100%;
+      width: 100%;
       padding: 20px;
-      opacity: 0.5;
+      background: #fff !important;
+      color: ${({ theme }) => theme.COLORS.gray10};
+      transition: all 0.3s;
       .tit-area {
         display: flex;
         justify-content: space-between;
@@ -60,13 +84,13 @@ const List = styled.ul`
           }
         }
       }
+      &.disabled {
+        width: 300px;
+        //margin: 0 auto;
+      }
     }
     a.box {
-      opacity: 1;
-      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-      background: #fff !important;
-      color: ${({ theme }) => theme.COLORS.gray10};
-      transition: all 0.3s;
+      display: block;
       &:hover,
       &:focus {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -103,24 +127,33 @@ function Item({ item }) {
 }
 
 function Portfolio(props) {
+  // const [speed, setSpeed] = useState(0);
+  useEffect(() => {
+    parallaxElement(".portfolio-list > li");
+  }, []);
+
   return (
-    <List>
-      {portfolioData.map((item) => {
-        return (
-          <li key={item.id}>
-            {item.url ? (
-              <Link href={item.url} target="_blank" className="box">
-                <Item item={item}></Item>
-              </Link>
-            ) : (
-              <div className="box">
-                <Item item={item}></Item>
-              </div>
-            )}
-          </li>
-        );
-      })}
-    </List>
+    <div>
+      <List className="portfolio-list">
+        {portfolioData.map((item) => {
+          const random = Math.random() * 1;
+          const speed = random.toFixed(1);
+          return (
+            <li key={item.id} data-speed={speed}>
+              {item.url ? (
+                <Link href={item.url} target="_blank" className="box">
+                  <Item item={item}></Item>
+                </Link>
+              ) : (
+                <div className="box disabled">
+                  <Item item={item}></Item>
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </List>
+    </div>
   );
 }
 

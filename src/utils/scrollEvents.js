@@ -158,7 +158,7 @@ export const parallaxElement = (getElements, type = "default") => {
         scrollTrigger: {
           scrub: 1,
         },
-        y: -ScrollTrigger.maxScroll(window) * speed,
+        y: -document.querySelector("body").scrollHeight * speed,
         ease: "none",
       });
     } else {

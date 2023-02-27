@@ -12,6 +12,7 @@
     "@welldone-software/why-did-you-render": "^7.0.1",
     "axios": "^1.2.0",
     "babel-plugin-styled-components": "^2.0.7",
+    "babel-preset-next": "^1.4.0",
     "framer-motion": "^7.6.19",
     "gsap": "^3.11.4",
     "next": "13.0.5",
