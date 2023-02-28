@@ -23,32 +23,46 @@ const List = styled.ul`
     position: relative;
     min-height: 50vh;
     flex: 0 0 auto;
-    &:nth-child(5n) {
-      left: 60%;
-      z-index: 10;
-      height: 200px;
+    width: 500px;
+    margin-right: auto;
+    margin-left: 0;
+    &:nth-child(odd) {
+      margin-right: 0;
+      margin-left: auto;
     }
-    &:nth-child(5n + 1) {
-      width: 600px;
-      left: 20%;
-      height: 1000px;
-    }
-    &:nth-child(5n + 2) {
-      width: 700px;
-      left: 100px;
-      height: 200px;
-    }
-    &:nth-child(5n + 3) {
-      left: 0;
-      height: 600px;
-    }
+    //&:nth-child(5n) {
+    //  width: 700px;
+    //  left: 60%;
+    //  z-index: 10;
+    //  height: 700px;
+    //}
+    //&:nth-child(5n + 1) {
+    //  width: 600px;
+    //  right: 0;
+    //  height: 800px;
+    //}
+    //&:nth-child(5n + 2) {
+    //  width: 700px;
+    //  left: 100px;
+    //  height: 400px;
+    //}
+    //&:nth-child(5n + 3) {
+    //  left: 20%;
+    //  width: 400px;
+    //  height: 600px;
+    //}
+    //&:nth-child(5n + 4) {
+    //  width: 500px;
+    //  right: 0;
+    //}
     .box {
       box-sizing: border-box;
-      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      //box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       //height: 100%;
       width: 100%;
+      height: 500px;
       padding: 20px;
-      background: #fff !important;
+      background: ${({ theme }) => theme.COLORS.gray90};
       color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.3s;
       .tit-area {
@@ -84,10 +98,10 @@ const List = styled.ul`
           }
         }
       }
-      &.disabled {
-        width: 300px;
-        //margin: 0 auto;
-      }
+      //&.disabled {
+      //  width: 300px;
+      //  margin: 0 auto;
+      //}
     }
     a.box {
       display: block;
@@ -129,7 +143,7 @@ function Item({ item }) {
 function Portfolio(props) {
   // const [speed, setSpeed] = useState(0);
   useEffect(() => {
-    parallaxElement(".portfolio-list > li");
+    parallaxElement(".portfolio-list .box");
   }, []);
 
   return (
@@ -139,13 +153,18 @@ function Portfolio(props) {
           const random = Math.random() * 1;
           const speed = random.toFixed(1);
           return (
-            <li key={item.id} data-speed={speed}>
+            <li key={item.id}>
               {item.url ? (
-                <Link href={item.url} target="_blank" className="box">
+                <Link
+                  href={item.url}
+                  target="_blank"
+                  className="box"
+                  data-speed={speed}
+                >
                   <Item item={item}></Item>
                 </Link>
               ) : (
-                <div className="box disabled">
+                <div className="box disabled" data-speed={speed}>
                   <Item item={item}></Item>
                 </div>
               )}
