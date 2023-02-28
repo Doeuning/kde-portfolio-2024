@@ -66,6 +66,7 @@ const List = styled.ul`
     //  right: 0;
     //}
     .box {
+      display: block;
       position: relative;
       box-sizing: border-box;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -103,6 +104,7 @@ const List = styled.ul`
         transform: translateX(-50%);
       }
       .info-box {
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -198,6 +200,8 @@ const List = styled.ul`
         //}
       }
       &.hover {
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
         .img {
           img {
             transform: scale(1.2);
@@ -219,13 +223,6 @@ const List = styled.ul`
             }
           }
         }
-      }
-    }
-    a.box {
-      display: block;
-      &.hover {
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
-          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
       }
     }
   }
@@ -295,7 +292,7 @@ function Portfolio(props) {
                 <Link
                   href={item.url}
                   target="_blank"
-                  className={`box ${boxOver && "hover"}`}
+                  className={`box${boxOver ? " hover" : ""}`}
                   data-speed={speed}
                   onMouseEnter={() => {
                     setBoxOver(true);

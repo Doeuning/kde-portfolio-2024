@@ -2,7 +2,7 @@ export const portfolioData = [
   {
     id: "groupware",
     imgUrl: "/logo-emotion.svg",
-    bgUrl: "http://www.dummyimage.com/500",
+    bgUrl: "/bg-emotion.png",
     title: "이모션 사내 그룹웨어",
     desc: "반응형 웹/모바일웹 사이트 신규 구축",
     period: "2021.11~2022.01",
