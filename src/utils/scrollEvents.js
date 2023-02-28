@@ -121,6 +121,7 @@ export const staggerText = (
 // type: default || background
 export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
+    console.log("element", type === "background");
     const scrollLeft = element.scrollWidth; // + element.offsetWidth
     const wrap = element.parentElement;
     gsap
@@ -132,7 +133,7 @@ export const horizontalScroll = (getElements, type = "default") => {
           scrub: 1,
           pin: true,
           // pinReparent: true,
-          pinSpacing: type === "background" ? false : true,
+          pinSpacing: type !== "background" ? true : false,
           toggleActions: "play none none reverse",
         },
       })

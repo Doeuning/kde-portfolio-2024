@@ -1,6 +1,8 @@
 export const portfolioData = [
   {
     id: "groupware",
+    imgUrl: "/logo-emotion.svg",
+    bgUrl: "http://www.dummyimage.com/500",
     title: "이모션 사내 그룹웨어",
     desc: "반응형 웹/모바일웹 사이트 신규 구축",
     period: "2021.11~2022.01",
@@ -10,6 +12,8 @@ export const portfolioData = [
   },
   {
     id: "ananti",
+    imgUrl: "/logo-ananti.svg",
+    bgUrl: "/bg-ananti.png",
     title: "아난티 온라인 커머스 플랫폼",
     desc: "반응형 웹/모바일웹 사이트 신규 구축",
     period: "2021.06~2021.12",
@@ -29,6 +33,8 @@ export const portfolioData = [
   },
   {
     id: "twd",
+    imgUrl: "/logo-twd.png",
+    bgUrl: "/bg-twd.png",
     title: "T World Direct Shop",
     desc: "운영 유지보수",
     period: "2021.06~2021.11",
@@ -39,6 +45,8 @@ export const portfolioData = [
   },
   {
     id: "jaju",
+    imgUrl: "/logo-jaju.svg",
+    bgUrl: "/bg-jaju.png",
     title: "JAJU",
     desc: "웹/모바일웹 쇼핑몰 사이트 신규 구축",
     period: "2020.12~2021.06",
@@ -49,6 +57,8 @@ export const portfolioData = [
   },
   {
     id: "wells",
+    imgUrl: "/logo-wells.svg",
+    bgUrl: "/bg-wells.png",
     title: "교원웰스",
     desc: "웹/모바일웹 사이트 신규 구축",
     period: "2020.06~2020.11",
@@ -59,6 +69,7 @@ export const portfolioData = [
   },
   {
     id: "toyota_compliments",
+    imgUrl: "/logo-toyota.png",
     title: "토요타",
     desc: "직원용 칭찬시스템 웹/모바일웹 사이트 신규 구축",
     period: "2019.09~2019.11",
@@ -78,6 +89,7 @@ export const portfolioData = [
   },
   {
     id: "yo_toyota",
+    imgUrl: "/logo-toyota.png",
     title: "토요타",
     desc: "고객용 하이브리드앱 신규 구축",
     period: "2018.10~2019.03",
