@@ -13,6 +13,7 @@ const theme = {
     coral: "coral",
     blue: "cornflowerblue",
     green: "yellowgreen",
+    main: "#C765E5",
     gray10: "#343a40",
     gray20: "#495057",
     gray30: "#868e96",

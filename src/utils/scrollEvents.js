@@ -121,7 +121,6 @@ export const staggerText = (
 // type: default || background
 export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
-    console.log("element", type === "background");
     const scrollLeft = element.scrollWidth; // + element.offsetWidth
     const wrap = element.parentElement;
     gsap
@@ -152,6 +151,7 @@ export const horizontalScroll = (getElements, type = "default") => {
 export const parallaxElement = (getElements, type = "default") => {
   const moveParallax = (element, i) => {
     const speed = element.dataset.speed;
+    console.log("speed", speed);
     const gap = 100;
     let moveY = element.offsetHeight * speed;
     if (type === "background") {

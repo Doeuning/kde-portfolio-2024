@@ -11,17 +11,19 @@ const BgText = styled.div`
     font-size: 150px;
     line-height: 100vh;
     white-space: nowrap;
-    color: ${({ theme }) => theme.COLORS.gray50};
+    color: ${({ theme }) => theme.COLORS.black};
+    text-transform: uppercase;
   }
 `;
 const Tags = styled.ul`
   display: flex;
-  margin: -5px 0 10px -5px;
+  margin: -10px 0 10px -10px;
   li {
-    margin: 5px 0 0 5px;
-    padding: 1px 3px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.COLORS.gray30};
+    margin: 10px 0 0 10px;
+    //padding: 1px 3px;
+    font-weight: 100;
+    font-size: 20px;
+    color: ${({ theme }) => theme.COLORS.main};
   }
 `;
 const List = styled.ul`
@@ -31,48 +33,30 @@ const List = styled.ul`
     flex-direction: column;
     align-content: center;
     position: relative;
-    min-height: 50vh;
+    min-height: 100vh;
     flex: 0 0 auto;
-    width: 500px;
+    width: 700px;
     margin-right: auto;
     margin-left: 0;
+    &.mobile {
+      width: 400px;
+      .box {
+        .info-box {
+          padding: 30px;
+        }
+      }
+    }
     &:nth-child(odd) {
       margin-right: 0;
       margin-left: auto;
     }
-    //&:nth-child(5n) {
-    //  width: 700px;
-    //  left: 60%;
-    //  z-index: 10;
-    //  height: 700px;
-    //}
-    //&:nth-child(5n + 1) {
-    //  width: 600px;
-    //  right: 0;
-    //  height: 800px;
-    //}
-    //&:nth-child(5n + 2) {
-    //  width: 700px;
-    //  left: 100px;
-    //  height: 400px;
-    //}
-    //&:nth-child(5n + 3) {
-    //  left: 20%;
-    //  width: 400px;
-    //  height: 600px;
-    //}
-    //&:nth-child(5n + 4) {
-    //  width: 500px;
-    //  right: 0;
-    //}
     .box {
       display: block;
       position: relative;
       box-sizing: border-box;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-      //height: 100%;
       width: 100%;
-      height: 500px;
+      height: 600px;
       background: ${({ theme }) => theme.COLORS.gray70};
       color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.6s;
@@ -85,7 +69,7 @@ const List = styled.ul`
           width: 100%;
           height: 100%;
           object-fit: cover;
-          object-position: right center;
+          object-position: left top;
           transition: all 0.6s;
         }
       }
@@ -114,10 +98,11 @@ const List = styled.ul`
         bottom: 0;
         left: 0;
         z-index: 10;
-        padding: 30px;
+        padding: 50px;
         //background: #fff;
         opacity: 0;
         transition: all 0.6s;
+        font-size: 20px;
         &::before {
           display: block;
           content: "";
@@ -149,38 +134,39 @@ const List = styled.ul`
         .img-hover {
           overflow: hidden;
           position: absolute;
-          top: 50px;
+          top: 100px;
           left: 100px;
-          height: calc(100% - 300px);
+          height: calc(100% - 500px);
           width: calc(100% - 100px);
           img {
             width: auto;
-            height: 100%;
+            max-height: 100%;
+            height: auto;
             transition: all 0.6s;
             transform: translateX(100%);
             object-fit: contain;
           }
         }
         .tit-area {
-          display: flex;
-          justify-content: space-between;
+          //display: flex;
+          //justify-content: space-between;
           .tit {
-            font-weight: 700;
-            font-size: 16px;
+            //font-weight: 700;
+            //font-size: 16px;
           }
           .role {
-            margin-left: 20px;
+            margin-top: 20px;
           }
         }
         .desc {
           margin: 10px 0;
-          font-size: 14px;
+          //font-size: 14px;
         }
         .info {
           display: flex;
           justify-content: space-between;
           margin-top: 10px;
-          font-size: 14px;
+          //font-size: 14px;
           .type {
             border-radius: 5px;
             padding: 2px 5px;
@@ -233,21 +219,28 @@ function Item({ item }) {
     <>
       {item.bgUrl && (
         <div className="img">
-          <Image src={item.bgUrl} fill />
+          <Image src={item.bgUrl} fill alt={item.title} />
         </div>
       )}
       <h2 className="tit-h2">{item.title}</h2>
       <div className="info-box">
         {item.imgUrl && (
           <div className="img-hover">
-            <Image src={item.imgUrl} fill />
+            <Image
+              src={item.imgUrl}
+              fill
+              sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+              alt={item.title}
+            />
           </div>
         )}
         <div className="tit-area">
-          <div className="tit">{item.title}</div>
-          <div className="role">{item.role}</div>
+          <div className="tit">{item.desc}</div>
+          <div className="role">역할 : {item.role}</div>
         </div>
-        <div className="desc">{item.desc}</div>
+        {/*<div className="desc">{item.desc}</div>*/}
         {item.tags && (
           <Tags>
             {item.tags.map((tag) => (
@@ -268,7 +261,13 @@ function Item({ item }) {
 }
 
 function Portfolio(props) {
+  let speedArr = [];
   useEffect(() => {
+    for (let i = 0; i < portfolioData.length; i++) {
+      const random = Math.random() * 1;
+      const speed = random.toFixed(1);
+      speedArr.push(speed);
+    }
     horizontalScroll(".horizontal-txt .txt", "background");
     parallaxElement(".portfolio-list .box");
   }, []);
@@ -282,18 +281,16 @@ function Portfolio(props) {
         </div>
       </BgText>
       <List className="portfolio-list">
-        {portfolioData.map((item) => {
-          const random = Math.random() * 1;
-          const speed = random.toFixed(1);
+        {portfolioData.map((item, i) => {
           const [boxOver, setBoxOver] = useState(false);
           return (
-            <li key={item.id}>
+            <li key={item.id} className={item.isMobile ? "mobile" : ""}>
               {item.url ? (
                 <Link
                   href={item.url}
                   target="_blank"
-                  className={`box${boxOver ? " hover" : ""}`}
-                  data-speed={speed}
+                  className={`box${boxOver === true ? " hover" : ""}`}
+                  data-speed={speedArr[i]}
                   onMouseEnter={() => {
                     setBoxOver(true);
                   }}
@@ -308,7 +305,7 @@ function Portfolio(props) {
               ) : (
                 <div
                   className={`box ${boxOver && "hover"}`}
-                  data-speed={speed}
+                  data-speed={speedArr[i]}
                   onMouseEnter={() => {
                     setBoxOver(true);
                   }}
@@ -326,5 +323,7 @@ function Portfolio(props) {
     </div>
   );
 }
+
+Portfolio.bgColor = "#ededed";
 
 export default Portfolio;

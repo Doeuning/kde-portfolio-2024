@@ -9,7 +9,7 @@ export default function IndexScript() {
 
   const bgEffect = () => {
     const moving = (element) => {
-      console.log(element.childNodes);
+      // console.log(element.childNodes);
       element.childNodes.forEach((el) => {
         el.style.whiteSpace = "pre";
         el.style.display = "inline-block";
@@ -32,7 +32,7 @@ export default function IndexScript() {
             scrub: 1,
             toggleActions: "play none none reverse",
             onToggle: () => {
-              console.log("in");
+              // console.log("in");
             },
           },
           duration: 2,

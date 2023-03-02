@@ -15,10 +15,44 @@ const Button = styled.button`
   background: #000;
   color: #fff;
   transition: all 0.3s;
+  &::before {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 30px;
+    height: 5px;
+    background: #fff;
+    transition: all 0.3s;
+    transform-origin: center center;
+  }
+  &::after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    width: 30px;
+    height: 5px;
+    background: #fff;
+    transition: all 0.3s;
+    transform-origin: center center;
+  }
   .is-open & {
     background: #fff;
     color: #000;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    &::before {
+      margin-top: 5px;
+      transform: rotate(45deg);
+      background: #000;
+    }
+    &::after {
+      margin-top: -10px;
+      transform: rotate(-45deg);
+      background: #000;
+    }
   }
 `;
 
@@ -96,23 +130,21 @@ function HeaderWrap(props) {
   return (
     <Header className={`header ${open && "is-open"}`}>
       <Inner>
-        <Button type="button" onClick={handleClick}>
-          열어라
-        </Button>
+        <Button type="button" onClick={handleClick}></Button>
         <Gnb className="gnb">
-          <Link href="/aboutme" scroll={false}>
+          <Link href="/aboutme">
             <StyledLink>About me</StyledLink>
           </Link>
-          <Link href="/portfolio" scroll={false}>
+          <Link href="/portfolio">
             <StyledLink>Portfolio</StyledLink>
           </Link>
-          <Link href="/skills" scroll={false}>
+          <Link href="/skills">
             <StyledLink>Skills</StyledLink>
           </Link>
-          <Link href="/contact" scroll={false}>
+          <Link href="/contact">
             <StyledLink>Contact</StyledLink>
           </Link>
-          <Link href="/demo" scroll={false}>
+          <Link href="/demo">
             <StyledLink>Scroll Event Demo</StyledLink>
           </Link>
         </Gnb>

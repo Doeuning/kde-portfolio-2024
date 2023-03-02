@@ -19,6 +19,7 @@ const MyApp = ({ Component, pageProps }) => {
   const mobile = usDetectDevice();
   // console.log(mobile);
   const SetLayout = layouts[Component.layout] || layouts["default"];
+  const SetBgColor = Component.bgColor || "#fff";
 
   const router = useRouter();
 
@@ -42,13 +43,15 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     // scrollbar.init(document.querySelector(".smooth-wrap"));
-  }, []);
+    console.log(router);
+    window.scrollTo(0, 0);
+  }, [router]);
 
   return (
     <ErrorBoundary>
       <ThemeProvider theme={theme}>
         <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
-          <SetLayout>
+          <SetLayout bgColor={SetBgColor}>
             <Component {...{ ...pageProps }} />
             {/*history, prev */}
           </SetLayout>

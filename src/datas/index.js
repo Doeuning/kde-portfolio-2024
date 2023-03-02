@@ -4,8 +4,8 @@ export const portfolioData = [
     imgUrl: "/logo-emotion.svg",
     bgUrl: "/bg-emotion.png",
     title: "이모션 사내 그룹웨어",
-    desc: "반응형 웹/모바일웹 사이트 신규 구축",
-    period: "2021.11~2022.01",
+    desc: "반응형 웹사이트 신규 구축",
+    period: "2021.11~2022.03",
     type: "project",
     role: "PA",
     tags: ["React", "Next.js", "Styled Component", "Axios"],
@@ -15,7 +15,7 @@ export const portfolioData = [
     imgUrl: "/logo-ananti.svg",
     bgUrl: "/bg-ananti.png",
     title: "아난티 온라인 커머스 플랫폼",
-    desc: "반응형 웹/모바일웹 사이트 신규 구축",
+    desc: "반응형 웹사이트 신규 구축",
     period: "2021.06~2021.12",
     url: "https://eternaljourney.ananti.kr/index",
     type: "project",
@@ -24,6 +24,7 @@ export const portfolioData = [
   },
   {
     id: "hanafind",
+    isMobile: true,
     title: "하나금융 파트너 인슈어테크 플랫폼",
     desc: "적응형 앱/웹/모바일웹 신규 구축",
     period: "2021.11~2022.05",
@@ -79,6 +80,9 @@ export const portfolioData = [
   },
   {
     id: "gc_imed",
+    isMobile: true,
+    imgUrl: "/logo-gcimed.png",
+    bgUrl: "/bg-gcimed.png",
     title: "GC IMED",
     desc: "모바일 웹 사이트 신규 구축",
     period: "2019.04~2019.08",
@@ -89,7 +93,9 @@ export const portfolioData = [
   },
   {
     id: "yo_toyota",
+    isMobile: true,
     imgUrl: "/logo-toyota.png",
+    bgUrl: "/bg-yotoyota.png",
     title: "토요타",
     desc: "고객용 하이브리드앱 신규 구축",
     period: "2018.10~2019.03",
@@ -100,6 +106,8 @@ export const portfolioData = [
   },
   {
     id: "golping",
+    imgUrl: "/logo-golping.png",
+    bgUrl: "/bg-golping.png",
     title: "골핑",
     desc: "웹/모바일웹 유지보수, 10주년 기념 이벤트 / 블랙골프데이 이벤트 / 신규 및 기존 이벤트 / 모바일 푸시기획전 등 퍼블리싱",
     period: "2018.01~2018.12",
@@ -110,6 +118,8 @@ export const portfolioData = [
   },
   {
     id: "jaseng",
+    imgUrl: "/logo-jasaeng.svg",
+    bgUrl: "/bg-jasaeng.png",
     title: "자생 한방병원",
     desc: "웹/모바일웹 유지보수, 메인 (Web/Mobile) 리뉴얼 / 레이아웃 리뉴얼 / 내 질환의 모든 것 카테고리 페이지 리뉴얼",
     period: "2018.01~2018.12",
@@ -119,7 +129,8 @@ export const portfolioData = [
     tags: ["jQuery"],
   },
   {
-    id: "gc_ballance",
+    id: "gc_balance",
+    imgUrl: "/logo-gc.png",
     title: "GC밸런스 심리상담센터",
     desc: "웹/모바일웹 사이트 신규 구축",
     period: "2018.08~2018.10",
@@ -129,6 +140,8 @@ export const portfolioData = [
   },
   {
     id: "snsys",
+    imgUrl: "/logo-snsys.png",
+    bgUrl: "/bg-snsys.png",
     title: "삼성기전",
     desc: "웹 사이트 신규 구축",
     period: "2018.07~2018.08",
@@ -139,6 +152,8 @@ export const portfolioData = [
   },
   {
     id: "sangsangin",
+    imgUrl: "/logo-sangsangin.png",
+    bgUrl: "/bg-sangsangin.png",
     title: "상상인 저축은행",
     desc: "웹 사이트 신규 구축",
     period: "2018.04~2018.07",
@@ -157,6 +172,8 @@ export const portfolioData = [
   },
   {
     id: "golfzon",
+    imgUrl: "/logo-golfzon.png",
+    bgUrl: "/bg-golfzon.png",
     title: "골프존 통합멤버십",
     desc: "웹 사이트 신규 구축",
     period: "2018.03~2018.04",
@@ -167,6 +184,8 @@ export const portfolioData = [
   },
   {
     id: "jawsfood",
+    imgUrl: "/logo-jaws.png",
+    bgUrl: "/bg-jaws.png",
     title: "죠스떡볶이",
     desc: "브랜드, 프랜차이즈 웹/모바일웹 사이트 신규 구축",
     period: "2017.12~2018.02",
@@ -177,6 +196,8 @@ export const portfolioData = [
   },
   {
     id: "dreamline",
+    imgUrl: "/logo-dreamline.png",
+    bgUrl: "/bg-dreamline.png",
     title: "드림라인",
     desc: "웹 사이트 신규 구축",
     period: "2017.07~2017.07",

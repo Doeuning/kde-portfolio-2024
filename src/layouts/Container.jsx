@@ -1,13 +1,10 @@
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 
 const Wrap = styled.div`
-  // position: absolute;
   width: 100%;
   min-height: 100vh;
-  // background: ${({ theme }) => theme.COLOR.gray80};
+  background: ${(props) => props.bgColor};
 `;
 
 const Inner = styled.div`
@@ -45,7 +42,7 @@ const variants = {
     },
   },
 };
-function Container({ children }) {
+function Container({ bgColor, children }) {
   // const router = useRouter();
   // const history = children.props.history;
   // const prev = children.props.prev;
@@ -60,6 +57,7 @@ function Container({ children }) {
   //         initial: "next",
   //         exit: "prev",
   //       };
+  console.log(bgColor);
   return (
     <AnimatePresence initial={false}>
       <motion.div
@@ -68,7 +66,7 @@ function Container({ children }) {
       // animate="in"
       // {...direction}
       >
-        <Wrap>
+        <Wrap bgColor={bgColor}>
           <Inner>{children}</Inner>
         </Wrap>
       </motion.div>

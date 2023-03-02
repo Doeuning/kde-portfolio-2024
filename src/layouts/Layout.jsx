@@ -8,11 +8,11 @@ const Layout = styled.div`
   min-height: 100vh;
 `;
 
-export default function Index({ children }) {
+export default function Index({ children, bgColor }) {
   return (
     <Layout>
       <Header />
-      <Container>{children}</Container>
+      <Container bgColor={bgColor}>{children}</Container>
     </Layout>
   );
 }
