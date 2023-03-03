@@ -43,7 +43,6 @@ const MyApp = ({ Component, pageProps }) => {
 
   useEffect(() => {
     // scrollbar.init(document.querySelector(".smooth-wrap"));
-    console.log(router);
     window.scrollTo(0, 0);
   }, [router]);
 

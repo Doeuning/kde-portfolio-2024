@@ -15,6 +15,7 @@
     "babel-preset-next": "^1.4.0",
     "framer-motion": "^7.6.19",
     "gsap": "^3.11.4",
+    "http-proxy-middleware": "^2.0.6",
     "next": "13.0.5",
     "prettier": "^2.8.0",
     "prop-types": "^15.8.1",

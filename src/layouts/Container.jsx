@@ -57,7 +57,6 @@ function Container({ bgColor, children }) {
   //         initial: "next",
   //         exit: "prev",
   //       };
-  console.log(bgColor);
   return (
     <AnimatePresence initial={false}>
       <motion.div
