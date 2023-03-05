@@ -219,7 +219,7 @@ function Item({ item }) {
     <>
       {item.bgUrl && (
         <div className="img">
-          <Image src={item.bgUrl} fill alt={item.title} loading="lazy" />
+          <Image src={item.bgUrl} fill alt={item.title} />
         </div>
       )}
       <h2 className="tit-h2">{item.title}</h2>
@@ -233,7 +233,6 @@ function Item({ item }) {
               (max-width: 1200px) 50vw,
               33vw"
               alt={item.title}
-              loading="lazy"
             />
           </div>
         )}

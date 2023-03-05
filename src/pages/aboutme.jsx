@@ -1,36 +1,32 @@
-import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import useFetch from "../hooks/useFetch";
+import Wave from "@components/Wave";
+import { useEffect } from "react";
 
 function Aboutme(props) {
-  const { data, error, loading } = useFetch(`/daumcafe/popular/article`);
-  const [url, setUrl] = useState("");
-  const getData = async () => {
-    try {
-      const ranks = data.articles.find(
-        (el, i) => el.cafeName === "＊여성시대＊ 차분한 20대들의 알흠다운 공간"
-      );
-      setUrl(ranks.readUrl);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const go = (getUrl) => {
-    window.open(getUrl, "_blank");
-  };
   useEffect(() => {
-    if (!loading && !error && data) {
-      getData();
-    }
-  }, [data, error, loading]);
-  useEffect(() => {
-    if (typeof window !== "undefined" && url !== "") {
-      go(url);
-    }
-  }, [url]);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    document.body.appendChild(canvas);
 
-  return <div></div>;
+    window.addEventListener("resize", resize, false);
+
+    const stageWidth = document.body.clientWidth;
+    const stageHeight = document.body.clientHeight;
+    const resize = () => {
+      ctx.width = stageWidth * 2;
+      ctx.height = stageHeight * 2;
+      ctx.scale(2, 2);
+    };
+
+    const animate = (t) => {
+      ctx.clearRect(0, 0, stageWidth, stageHeight);
+      requestAnimationFrame(animate);
+    };
+  }, []);
+  return (
+    <div>
+      <Wave></Wave>
+    </div>
+  );
 }
 
 export default Aboutme;

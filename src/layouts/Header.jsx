@@ -130,20 +130,22 @@ function HeaderWrap() {
     const target = e.target;
 
     target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
-    gsap.to(e.currentTarget, {
-      x: diffX,
-      y: diffY,
-      duration: 1,
-      scale: 2,
-      ease: "Expo.easeOut",
-    });
+    if (mousePos.x !== 0 && mousePos.y !== 0) {
+      gsap.to(e.currentTarget, {
+        x: diffX * 2,
+        y: diffY * 2,
+        duration: 2,
+        scale: 2,
+        ease: "Expo.easeOut",
+      });
+    }
     setMousePos({ x: e.clientX, y: e.clientY });
   };
   const handleLeave = (e) => {
     gsap.to(e.currentTarget, {
       x: 0,
       y: 0,
-      duration: 1,
+      duration: 2,
       scale: 1,
       ease: "Expo.easeOut",
     });
