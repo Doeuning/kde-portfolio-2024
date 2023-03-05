@@ -132,8 +132,8 @@ function HeaderWrap() {
     target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
     if (mousePos.x !== 0 && mousePos.y !== 0) {
       gsap.to(e.currentTarget, {
-        x: diffX * 2,
-        y: diffY * 2,
+        x: diffX * 10,
+        y: diffY * 5,
         duration: 2,
         scale: 2,
         ease: "Expo.easeOut",
