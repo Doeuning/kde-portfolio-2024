@@ -225,3 +225,37 @@ export const portfolioData = [
     tags: ["jQuery"],
   },
 ];
+
+export const gnbMenu = [
+  {
+    url: "/aboutme",
+    title: "About Me",
+  },
+  {
+    url: "/portfolio",
+    title: "Portfolio",
+  },
+  {
+    url: "/skills",
+    title: "Skills",
+  },
+  {
+    url: "/contact",
+    title: "Contact",
+  },
+  {
+    url: "/demo",
+    title: "Scroll Event Demo",
+  },
+];
+
+export const sns = [
+  {
+    type: "velog",
+    url: "https://velog.io/@erun",
+  },
+  {
+    type: "github",
+    url: "https://github.com/Doeuning",
+  },
+];

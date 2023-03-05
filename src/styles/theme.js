@@ -35,7 +35,7 @@ const theme = {
       font-family: "Raleway", sans-serif;
     `,
     fontOleoScript: css`
-      font-family: "Oleo Script", sans-serif;
+      font-family: "Oleo Script Swash Caps", cursive;
     `,
     clearFix: css`
       &:after {

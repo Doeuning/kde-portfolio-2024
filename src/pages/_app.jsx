@@ -9,6 +9,7 @@ import theme from "@styles/theme.js";
 import { useEffect } from "react";
 // import scrollbar from "smooth-scrollbar";
 import ErrorBoundary from "@layouts/ErrorBoundary";
+import { AnimateSharedLayout, motion } from "framer-motion";
 
 const layouts = {
   default: Layout,
@@ -48,14 +49,23 @@ const MyApp = ({ Component, pageProps }) => {
 
   return (
     <ErrorBoundary>
-      <ThemeProvider theme={theme}>
-        <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
-          <SetLayout bgColor={SetBgColor}>
-            <Component {...{ ...pageProps }} />
-            {/*history, prev */}
-          </SetLayout>
-        </div>
-      </ThemeProvider>
+      <AnimateSharedLayout>
+        <ThemeProvider theme={theme}>
+          <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
+            <SetLayout bgColor={SetBgColor}>
+              <motion.div
+                key={router.route}
+                initial={{ opacity: 0, y: "100px" }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: "-100px" }}
+              >
+                <Component {...{ ...pageProps }} />
+                {/*history, prev */}
+              </motion.div>
+            </SetLayout>
+          </div>
+        </ThemeProvider>
+      </AnimateSharedLayout>
     </ErrorBoundary>
   );
 };

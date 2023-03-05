@@ -1,10 +1,10 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { MdHome } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { gsap } from "gsap/dist/gsap";
 import { staggerElement } from "@utils/scrollEvents";
+import { gnbMenu } from "../datas";
 
 const Button = styled.button`
   display: block;
@@ -42,7 +42,7 @@ const Button = styled.button`
   .is-open & {
     background: #fff;
     color: #000;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     &::before {
       margin-top: 5px;
       transform: rotate(45deg);
@@ -78,10 +78,6 @@ const Inner = styled.div`
 `;
 
 const Gnb = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
   position: fixed;
   top: 0;
   right: 0;
@@ -90,29 +86,75 @@ const Gnb = styled.div`
   z-index: 900;
   background: #000;
   transform: translate3d(0, -100%, 0);
+  .inner {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-end;
+    box-sizing: border-box;
+    max-width: 1200px;
+    padding: 0 20px;
+    height: 100%;
+    margin: 0 auto;
+    a {
+      flex: 0 0 auto;
+      display: inline-block;
+    }
+  }
 `;
 
 const StyledLink = styled.span`
-  display: block;
-  max-width: 1200px;
+  display: inline-block;
+  position: relative;
   margin: 0 auto;
   padding: 20px;
+  ${({ theme }) => theme.MIXINS.fontRaleway};
+  font-weight: 700;
   font-size: 30px;
 `;
 
-function HeaderWrap(props) {
+function HeaderWrap() {
   const [open, setOpen] = useState(false);
+  const [mousePos, setMousePos] = useState({
+    x: 0,
+    y: 0,
+  });
   const handleClick = () => {
     setOpen((prevState) => !prevState);
   };
   const router = useRouter();
+  const handleMove = (e) => {
+    const diffX = e.clientX - mousePos.x;
+    const diffY = e.clientY - mousePos.y;
+    const target = e.target;
+
+    target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
+    gsap.to(e.currentTarget, {
+      x: diffX,
+      y: diffY,
+      duration: 1,
+      scale: 2,
+      ease: "Expo.easeOut",
+    });
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+  const handleLeave = (e) => {
+    gsap.to(e.currentTarget, {
+      x: 0,
+      y: 0,
+      duration: 1,
+      scale: 1,
+      ease: "Expo.easeOut",
+    });
+  };
   useEffect(() => {
     if (open) {
       gsap.to(".gnb", {
         y: 0,
         ease: "Expo.easeOut",
         onStart: () => {
-          staggerElement(".gnb");
+          staggerElement(".gnb .inner");
         },
       });
     } else {
@@ -132,21 +174,20 @@ function HeaderWrap(props) {
       <Inner>
         <Button type="button" onClick={handleClick}></Button>
         <Gnb className="gnb">
-          <Link href="/aboutme">
-            <StyledLink>About me</StyledLink>
-          </Link>
-          <Link href="/portfolio">
-            <StyledLink>Portfolio</StyledLink>
-          </Link>
-          <Link href="/skills">
-            <StyledLink>Skills</StyledLink>
-          </Link>
-          <Link href="/contact">
-            <StyledLink>Contact</StyledLink>
-          </Link>
-          <Link href="/demo">
-            <StyledLink>Scroll Event Demo</StyledLink>
-          </Link>
+          <div className="inner">
+            {gnbMenu.map((item) => {
+              return (
+                <Link
+                  href={item.url}
+                  onMouseMove={handleMove}
+                  onMouseLeave={handleLeave}
+                  key={item.url}
+                >
+                  <StyledLink>{item.title}</StyledLink>
+                </Link>
+              );
+            })}
+          </div>
         </Gnb>
       </Inner>
     </Header>
