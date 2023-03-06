@@ -25,6 +25,8 @@ export const portfolioData = [
   {
     id: "hanafind",
     isMobile: true,
+    imgUrl: "/logo-fingle.png",
+    bgUrl: "/bg-fingle.png",
     title: "하나금융 파트너 인슈어테크 플랫폼",
     desc: "적응형 앱/웹/모바일웹 신규 구축",
     period: "2021.11~2022.05",
