@@ -116,6 +116,7 @@ const StyledLink = styled.span`
 
 function HeaderWrap() {
   const [open, setOpen] = useState(false);
+  const [menu, setMenu] = useState(null);
   const [mousePos, setMousePos] = useState({
     x: 0,
     y: 0,
@@ -170,29 +171,34 @@ function HeaderWrap() {
   useEffect(() => {
     setOpen(false);
   }, [router]);
+  useEffect(() => {
+    setMenu(gnbMenu);
+  }, []);
 
   return (
-    <Header className={`header ${open && "is-open"}`}>
-      <Inner>
-        <Button type="button" onClick={handleClick}></Button>
-        <Gnb className="gnb">
-          <div className="inner">
-            {gnbMenu.map((item) => {
-              return (
-                <Link
-                  href={item.url}
-                  onMouseMove={handleMove}
-                  onMouseLeave={handleLeave}
-                  key={item.url}
-                >
-                  <StyledLink>{item.title}</StyledLink>
-                </Link>
-              );
-            })}
-          </div>
-        </Gnb>
-      </Inner>
-    </Header>
+    menu && (
+      <Header className={`header ${open && "is-open"}`}>
+        <Inner>
+          <Button type="button" onClick={handleClick}></Button>
+          <Gnb className="gnb">
+            <div className="inner">
+              {menu.map((item) => {
+                return (
+                  <Link
+                    href={item.url}
+                    onMouseMove={handleMove}
+                    onMouseLeave={handleLeave}
+                    key={item.url}
+                  >
+                    <StyledLink>{item.title}</StyledLink>
+                  </Link>
+                );
+              })}
+            </div>
+          </Gnb>
+        </Inner>
+      </Header>
+    )
   );
 }
 

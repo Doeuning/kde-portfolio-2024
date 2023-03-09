@@ -336,6 +336,7 @@ function Item({ item }) {
 }
 
 function Portfolio(props) {
+  const [data, setData] = useState(null);
   const [viewListType, setViewListType] = useState(true);
   let speedArr = [];
   const changeType = () => {
@@ -354,103 +355,110 @@ function Portfolio(props) {
   useEffect(() => {
     viewAction();
   }, [viewListType]);
+  useEffect(() => {
+    setData(portfolioData);
+  }, []);
 
   return (
-    <div>
-      <TypeBtn className={viewListType && "on"} onClick={changeType}>
-        {viewListType ? "목록으로 보기" : "이미지로 보기"}
-      </TypeBtn>
-      <motion.div
-        key={viewListType}
-        initial={{ opacity: 0, y: "100px" }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: "-100px" }}
-      >
-        {viewListType ? (
-          <div>
-            <BgText className="horizontal-txt">
-              <div className="txt">
-                Success doesn’t come from what you do occasionally, but what you
-                do consistently.
-              </div>
-            </BgText>
-            <List className="portfolio-list">
-              {portfolioData.map((item, i) => {
-                return (
-                  <li key={item.id} className={item.isMobile ? "mobile" : ""}>
-                    {item.url ? (
-                      <Link
-                        href={item.url}
-                        target="_blank"
-                        data-speed={speedArr[i]}
-                      >
-                        <Item item={item}></Item>
-                      </Link>
-                    ) : (
-                      <div data-speed={speedArr[i]}>
-                        <Item item={item}></Item>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </List>
-          </div>
-        ) : (
-          <Table>
-            <colgroup>
-              <col style={{ width: "12%" }} />
-              <col style={{ width: "8%" }} />
-              <col style={{ width: "12%" }} />
-              <col style={{ width: "8%" }} />
-              <col style={{ width: "auto" }} />
-              <col style={{ width: "20%" }} />
-              <col style={{ width: "0" }} />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>투입 기간</th>
-                <th>타입</th>
-                <th>프로젝트명</th>
-                <th>역할</th>
-                <th>설명</th>
-                <th>사용 기술</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {portfolioData.map((item, i) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{item.period}</td>
-                    <td>{item.type === "project" ? "프로젝트" : "유지보수"}</td>
-                    <td>{item.title}</td>
-                    <td>{item.role}</td>
-                    <td className="desc">{item.desc}</td>
-                    <td>
-                      {item.tags.map((el, i) => {
-                        if (i >= item.tags.length - 1) {
-                          return el;
-                        } else {
-                          return el + ", ";
-                        }
-                      })}
-                    </td>
-                    {item.url ? (
+    data && (
+      <div>
+        <TypeBtn className={viewListType && "on"} onClick={changeType}>
+          {viewListType ? "목록으로 보기" : "이미지로 보기"}
+        </TypeBtn>
+        <motion.div
+          key={viewListType}
+          initial={{ opacity: 0, y: "100px" }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: "-100px" }}
+        >
+          {viewListType ? (
+            <div>
+              <BgText className="horizontal-txt">
+                <div className="txt">
+                  Success doesn’t come from what you do occasionally, but what
+                  you do consistently.
+                </div>
+              </BgText>
+              <List className="portfolio-list">
+                {data.map((item, i) => {
+                  return (
+                    <li key={item.id} className={item.isMobile ? "mobile" : ""}>
+                      {item.url ? (
+                        <Link
+                          href={item.url}
+                          target="_blank"
+                          data-speed={speedArr[i]}
+                        >
+                          <Item item={item}></Item>
+                        </Link>
+                      ) : (
+                        <div data-speed={speedArr[i]}>
+                          <Item item={item}></Item>
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </List>
+            </div>
+          ) : (
+            <Table>
+              <colgroup>
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "8%" }} />
+                <col style={{ width: "12%" }} />
+                <col style={{ width: "8%" }} />
+                <col style={{ width: "auto" }} />
+                <col style={{ width: "20%" }} />
+                <col style={{ width: "0" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>투입 기간</th>
+                  <th>타입</th>
+                  <th>프로젝트명</th>
+                  <th>역할</th>
+                  <th>설명</th>
+                  <th>사용 기술</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={item.id}>
+                      <td>{item.period}</td>
                       <td>
-                        <Link href={item.url} target="_blank"></Link>
+                        {item.type === "project" ? "프로젝트" : "유지보수"}
                       </td>
-                    ) : (
-                      <td></td>
-                    )}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        )}
-      </motion.div>
-    </div>
+                      <td>{item.title}</td>
+                      <td>{item.role}</td>
+                      <td className="desc">{item.desc}</td>
+                      <td>
+                        {item.tags.map((el, i) => {
+                          if (i >= item.tags.length - 1) {
+                            return el;
+                          } else {
+                            return el + ", ";
+                          }
+                        })}
+                      </td>
+                      {item.url ? (
+                        <td>
+                          <Link href={item.url} target="_blank"></Link>
+                        </td>
+                      ) : (
+                        <td></td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </motion.div>
+      </div>
+    )
   );
 }
 
