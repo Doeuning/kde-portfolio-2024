@@ -2,19 +2,26 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { portfolioData } from "../datas";
+import { motion } from "framer-motion";
 import { parallaxElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 
 const TypeBtn = styled.button`
   position: fixed;
-  top: 100px;
-  right: 0;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-730px);
   z-index: 10000000;
-  width: 100px;
-  height: 40px;
-  background: coral;
-  &.on {
-    background: blueviolet;
+  width: 130px;
+  padding: 10px 20px;
+  background: #000;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  transition: all 0.3s;
+  ${({ theme }) => theme.MIXINS.boxShadow};
+  &:hover {
+    background: ${({ theme }) => theme.COLORS.gray20};
   }
 `;
 const BgText = styled.div`
@@ -38,14 +45,53 @@ const Tags = styled.ul`
     color: ${({ theme }) => theme.COLORS.main};
   }
 `;
+
+const Table = styled.table`
+  padding: 150px 0;
+  tr {
+    position: relative;
+  }
+  th {
+    border-top: 1px solid ${({ theme }) => theme.COLORS.gray10};
+    padding: 20px 10px;
+    font-weight: 700;
+    font-size: 14px;
+    background: ${({ theme }) => theme.COLORS.gray70};
+  }
+  td {
+    position: static;
+    border-top: 1px solid ${({ theme }) => theme.COLORS.gray50};
+    padding: 20px 10px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    a {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: all 0.3s;
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
+    &.desc {
+      text-align: left;
+    }
+    .thumb {
+      ${({ theme }) => theme.MIXINS.boxShadow};
+      position: absolute;
+      width: 300px;
+      height: 200px;
+      z-index: 100;
+      font-size: 0;
+    }
+  }
+`;
 const List = styled.ul`
   padding: 50vh 0;
   & > li {
-    margin-top: 20px;
-    border-top: 1px solid color: ${({ theme }) => theme.COLORS.gray30};
-    padding-top: 20px;
-  }
-  &:not(.view-type) > li {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -77,6 +123,15 @@ const List = styled.ul`
       background: ${({ theme }) => theme.COLORS.gray70};
       color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.6s;
+      .dummyBg {
+        display: block;
+        height: 100%;
+        ${({ theme }) => theme.MIXINS.fontRaleway};
+        font-size: 600px;
+        line-height: 100%;
+        text-align: center;
+        color: ${({ theme }) => theme.COLORS.gray60};
+      }
       .img {
         overflow: hidden;
         position: relative;
@@ -165,12 +220,6 @@ const List = styled.ul`
           }
         }
         .tit-area {
-          //display: flex;
-          //justify-content: space-between;
-          .tit {
-            //font-weight: 700;
-            //font-size: 16px;
-          }
           .role {
             margin-top: 20px;
           }
@@ -197,10 +246,6 @@ const List = styled.ul`
             }
           }
         }
-        //&.disabled {
-        //  width: 300px;
-        //  margin: 0 auto;
-        //}
       }
       &.hover {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -232,12 +277,25 @@ const List = styled.ul`
 `;
 
 function Item({ item }) {
+  const [boxOver, setBoxOver] = useState(false);
   return (
-    <>
-      {item.bgUrl && (
+    <div
+      className={`box ${boxOver && "hover"}`}
+      onMouseEnter={() => {
+        setBoxOver(true);
+      }}
+      onMouseLeave={() => {
+        setTimeout(() => {
+          setBoxOver(false);
+        }, 500);
+      }}
+    >
+      {item.bgUrl ? (
         <div className="img">
           <Image src={item.bgUrl} fill alt={item.title} />
         </div>
+      ) : (
+        <div className="dummyBg">?</div>
       )}
       <h2 className="tit-h2">{item.title}</h2>
       <div className="info-box">
@@ -273,13 +331,17 @@ function Item({ item }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
 function Portfolio(props) {
-  const [listType, setListType] = useState(false);
+  const [viewListType, setViewListType] = useState(true);
   let speedArr = [];
+  const changeType = () => {
+    setViewListType((prevState) => !prevState);
+    window.scrollTo(0, 0);
+  };
   const viewAction = () => {
     for (let i = 0; i < portfolioData.length; i++) {
       const random = Math.random() * 1;
@@ -291,66 +353,107 @@ function Portfolio(props) {
   };
   useEffect(() => {
     viewAction();
-  }, [listType]);
+  }, [viewListType]);
 
   return (
     <div>
-      <TypeBtn
-        className={listType && "on"}
-        onClick={() => {
-          setListType((prevState) => !prevState);
-        }}
-      ></TypeBtn>
-      <BgText className="horizontal-txt">
-        <div className="txt">
-          Success doesn’t come from what you do occasionally, but what you do
-          consistently.
-        </div>
-      </BgText>
-      <List className={`portfolio-list ${!listType && "view-type"}`}>
-        {portfolioData.map((item, i) => {
-          const [boxOver, setBoxOver] = useState(false);
-          return (
-            <li key={item.id} className={item.isMobile ? "mobile" : ""}>
-              {item.url ? (
-                <Link
-                  href={item.url}
-                  target="_blank"
-                  className={`box${boxOver === true ? " hover" : ""}`}
-                  data-speed={speedArr[i]}
-                  onMouseEnter={() => {
-                    setBoxOver(true);
-                  }}
-                  onMouseLeave={() => {
-                    setTimeout(() => {
-                      setBoxOver(false);
-                    }, 500);
-                  }}
-                >
-                  <Item item={item}></Item>
-                </Link>
-              ) : (
-                <div
-                  className={`box ${boxOver && "hover"}`}
-                  data-speed={speedArr[i]}
-                  onMouseEnter={() => {
-                    setBoxOver(true);
-                  }}
-                  onMouseLeave={() => {
-                    setBoxOver(false);
-                  }}
-                >
-                  <Item item={item}></Item>
-                </div>
-              )}
-            </li>
-          );
-        })}
-      </List>
+      <TypeBtn className={viewListType && "on"} onClick={changeType}>
+        {viewListType ? "목록으로 보기" : "이미지로 보기"}
+      </TypeBtn>
+      <motion.div
+        key={viewListType}
+        initial={{ opacity: 0, y: "100px" }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: "-100px" }}
+      >
+        {viewListType ? (
+          <div>
+            <BgText className="horizontal-txt">
+              <div className="txt">
+                Success doesn’t come from what you do occasionally, but what you
+                do consistently.
+              </div>
+            </BgText>
+            <List className="portfolio-list">
+              {portfolioData.map((item, i) => {
+                return (
+                  <li key={item.id} className={item.isMobile ? "mobile" : ""}>
+                    {item.url ? (
+                      <Link
+                        href={item.url}
+                        target="_blank"
+                        data-speed={speedArr[i]}
+                      >
+                        <Item item={item}></Item>
+                      </Link>
+                    ) : (
+                      <div data-speed={speedArr[i]}>
+                        <Item item={item}></Item>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </List>
+          </div>
+        ) : (
+          <Table>
+            <colgroup>
+              <col style={{ width: "12%" }} />
+              <col style={{ width: "8%" }} />
+              <col style={{ width: "12%" }} />
+              <col style={{ width: "8%" }} />
+              <col style={{ width: "auto" }} />
+              <col style={{ width: "20%" }} />
+              <col style={{ width: "0" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>투입 기간</th>
+                <th>타입</th>
+                <th>프로젝트명</th>
+                <th>역할</th>
+                <th>설명</th>
+                <th>사용 기술</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {portfolioData.map((item, i) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{item.period}</td>
+                    <td>{item.type === "project" ? "프로젝트" : "유지보수"}</td>
+                    <td>{item.title}</td>
+                    <td>{item.role}</td>
+                    <td className="desc">{item.desc}</td>
+                    <td>
+                      {item.tags.map((el, i) => {
+                        if (i >= item.tags.length - 1) {
+                          return el;
+                        } else {
+                          return el + ", ";
+                        }
+                      })}
+                    </td>
+                    {item.url ? (
+                      <td>
+                        <Link href={item.url} target="_blank"></Link>
+                      </td>
+                    ) : (
+                      <td></td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
+      </motion.div>
     </div>
   );
 }
 
-Portfolio.bgColor = "#ededed";
+Portfolio.bgColor = "#f6f6f6";
 
 export default Portfolio;
