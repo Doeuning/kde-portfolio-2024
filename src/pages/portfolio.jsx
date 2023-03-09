@@ -5,6 +5,18 @@ import { portfolioData } from "../datas";
 import { parallaxElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 
+const TypeBtn = styled.button`
+  position: fixed;
+  top: 100px;
+  right: 0;
+  z-index: 10000000;
+  width: 100px;
+  height: 40px;
+  background: coral;
+  &.on {
+    background: blueviolet;
+  }
+`;
 const BgText = styled.div`
   .txt {
     ${({ theme }) => theme.MIXINS.fontRaleway};
@@ -29,6 +41,11 @@ const Tags = styled.ul`
 const List = styled.ul`
   padding: 50vh 0;
   & > li {
+    margin-top: 20px;
+    border-top: 1px solid color: ${({ theme }) => theme.COLORS.gray30};
+    padding-top: 20px;
+  }
+  &:not(.view-type) > li {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -261,8 +278,9 @@ function Item({ item }) {
 }
 
 function Portfolio(props) {
+  const [listType, setListType] = useState(false);
   let speedArr = [];
-  useEffect(() => {
+  const viewAction = () => {
     for (let i = 0; i < portfolioData.length; i++) {
       const random = Math.random() * 1;
       const speed = random.toFixed(1);
@@ -270,17 +288,26 @@ function Portfolio(props) {
     }
     horizontalScroll(".horizontal-txt .txt", "background");
     parallaxElement(".portfolio-list .box");
-  }, []);
+  };
+  useEffect(() => {
+    viewAction();
+  }, [listType]);
 
   return (
     <div>
+      <TypeBtn
+        className={listType && "on"}
+        onClick={() => {
+          setListType((prevState) => !prevState);
+        }}
+      ></TypeBtn>
       <BgText className="horizontal-txt">
         <div className="txt">
           Success doesn’t come from what you do occasionally, but what you do
           consistently.
         </div>
       </BgText>
-      <List className="portfolio-list">
+      <List className={`portfolio-list ${!listType && "view-type"}`}>
         {portfolioData.map((item, i) => {
           const [boxOver, setBoxOver] = useState(false);
           return (
