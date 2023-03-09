@@ -344,7 +344,7 @@ function Portfolio(props) {
     window.scrollTo(0, 0);
   };
   const viewAction = () => {
-    for (let i = 0; i < portfolioData.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       const random = Math.random() * 1;
       const speed = random.toFixed(1);
       speedArr.push(speed);
@@ -353,11 +353,11 @@ function Portfolio(props) {
     parallaxElement(".portfolio-list .box");
   };
   useEffect(() => {
-    viewAction();
-  }, [viewListType]);
-  useEffect(() => {
     setData(portfolioData);
   }, []);
+  useEffect(() => {
+    viewAction();
+  }, [data]);
 
   return (
     data && (
