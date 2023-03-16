@@ -41,7 +41,7 @@ function Wave(props) {
   };
   const drawWave = () => {
     if (!ctx) return;
-    const array = [
+    const points = [
       {
         x: 0,
         y: stageHeight / 2,
@@ -52,9 +52,14 @@ function Wave(props) {
       },
     ];
     ctx.beginPath();
-    // ctx.moveTo(0, 0);
-    ctx.moveTo(array[0].x, array[0].y);
-    ctx.lineTo(array[1].x, array[1].y);
+    ctx.moveTo(0, 0);
+    // ctx.moveTo(array[0].x, array[0].y);
+    // ctx.lineTo(array[1].x, array[1].y);
+    for (let i = 0; i < points.length - 1; i++) {
+      const c = (points[i].x + points[i + 1].x) / 2;
+      const d = (points[i].y + points[i + 1].y) / 2;
+      ctx.quadraticCurveTo(points[i].x, points[i].y, c, d);
+    }
     ctx.stroke();
     // ctx.fillStyle = "#ff0000";
     // ctx.fill();
