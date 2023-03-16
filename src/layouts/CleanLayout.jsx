@@ -7,10 +7,10 @@ const CleanLayout = styled.div`
   min-height: 100vh;
 `;
 
-export default function Index({ children }) {
+export default function Index({ children, bgColor }) {
   return (
     <CleanLayout>
-      <Container>{children}</Container>
+      <Container bgColor={bgColor}>{children}</Container>
     </CleanLayout>
   );
 }

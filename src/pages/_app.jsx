@@ -52,7 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
       <LayoutGroup>
         <ThemeProvider theme={theme}>
           <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
-            <SetLayout bgColor={SetBgColor}>
+            <SetLayout bgColor={SetBgColor} classNam="layout">
               <motion.div
                 key={router.route}
                 initial={{ opacity: 0, y: "100px" }}

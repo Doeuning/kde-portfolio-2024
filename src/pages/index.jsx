@@ -12,6 +12,7 @@ import smoothScroll from "@utils/smoothScroll";
 
 const MainWrap = styled.div`
   position: relative;
+  background: #fffa99;
 `;
 
 const Section = styled.section`
@@ -51,7 +52,7 @@ const HelloWorld = styled.div`
   ${({ theme }) => theme.MIXINS.fontOleoScript};
   width: auto;
   font-size: 100px;
-  color: lightpink;
+  color: #e6735d;
 `;
 
 const Balloons = styled.ul`

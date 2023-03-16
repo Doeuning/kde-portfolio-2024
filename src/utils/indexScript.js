@@ -9,6 +9,16 @@ export default function IndexScript() {
 
   const bgEffect = () => {
     const moving = (element) => {
+      gsap.to(".main-wrap", {
+        scrollTrigger: {
+          trigger: element.parentElement,
+          start: "top top",
+          end: "+=800",
+          scrub: 1,
+          toggleActions: "play none none reverse",
+        },
+        background: "#fff",
+      });
       // console.log(element.childNodes);
       element.childNodes.forEach((el) => {
         el.style.whiteSpace = "pre";
@@ -16,34 +26,47 @@ export default function IndexScript() {
         el.style.verticalAlign = "middle";
       });
       const tl = gsap.timeline();
-      tl.from(element.childNodes, {
-        y: 20,
-        opacity: 0,
-        stagger: 0.1,
-      }).to(
+      tl.fromTo(
+        element,
+        {
+          scale: 2,
+        },
+        {
+          scale: 1,
+        }
+      );
+      tl.fromTo(
         element.childNodes,
         {
-          scrollTrigger: {
-            trigger: element.parentElement,
-            start: "top top",
-            end: "+=800",
-            pin: true,
-            pinSpacing: true,
-            scrub: 1,
-            toggleActions: "play none none reverse",
-            onToggle: () => {
-              // console.log("in");
-            },
-          },
-          duration: 2,
-          opacity: 1,
-          stagger: {
-            from: "random",
-            each: 0.2,
-          },
+          y: 20,
+          opacity: 0,
+          stagger: 0.1,
           scale: "random(2, 5)",
           x: "random(-300, 300)",
           y: "random(-300, 300)",
+        },
+        {
+          // scrollTrigger: {
+          //   trigger: element.parentElement,
+          //   start: "top top",
+          //   end: "+=800",
+          //   pin: true,
+          //   pinSpacing: true,
+          //   scrub: 1,
+          //   toggleActions: "play none none reverse",
+          //   onToggle: () => {
+          //     // console.log("in");
+          //   },
+          // },
+          duration: 0.3,
+          opacity: 1,
+          scale: 1,
+          stagger: {
+            from: "random",
+            each: 0.05,
+          },
+          x: 0,
+          y: 0,
         },
         ">"
       );

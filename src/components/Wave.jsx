@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const CanvasWrap = styled.div`
   //#wave {
@@ -29,14 +29,58 @@ function Point({ x, y, fixedY, cur }) {
   return <div></div>;
 }
 function Wave(props) {
-  if (typeof window !== "undefined") {
-  }
-  const resize = () => {};
+  const canvasRef = useRef(null);
+  const [ctx, setCtx] = useState(null);
+  const [stageWidth, setStageWidth] = useState(0);
+  const [stageHeight, setStageHeight] = useState(0);
+  const options = {};
 
-  useEffect(() => {}, []);
+  const setCanvasSize = () => {
+    setStageWidth(document.body.clientWidth);
+    setStageHeight(document.body.clientHeight);
+  };
+  const drawWave = () => {
+    if (!ctx) return;
+    const array = [
+      {
+        x: 0,
+        y: stageHeight / 2,
+      },
+      {
+        x: 100,
+        y: 200,
+      },
+    ];
+    ctx.beginPath();
+    // ctx.moveTo(0, 0);
+    ctx.moveTo(array[0].x, array[0].y);
+    ctx.lineTo(array[1].x, array[1].y);
+    ctx.stroke();
+    // ctx.fillStyle = "#ff0000";
+    // ctx.fill();
+  };
+
+  useEffect(() => {
+    setCanvasSize();
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+    context.width = stageWidth * 2 + "px";
+    context.height = stageHeight * 2 + "px";
+    setCtx(context);
+  }, []);
+
+  useEffect(() => {
+    drawWave();
+  }, [ctx]);
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("resize", setCanvasSize);
+  }
+
   return (
     <CanvasWrap>
       <Point x={500} y={400} />
+      <canvas ref={canvasRef} width={stageWidth} height={stageHeight}></canvas>
     </CanvasWrap>
   );
 }
