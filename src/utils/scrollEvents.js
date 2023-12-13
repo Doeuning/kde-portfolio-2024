@@ -123,12 +123,25 @@ export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
     const scrollLeft = element.scrollWidth; // + element.offsetWidth
     const wrap = element.parentElement;
+    const body = document.body,
+      html = document.documentElement;
+
+    const totalHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
+
+    console.log("wrap", totalHeight);
+
     gsap
       .timeline({
         scrollTrigger: {
           trigger: wrap,
           start: `center center`,
-          end: `bottom+=${scrollLeft} 50%`,
+          end: `bottom+=${totalHeight} 50%`,
           scrub: 1,
           pin: true,
           // pinReparent: true,
@@ -149,6 +162,7 @@ export const horizontalScroll = (getElements, type = "default") => {
 };
 
 export const parallaxElement = (getElements, type = "default") => {
+  console.log("parallax");
   const moveParallax = (element, i) => {
     const speed = element.dataset.speed;
     console.log("speed", speed);
@@ -165,10 +179,7 @@ export const parallaxElement = (getElements, type = "default") => {
     } else {
       // element.style.opacity = 0;
       // element.style.transform = `translateY(${gap}px)`;
-      // gsap.from(element, {
-      //   opacity: 0,
-      //   // y: `+=${gap}`,
-      // });
+
       // gsap.to(element, {
       //   opacity: 1,
       //   // y: "auto",
@@ -195,10 +206,15 @@ export const parallaxElement = (getElements, type = "default") => {
       //     },
       //   },
       // });
+      gsap.from(element, {
+        opacity: 0,
+        // y: `+=${gap}`,
+      });
       gsap.to(element, {
         y: `-${moveY}`,
         ease: "none",
-        // duration: 1,
+        duration: 1,
+        opacity: 1,
         scrollTrigger: {
           trigger: element,
           start: `top bottom-=${gap}`,

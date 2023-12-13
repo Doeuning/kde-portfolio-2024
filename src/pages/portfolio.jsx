@@ -115,11 +115,13 @@ const List = styled.ul`
     }
     .box {
       display: block;
+      overflow: hidden;
       position: relative;
       box-sizing: border-box;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       width: 100%;
       height: 600px;
+      border-radius: 30px;
       background: ${({ theme }) => theme.COLORS.gray70};
       color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.6s;
@@ -148,7 +150,7 @@ const List = styled.ul`
       .tit-h2 {
         position: absolute;
         top: 20px;
-        left: -20px;
+        left: 0;
         z-index: 20;
         padding: 20px;
         background: #000;
@@ -165,13 +167,10 @@ const List = styled.ul`
         flex-direction: column;
         justify-content: flex-end;
         position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0;
         z-index: 10;
         padding: 50px;
-        //background: #fff;
+        background: #fff;
         opacity: 0;
         transition: all 0.6s;
         font-size: 20px;
@@ -182,40 +181,27 @@ const List = styled.ul`
           top: 0;
           right: 0;
           left: 0;
+          opacity: 0;
           z-index: -1;
           width: 100%;
-          height: 51%;
+          height: 100%;
           background: #fff;
           transition: all 0.6s;
-          transform: translateX(-100%);
-        }
-        &::after {
-          display: block;
-          content: "";
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          z-index: -1;
-          width: 100%;
-          height: 50%;
-          background: #fff;
-          transition: all 0.6s;
-          transform: translateX(100%);
+          transform: scale(1.5);
         }
         .img-hover {
           overflow: hidden;
           position: absolute;
-          top: 100px;
-          left: 100px;
+          top: 40%;
+          left: 50%;
           height: calc(100% - 500px);
           width: calc(100% - 100px);
+          transform: translate(-50%, -50%) scale(1.5);
+          transition: all 0.6s;
           img {
             width: auto;
             max-height: 100%;
             height: auto;
-            transition: all 0.6s;
-            transform: translateX(100%);
             object-fit: contain;
           }
         }
@@ -261,14 +247,12 @@ const List = styled.ul`
         }
         .info-box {
           opacity: 1;
-          &::before,
-          &::after {
-            transform: translateX(0);
+          &::before {
+            opacity: 1;
+            transform: scale(1);
           }
           .img-hover {
-            img {
-              transform: translateX(0);
-            }
+            transform: translate(-50%, -50%) scale(1);
           }
         }
       }
@@ -276,11 +260,13 @@ const List = styled.ul`
   }
 `;
 
-function Item({ item }) {
+function Item({ item, speed }) {
   const [boxOver, setBoxOver] = useState(false);
+  console.log("spped", speed);
   return (
     <div
       className={`box ${boxOver && "hover"}`}
+      data-speed={speed}
       onMouseEnter={() => {
         setBoxOver(true);
       }}
@@ -338,18 +324,16 @@ function Item({ item }) {
 function Portfolio(props) {
   const [data, setData] = useState(null);
   const [viewListType, setViewListType] = useState(true);
-  let speedArr = [];
+  const [speedArr, setSpeedArr] = useState([]);
   const changeType = () => {
     setViewListType((prevState) => !prevState);
     window.scrollTo(0, 0);
   };
   const viewAction = () => {
-    console.log("data", data);
-    console.log("data", portfolioData);
     for (let i = 0; i < portfolioData.length; i++) {
       const random = Math.random() * 1;
       const speed = random.toFixed(1);
-      speedArr.push(speed);
+      setSpeedArr((arr) => [...arr, speed]);
     }
     horizontalScroll(".horizontal-txt .txt", "background");
     parallaxElement(".portfolio-list .box");
@@ -385,19 +369,16 @@ function Portfolio(props) {
               </BgText>
               <List className="portfolio-list">
                 {data.map((item, i) => {
+                  console.log("speedArr", speedArr[i]);
                   return (
                     <li key={item.id} className={item.isMobile ? "mobile" : ""}>
                       {item.url ? (
-                        <Link
-                          href={item.url}
-                          target="_blank"
-                          data-speed={speedArr[i]}
-                        >
-                          <Item item={item}></Item>
+                        <Link href={item.url} target="_blank">
+                          <Item item={item} speed={speedArr[i]}></Item>
                         </Link>
                       ) : (
-                        <div data-speed={speedArr[i]}>
-                          <Item item={item}></Item>
+                        <div>
+                          <Item item={item} speed={speedArr[i]}></Item>
                         </div>
                       )}
                     </li>
