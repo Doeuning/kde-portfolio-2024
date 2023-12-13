@@ -30,7 +30,7 @@ const BgText = styled.div`
     font-size: 150px;
     line-height: 100vh;
     white-space: nowrap;
-    color: ${({ theme }) => theme.COLORS.black};
+    color: ${({ theme }) => theme.COLORS.gray60};
     text-transform: uppercase;
   }
 `;
@@ -104,7 +104,7 @@ const List = styled.ul`
     &.mobile {
       width: 400px;
       .box {
-        .info-box {
+        .info-inner {
           padding: 30px;
         }
       }
@@ -122,7 +122,7 @@ const List = styled.ul`
       width: 100%;
       height: 600px;
       border-radius: 30px;
-      background: ${({ theme }) => theme.COLORS.gray70};
+      background: ${({ theme }) => theme.COLORS.gray50};
       color: ${({ theme }) => theme.COLORS.gray10};
       transition: all 0.6s;
       .dummyBg {
@@ -169,7 +169,6 @@ const List = styled.ul`
         position: absolute;
         inset: 0;
         z-index: 10;
-        padding: 50px;
         background: #fff;
         opacity: 0;
         transition: all 0.6s;
@@ -185,14 +184,19 @@ const List = styled.ul`
           z-index: -1;
           width: 100%;
           height: 100%;
-          background: #fff;
+          background: ${({ theme }) => theme.COLORS.gray50};
           transition: all 0.6s;
           transform: scale(1.5);
+        }
+        .info-inner {
+          padding: 50px;
+          background: ${({ theme }) => theme.COLORS.gray10};
+          color: #fff;
         }
         .img-hover {
           overflow: hidden;
           position: absolute;
-          top: 40%;
+          top: 30%;
           left: 50%;
           height: calc(100% - 500px);
           width: calc(100% - 100px);
@@ -297,23 +301,25 @@ function Item({ item, speed }) {
             />
           </div>
         )}
-        <div className="tit-area">
-          <div className="tit">{item.desc}</div>
-          <div className="role">역할 : {item.role}</div>
-        </div>
-        {/*<div className="desc">{item.desc}</div>*/}
-        {item.tags && (
-          <Tags>
-            {item.tags.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </Tags>
-        )}
+        <div className="info-inner">
+          <div className="tit-area">
+            <div className="tit">{item.desc}</div>
+            <div className="role">역할 : {item.role}</div>
+          </div>
+          {/*<div className="desc">{item.desc}</div>*/}
+          {item.tags && (
+            <Tags>
+              {item.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </Tags>
+          )}
 
-        <div className="info">
-          <div className="period">{item.period}</div>
-          <div className={`type ${item.type}`}>
-            {item.type === "project" ? "프로젝트" : "유지보수"}
+          <div className="info">
+            <div className="period">{item.period}</div>
+            <div className={`type ${item.type}`}>
+              {item.type === "project" ? "프로젝트" : "유지보수"}
+            </div>
           </div>
         </div>
       </div>
@@ -447,6 +453,6 @@ function Portfolio(props) {
   );
 }
 
-Portfolio.bgColor = "#f6f6f6";
+Portfolio.bgColor = "#495057";
 
 export default Portfolio;
