@@ -128,6 +128,7 @@ const List = styled.ul`
       box-sizing: border-box;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       width: 100%;
+      min-height: 600px;
       height: 600px;
       border-radius: 30px;
       background: ${({ theme }) => theme.COLORS.gray50};
@@ -245,26 +246,6 @@ const List = styled.ul`
         .detail {
           margin: 20px 0 0;
           font-size: 14px;
-        }
-        ${
-          "" /* .info {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 10px;
-          //font-size: 14px;
-          .type {
-            border-radius: 5px;
-            padding: 2px 5px;
-            font-weight: 700;
-            color: #fff;
-            &.project {
-              background: ${({ theme }) => theme.COLORS.blue};
-            }
-            &.maintain {
-              background: ${({ theme }) => theme.COLORS.green};
-            }
-          }
-        } */
         }
       }
       &.hover {
