@@ -12,7 +12,7 @@ const Button = styled.button`
   z-index: 1100;
   width: 50px;
   height: 50px;
-  background: #000;
+  background: ${({ theme }) => theme.COLORS.gray30};
   color: #fff;
   transition: all 0.3s;
   &::before {
@@ -23,7 +23,7 @@ const Button = styled.button`
     right: 10px;
     width: 30px;
     height: 5px;
-    background: #fff;
+    background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;
   }
@@ -35,7 +35,7 @@ const Button = styled.button`
     right: 10px;
     width: 30px;
     height: 5px;
-    background: #fff;
+    background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;
   }

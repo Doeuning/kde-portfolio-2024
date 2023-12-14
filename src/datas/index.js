@@ -5,6 +5,8 @@ export const portfolioData = [
     bgUrl: "/bg-emotion.png",
     title: "이모션 사내 그룹웨어",
     desc: "반응형 웹사이트 신규 구축",
+    detail:
+      "React, Next.js, Styled Component 등을 사용하여 진행한 내부 프로젝트로, 기존에 사용하던 딱딱하고 사용하기 복잡한 그룹웨어를 사용하기 쉽고 보기 좋게 리뉴얼하였습니다. 직원 목록, 등록, 수정, 상세 페이지 등의 프론트를 담당해 작업했습니다.",
     period: "2021.11~2022.03",
     type: "project",
     role: "PA",
@@ -16,6 +18,8 @@ export const portfolioData = [
     bgUrl: "/bg-ananti.png",
     title: "아난티 온라인 커머스 플랫폼",
     desc: "반응형 웹사이트 신규 구축",
+    detail:
+      "고객의 니즈에 맞추어 일반적인 웹사이트와 다르게 매거진 형태의 디자인으로 작업한 프로젝트입니다. 특히 'INSIGHT' 페이지의 첫 세 페이지는 프로젝트 구축 이후 추가 작업 건으로, gsap를 이용해 화려한 인터렉션을 구축했습니다.",
     period: "2021.06~2021.12",
     url: "https://eternaljourney.ananti.kr/index",
     type: "project",
@@ -167,7 +171,9 @@ export const portfolioData = [
     id: "herit",
     imgUrl: "/logo-herit.png",
     title: "헤리트 해빛온 태양광시스템",
-    desc: "태양광 시스템 대시보드 신규 구축 프로젝트로, 전달받은 데이터를 그래프로 나타낼 수 있도록 chart.js를 사용했습니다.",
+    desc: "대시보드 신규 구축",
+    detail:
+      "태양광 시스템 대시보드 신규 구축 프로젝트로, 전달받은 데이터를 그래프로 시각화 할 수 있도록 chart.js를 사용했습니다.",
     period: "2018.05~2018.06",
     type: "project",
     role: "PL",

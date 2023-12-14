@@ -9,19 +9,19 @@ import Image from "next/image";
 const TypeBtn = styled.button`
   position: fixed;
   bottom: 100px;
-  left: 50%;
-  transform: translateX(-730px);
-  z-index: 10000000;
+  left: 0;
+  z-index: 100;
   width: 130px;
   padding: 10px 20px;
-  background: #000;
+  background: ${({ theme }) => theme.COLORS.gray20};
   font-weight: 700;
   font-size: 14px;
-  color: #fff;
+  color: ${({ theme }) => theme.COLORS.white};
   transition: all 0.3s;
-  ${({ theme }) => theme.MIXINS.boxShadow};
+  box-shadow: ${({ theme }) => theme.MIXINS.boxShadow};
   &:hover {
-    background: ${({ theme }) => theme.COLORS.gray20};
+    background: ${({ theme }) => theme.COLORS.gray50};
+    color: ${({ theme }) => theme.COLORS.black};
   }
 `;
 const BgText = styled.div`
@@ -36,13 +36,14 @@ const BgText = styled.div`
 `;
 const Tags = styled.ul`
   display: flex;
-  margin: -10px 0 10px -10px;
+  margin: 20px 0 0 -10px;
   li {
     margin: 10px 0 0 10px;
-    //padding: 1px 3px;
-    font-weight: 100;
+    padding: 5px 10px;
+    background: ${({ theme }) => theme.COLORS.gray30};
+    font-weight: 700;
     font-size: 20px;
-    color: ${({ theme }) => theme.COLORS.main};
+    color: ${({ theme }) => theme.COLORS.white};
   }
 `;
 
@@ -50,21 +51,28 @@ const Table = styled.table`
   padding: 150px 0;
   tr {
     position: relative;
+
+    &:last-child {
+      td {
+        border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray30};
+      }
+    }
   }
   th {
-    border-top: 1px solid ${({ theme }) => theme.COLORS.gray10};
+    border-top: 1px solid ${({ theme }) => theme.COLORS.gray90};
     padding: 20px 10px;
     font-weight: 700;
     font-size: 14px;
-    background: ${({ theme }) => theme.COLORS.gray70};
+    background: ${({ theme }) => theme.COLORS.gray10};
+    color: ${({ theme }) => theme.COLORS.white};
   }
   td {
     position: static;
-    border-top: 1px solid ${({ theme }) => theme.COLORS.gray50};
+    border-top: 1px solid ${({ theme }) => theme.COLORS.gray30};
     padding: 20px 10px;
     font-size: 14px;
-    background: rgba(255, 255, 255, 0.5);
     text-align: center;
+    color: ${({ theme }) => theme.COLORS.white};
     a {
       position: absolute;
       top: 0;
@@ -73,14 +81,14 @@ const Table = styled.table`
       left: 0;
       transition: all 0.3s;
       &:hover {
-        background: rgba(0, 0, 0, 0.05);
+        background: rgba(255, 255, 255, 0.1);
       }
     }
     &.desc {
       text-align: left;
     }
     .thumb {
-      ${({ theme }) => theme.MIXINS.boxShadow};
+      box-shadow: ${({ theme }) => theme.MIXINS.boxShadow};
       position: absolute;
       width: 300px;
       height: 200px;
@@ -98,7 +106,7 @@ const List = styled.ul`
     position: relative;
     min-height: 100vh;
     flex: 0 0 auto;
-    width: 700px;
+    width: 600px;
     margin-right: auto;
     margin-left: 0;
     &.mobile {
@@ -147,19 +155,32 @@ const List = styled.ul`
           transition: all 0.6s;
         }
       }
-      .tit-h2 {
+      .tit-box {
+        display: flex;
+        align-items: center;
         position: absolute;
         top: 20px;
         left: 0;
         z-index: 20;
-        padding: 20px;
-        background: #000;
-        font-weight: 700;
-        font-size: 16px;
-        color: #fff;
         transition: all 0.3s 0.2s;
         opacity: 0;
         transform: translateX(-50%);
+        font-weight: 700;
+        font-size: 16px;
+        color: #fff;
+        .tit-h2 {
+          padding: 20px;
+          background: ${({ theme }) => theme.COLORS.black};
+        }
+        .type {
+          padding: 20px;
+          &.project {
+            background: ${({ theme }) => theme.COLORS.blue};
+          }
+          &.maintain {
+            background: ${({ theme }) => theme.COLORS.green};
+          }
+        }
       }
       .info-box {
         overflow: hidden;
@@ -210,15 +231,23 @@ const List = styled.ul`
           }
         }
         .tit-area {
-          .role {
-            margin-top: 20px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: center;
+          .period {
+            font-size: 16px;
           }
         }
-        .desc {
-          margin: 10px 0;
-          //font-size: 14px;
+        .role {
+          margin-top: 10px;
         }
-        .info {
+        .detail {
+          margin: 20px 0 0;
+          font-size: 14px;
+        }
+        ${
+          "" /* .info {
           display: flex;
           justify-content: space-between;
           margin-top: 10px;
@@ -235,6 +264,7 @@ const List = styled.ul`
               background: ${({ theme }) => theme.COLORS.green};
             }
           }
+        } */
         }
       }
       &.hover {
@@ -245,7 +275,7 @@ const List = styled.ul`
             transform: scale(1.2);
           }
         }
-        .tit-h2 {
+        .tit-box {
           opacity: 1;
           transform: translateX(0);
         }
@@ -275,9 +305,7 @@ function Item({ item, speed }) {
         setBoxOver(true);
       }}
       onMouseLeave={() => {
-        setTimeout(() => {
-          setBoxOver(false);
-        }, 500);
+        setBoxOver(false);
       }}
     >
       {item.bgUrl ? (
@@ -287,7 +315,12 @@ function Item({ item, speed }) {
       ) : (
         <div className="dummyBg">?</div>
       )}
-      <h2 className="tit-h2">{item.title}</h2>
+      <div className="tit-box">
+        <div className={`type ${item.type}`}>
+          {item.type === "project" ? "프로젝트" : "유지보수"}
+        </div>
+        <h2 className="tit-h2">{item.title}</h2>
+      </div>
       <div className="info-box">
         {item.imgUrl && (
           <div className="img-hover">
@@ -304,9 +337,10 @@ function Item({ item, speed }) {
         <div className="info-inner">
           <div className="tit-area">
             <div className="tit">{item.desc}</div>
-            <div className="role">역할 : {item.role}</div>
+            <div className="period">{item.period}</div>
           </div>
-          {/*<div className="desc">{item.desc}</div>*/}
+          <div className="role">역할 : {item.role}</div>
+          {item.detail && <div className="detail">{item.detail}</div>}
           {item.tags && (
             <Tags>
               {item.tags.map((tag) => (
@@ -314,13 +348,6 @@ function Item({ item, speed }) {
               ))}
             </Tags>
           )}
-
-          <div className="info">
-            <div className="period">{item.period}</div>
-            <div className={`type ${item.type}`}>
-              {item.type === "project" ? "프로젝트" : "유지보수"}
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -345,13 +372,11 @@ function Portfolio(props) {
     parallaxElement(".portfolio-list .box");
   };
   useEffect(() => {
-    console.log("setdata");
     setData(portfolioData);
   }, []);
   useEffect(() => {
-    console.log("viewaction");
     viewAction();
-  }, [data]);
+  }, [data, viewListType]);
 
   return (
     data && (
@@ -453,6 +478,6 @@ function Portfolio(props) {
   );
 }
 
-Portfolio.bgColor = "#495057";
+Portfolio.bgColor = "#111";
 
 export default Portfolio;
