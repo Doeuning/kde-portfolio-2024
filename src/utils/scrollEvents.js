@@ -134,7 +134,7 @@ export const horizontalScroll = (getElements, type = "default") => {
       html.offsetHeight
     );
 
-    console.log("wrap", totalHeight);
+    // console.log("wrap", totalHeight);
 
     gsap
       .timeline({
@@ -162,14 +162,14 @@ export const horizontalScroll = (getElements, type = "default") => {
 };
 
 export const parallaxElement = (getElements, type = "default") => {
-  console.log("parallax");
+  const elements = gsap.utils.toArray(getElements);
   const moveParallax = (element, i) => {
     const speed = element.dataset.speed;
-    console.log("speed", speed);
-    const gap = 100;
-    let moveY = element.offsetHeight * speed;
+    let moveY = element.offsetHeight * speed ;
+    console.log(speed);
+    let tl = gsap.timeline();
     if (type === "background") {
-      gsap.to(element, {
+      tl.to(element, {
         scrollTrigger: {
           scrub: 1,
         },
@@ -177,103 +177,74 @@ export const parallaxElement = (getElements, type = "default") => {
         ease: "none",
       });
     } else {
-      // element.style.opacity = 0;
-      // element.style.transform = `translateY(${gap}px)`;
-
-      // gsap.to(element, {
-      //   opacity: 1,
-      //   // y: "auto",
-      //   ease: "none",
-      //   // duration: 0.5,
-      //   scrollTrigger: {
-      //     trigger: element,
-      //     start: `top bottom`,
-      //     end: `top bottom-=${gap / 4}`,
-      //     scrub: 1,
-      //     invalidateOnRefresh: true,
-      //     toggleActions: "play none none reverse",
-      //     markers: {
-      //       startColor: "red",
-      //       endColor: "red",
-      //       fontSize: "18px",
-      //       fontWeight: "bold",
-      //       indent: 250,
-      //     },
-      //     onToggle: (self) => {
-      //       if (i === 0) {
-      //         console.log("hello----------------------progress", self.progress);
-      //       }
-      //     },
-      //   },
-      // });
-      gsap.from(element, {
+      tl.addLabel("sectionLabel" + i, i * (1 / elements.length));
+      console.log(tl.labels);
+      tl.from(element, {
         opacity: 0,
-        // y: `+=${gap}`,
+        // y: moveY,
+        // yPercent: 100,
       });
-      gsap.to(element, {
+      tl.to(element, {
         y: `-${moveY}`,
-        ease: "none",
-        duration: 1,
         opacity: 1,
+        // yPercent: 0,
+        ease: "none",
+        // duration: 1,
+        // duration: 0.5,
         scrollTrigger: {
           trigger: element,
-          start: `top bottom-=${gap}`,
+          // start: `top bottom-=${gap}`,
+          start: "top bottom",
           // start: (self) => self.previous().end,
-          end: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
-          scrub: 2,
+          // end: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
+          end: "bottom top",
+          // end: () => "+=" + document.querySelector("body").offsetHeight,
+          // scrub: 1,
+          snap: {
+            snapTo: "labelsDirectional",
+            // duration: 0.3,
+            // delay: 0.1,
+            ease: "none",
+          },
           invalidateOnRefresh: true,
           // markers: {
-          //   startColor: "black",
-          //   endColor: "black",
+          //   startColor: "red",
+          //   endColor: "lightblue",
           //   fontSize: "18px",
           //   fontWeight: "bold",
           //   indent: 500,
           // },
           toggleActions: "play none none reverse",
           onToggle: (self) => {
-            if (i === 0) {
-              console.log(
-                "----------------------parallax progress",
-                self.progress
-              );
-            }
+            // if (i === 0) {
+            //   console.log(
+            //     "----------------------parallax progress",
+            //     self.progress
+            //   );
+            // }
           },
         },
       });
-      // console.log(`bottom-=${moveY}px top+=${element.offsetHeight / 4}px`);
-      // gsap.to(element, {
-      //   y: `-${moveY + gap}`,
-      //   opacity: 0,
-      //   ease: "none",
-      //   // duration: 0.5,
+      // tl.to(element, {
+      //   yPercent: -100,
       //   scrollTrigger: {
+      //     ease: "none",
       //     trigger: element,
-      //     start: `bottom-=${moveY + gap}px top+=${element.offsetHeight / 4}px`,
-      //     // start: (self) => self.previous().end,
-      //     end: `+=${gap / 2}`,
+      //     start: "center top",
+      //     end: "bottom top",
       //     scrub: 1,
+      //     // snap: "labelsDirectional",
+      //     snap: {
+      //       snapTo: "labelsDirectional",
+      //       // duration: 0.3,
+      //       // delay: 0.1,
+      //       ease: "power1.inOut",
+      //     },
       //     invalidateOnRefresh: true,
       //     toggleActions: "play none none reverse",
-      //     markers: {
-      //       startColor: "blue",
-      //       endColor: "blue",
-      //       fontSize: "18px",
-      //       fontWeight: "bold",
-      //       indent: 0,
-      //     },
-      //     onToggle: (self) => {
-      //       if (i === 0) {
-      //         console.log(
-      //           i,
-      //           "----------------------byebye progress",
-      //           self.progress
-      //         );
-      //       }
-      //     },
       //   },
       // });
     }
   };
-  const elements = gsap.utils.toArray(getElements);
   elements.forEach((element, i) => moveParallax(element, i));
 };

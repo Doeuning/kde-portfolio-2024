@@ -27,6 +27,7 @@ const TypeBtn = styled.button`
 const BgText = styled.div`
   .txt {
     ${({ theme }) => theme.MIXINS.fontRaleway};
+    opacity: 0.5;
     font-size: 150px;
     line-height: 100vh;
     white-space: nowrap;
@@ -277,7 +278,6 @@ const List = styled.ul`
 
 function Item({ item, speed }) {
   const [boxOver, setBoxOver] = useState(false);
-  console.log("spped", speed);
   return (
     <div
       className={`box ${boxOver && "hover"}`}
@@ -381,7 +381,6 @@ function Portfolio(props) {
               </BgText>
               <List className="portfolio-list">
                 {data.map((item, i) => {
-                  console.log("speedArr", speedArr[i]);
                   return (
                     <li key={item.id} className={item.isMobile ? "mobile" : ""}>
                       {item.url ? (

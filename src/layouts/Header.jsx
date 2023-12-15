@@ -22,7 +22,7 @@ const Button = styled.button`
     top: 15px;
     right: 10px;
     width: 30px;
-    height: 5px;
+    height: 2px;
     background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;
@@ -34,7 +34,7 @@ const Button = styled.button`
     top: 30px;
     right: 10px;
     width: 30px;
-    height: 5px;
+    height: 2px;
     background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;

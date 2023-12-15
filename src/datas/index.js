@@ -244,18 +244,18 @@ export const gnbMenu = [
     url: "/portfolio",
     title: "Portfolio",
   },
-  {
-    url: "/skills",
-    title: "Skills",
-  },
+  // {
+  //   url: "/skills",
+  //   title: "Skills",
+  // },
   {
     url: "/contact",
     title: "Contact",
   },
-  {
-    url: "/demo",
-    title: "Scroll Event Demo",
-  },
+  // {
+  //   url: "/demo",
+  //   title: "Scroll Event Demo",
+  // },
 ];
 
 export const sns = [
