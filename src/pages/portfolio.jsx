@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { portfolioData } from "../datas";
 import { motion } from "framer-motion";
-import { parallaxElement, horizontalScroll } from "@utils/scrollEvents";
+import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 
 const TypeBtn = styled.button`
@@ -108,6 +108,7 @@ const List = styled.ul`
     min-height: 100vh;
     flex: 0 0 auto;
     width: 600px;
+    margin-top: 50px;
     margin-right: auto;
     margin-left: 0;
     &.mobile {
@@ -134,7 +135,6 @@ const List = styled.ul`
       border-radius: 30px;
       background: ${({ theme }) => theme.COLORS.gray50};
       color: ${({ theme }) => theme.COLORS.gray10};
-      transition: all 0.6s;
       .dummyBg {
         display: block;
         height: 100%;
@@ -276,12 +276,11 @@ const List = styled.ul`
   }
 `;
 
-function Item({ item, speed }) {
+function Item({ item }) {
   const [boxOver, setBoxOver] = useState(false);
   return (
     <div
       className={`box ${boxOver && "hover"}`}
-      data-speed={speed}
       onMouseEnter={() => {
         setBoxOver(true);
       }}
@@ -305,14 +304,14 @@ function Item({ item, speed }) {
       <div className="info-box">
         {item.imgUrl && (
           <div className="img-hover">
-            <Image
+            {/* <Image
               src={item.imgUrl}
               fill
               sizes="(max-width: 768px) 100vw,
               (max-width: 1200px) 50vw,
               33vw"
               alt={item.title}
-            />
+            /> */}
           </div>
         )}
         <div className="info-inner">
@@ -338,25 +337,30 @@ function Item({ item, speed }) {
 function Portfolio(props) {
   const [data, setData] = useState(null);
   const [viewListType, setViewListType] = useState(true);
-  const [speedArr, setSpeedArr] = useState([]);
   const changeType = () => {
     setViewListType((prevState) => !prevState);
+    console.log(window);
     window.scrollTo(0, 0);
   };
   const viewAction = () => {
-    for (let i = 0; i < portfolioData.length; i++) {
-      const random = Math.random() * 1;
-      const speed = random.toFixed(1);
-      setSpeedArr((arr) => [...arr, speed]);
-    }
     horizontalScroll(".horizontal-txt .txt", "background");
-    parallaxElement(".portfolio-list .box");
+    scrollFixElement(".portfolio-list .box");
   };
+
+  const stopViewAction = () => {
+    // 모드 변경 시 gsap 실행 수정중
+    return () => window.removeEventListener("scroll");
+  };
+
   useEffect(() => {
     setData(portfolioData);
   }, []);
   useEffect(() => {
-    viewAction();
+    if (viewListType) {
+      viewAction();
+    } else {
+      stopViewAction();
+    }
   }, [data, viewListType]);
 
   return (
@@ -385,11 +389,11 @@ function Portfolio(props) {
                     <li key={item.id} className={item.isMobile ? "mobile" : ""}>
                       {item.url ? (
                         <Link href={item.url} target="_blank">
-                          <Item item={item} speed={speedArr[i]}></Item>
+                          <Item item={item}></Item>
                         </Link>
                       ) : (
                         <div>
-                          <Item item={item} speed={speedArr[i]}></Item>
+                          <Item item={item}></Item>
                         </div>
                       )}
                     </li>

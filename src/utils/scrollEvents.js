@@ -161,13 +161,48 @@ export const horizontalScroll = (getElements, type = "default") => {
   elements.forEach((element) => moveLeft(element));
 };
 
+export const scrollFixElement = (getElements) => {
+  const elements = gsap.utils.toArray(getElements);
+
+  const moveFix = (element) => {
+    let tl = gsap.timeline();
+
+    ScrollTrigger.create({
+      trigger: element,
+      pin: element,
+      pinSpacing: "margin",
+      start: "center center",
+      end: "+=700",
+      scrub: 1,
+      invalidateOnRefresh: true,
+      toggleActions: "play none none reverse",
+    });
+    tl.from(element, {
+      opacity: 0,
+    }).to(element, {
+      opacity: 1,
+      ease: "none",
+    });
+  };
+  elements.forEach((element, i) => moveFix(element));
+};
+
 export const parallaxElement = (getElements, type = "default") => {
   const elements = gsap.utils.toArray(getElements);
+  let speedArr = [];
+
+  for (let i = 0; i < getElements.length; i++) {
+    const random = Math.random() * 1,
+      speed = random.toFixed(1);
+    speedArr.push(speed);
+  }
+
   const moveParallax = (element, i) => {
-    const speed = element.dataset.speed;
-    let moveY = element.offsetHeight * speed ;
-    console.log(speed);
-    let tl = gsap.timeline();
+    const wrap = element.parentElement,
+      speed = speedArr[i];
+    let moveY = element.offsetHeight * speed,
+      tl = gsap.timeline();
+
     if (type === "background") {
       tl.to(element, {
         scrollTrigger: {
@@ -177,43 +212,21 @@ export const parallaxElement = (getElements, type = "default") => {
         ease: "none",
       });
     } else {
-      tl.addLabel("sectionLabel" + i, i * (1 / elements.length));
-      console.log(tl.labels);
+      element.style.transform = `translateY(${moveY})`;
+      ScrollTrigger.create({});
       tl.from(element, {
         opacity: 0,
-        // y: moveY,
-        // yPercent: 100,
-      });
-      tl.to(element, {
-        y: `-${moveY}`,
+        y: moveY,
+      }).to(element, {
+        y: `-=${moveY}`,
         opacity: 1,
-        // yPercent: 0,
         ease: "none",
-        // duration: 1,
-        // duration: 0.5,
         scrollTrigger: {
-          trigger: element,
-          // start: `top bottom-=${gap}`,
-          start: "top bottom",
-          // start: (self) => self.previous().end,
-          // end: `bottom-=${moveY}px top+=${element.offsetHeight / 3}px`,
+          trigger: wrap,
+          start: `top bottom+=${100}`,
           end: "bottom top",
-          // end: () => "+=" + document.querySelector("body").offsetHeight,
-          // scrub: 1,
-          snap: {
-            snapTo: "labelsDirectional",
-            // duration: 0.3,
-            // delay: 0.1,
-            ease: "none",
-          },
+          scrub: 1,
           invalidateOnRefresh: true,
-          // markers: {
-          //   startColor: "red",
-          //   endColor: "lightblue",
-          //   fontSize: "18px",
-          //   fontWeight: "bold",
-          //   indent: 500,
-          // },
           toggleActions: "play none none reverse",
           onToggle: (self) => {
             // if (i === 0) {
@@ -225,25 +238,6 @@ export const parallaxElement = (getElements, type = "default") => {
           },
         },
       });
-      // tl.to(element, {
-      //   yPercent: -100,
-      //   scrollTrigger: {
-      //     ease: "none",
-      //     trigger: element,
-      //     start: "center top",
-      //     end: "bottom top",
-      //     scrub: 1,
-      //     // snap: "labelsDirectional",
-      //     snap: {
-      //       snapTo: "labelsDirectional",
-      //       // duration: 0.3,
-      //       // delay: 0.1,
-      //       ease: "power1.inOut",
-      //     },
-      //     invalidateOnRefresh: true,
-      //     toggleActions: "play none none reverse",
-      //   },
-      // });
     }
   };
   elements.forEach((element, i) => moveParallax(element, i));
