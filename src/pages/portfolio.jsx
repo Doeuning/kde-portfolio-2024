@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { portfolioData } from "../datas";
 import { motion } from "framer-motion";
 import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
+import usDetectDevice from "@src/hooks/usDetectDevice";
 
 const TypeBtn = styled.button`
   position: fixed;
@@ -37,6 +38,7 @@ const BgText = styled.div`
 `;
 const Tags = styled.ul`
   display: flex;
+  flex-wrap: wrap;
   margin: 20px 0 0 -10px;
   li {
     margin: 10px 0 0 10px;
@@ -107,12 +109,13 @@ const List = styled.ul`
     position: relative;
     min-height: 100vh;
     flex: 0 0 auto;
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     margin-top: 50px;
     margin-right: auto;
     margin-left: 0;
-    &.mobile {
-      width: 400px;
+    &.mo {
+      width: 100%;
       .box {
         .info-inner {
           padding: 30px;
@@ -122,30 +125,59 @@ const List = styled.ul`
     &:nth-child(odd) {
       margin-right: 0;
       margin-left: auto;
+      .box {
+        .detail {
+          left: calc(-400px + 20px);
+          right: auto;
+          transform: translateX(-100%);
+        }
+      }
     }
     .box {
       display: block;
-      overflow: hidden;
       position: relative;
       box-sizing: border-box;
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+      max-width: 600px;
       width: 100%;
       min-height: 600px;
       height: 600px;
-      border-radius: 30px;
       background: ${({ theme }) => theme.COLORS.gray50};
       color: ${({ theme }) => theme.COLORS.gray10};
+      & > .detail,
+      & > a > .detail {
+        position: absolute;
+        right: calc(-400px + 20px);
+        bottom: 100px;
+        z-index: 10;
+        box-sizing: border-box;
+        width: 400px;
+        padding: 30px;
+        background: ${({ theme }) => theme.COLORS.gray30};
+        font-size: 18px;
+        color: ${({ theme }) => theme.COLORS.white};
+        transition: all 0.3s 0.4s;
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      .box-inner {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 30px;
+      }
       .dummyBg {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: 100%;
         ${({ theme }) => theme.MIXINS.fontRaleway};
-        font-size: 600px;
-        line-height: 100%;
+        font-size: 50px;
         text-align: center;
         color: ${({ theme }) => theme.COLORS.gray60};
       }
       .img {
-        overflow: hidden;
         position: relative;
         width: 100%;
         height: 100%;
@@ -185,7 +217,6 @@ const List = styled.ul`
         }
       }
       .info-box {
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -244,14 +275,21 @@ const List = styled.ul`
         .role {
           margin-top: 10px;
         }
+        .percentage {
+          margin-top: 10px;
+        }
         .detail {
-          margin: 20px 0 0;
-          font-size: 14px;
+          margin-top: 20px;
         }
       }
       &.hover {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
           rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+        & > .detail,
+        & > a > .detail {
+          opacity: 1;
+          transform: translateX(0);
+        }
         .img {
           img {
             transform: scale(1.2);
@@ -277,6 +315,62 @@ const List = styled.ul`
 `;
 
 function Item({ item }) {
+  const mobile = usDetectDevice();
+  return (
+    <Fragment>
+      <div className="box-inner">
+        {item.bgUrl ? (
+          <div className="img">
+            <Image src={item.bgUrl} fill alt={item.title} />
+          </div>
+        ) : (
+          <div className="dummyBg">No Image</div>
+        )}
+        <div className="tit-box">
+          <div className={`type ${item.type}`}>
+            {item.type === "project" ? "프로젝트" : "유지보수"}
+          </div>
+          <h2 className="tit-h2">{item.title}</h2>
+        </div>
+        <div className="info-box">
+          {item.imgUrl && (
+            <div className="img-hover">
+              <Image
+                src={item.imgUrl}
+                fill
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+                alt={item.title}
+              />
+            </div>
+          )}
+          <div className="info-inner">
+            <div className="tit-area">
+              <div className="tit">{item.desc}</div>
+              <div className="period">{item.period}</div>
+            </div>
+            <div className="role">역할 : {item.role}</div>
+            <div className="percentage">참여도 : {item.percentage}</div>
+            {mobile && item.detail && (
+              <div className="detail">{item.detail}</div>
+            )}
+            {item.tags && (
+              <Tags>
+                {item.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </Tags>
+            )}
+          </div>
+        </div>
+      </div>
+      {!mobile && item.detail && <div className="detail">{item.detail}</div>}
+    </Fragment>
+  );
+}
+
+function Box({ item }) {
   const [boxOver, setBoxOver] = useState(false);
   return (
     <div
@@ -288,52 +382,16 @@ function Item({ item }) {
         setBoxOver(false);
       }}
     >
-      {item.bgUrl ? (
-        <div className="img">
-          <Image src={item.bgUrl} fill alt={item.title} />
-        </div>
+      {item.url ? (
+        <Link href={item.url} target="_blank">
+          <Item item={item} />
+        </Link>
       ) : (
-        <div className="dummyBg">?</div>
+        <Item item={item} />
       )}
-      <div className="tit-box">
-        <div className={`type ${item.type}`}>
-          {item.type === "project" ? "프로젝트" : "유지보수"}
-        </div>
-        <h2 className="tit-h2">{item.title}</h2>
-      </div>
-      <div className="info-box">
-        {item.imgUrl && (
-          <div className="img-hover">
-            {/* <Image
-              src={item.imgUrl}
-              fill
-              sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
-              alt={item.title}
-            /> */}
-          </div>
-        )}
-        <div className="info-inner">
-          <div className="tit-area">
-            <div className="tit">{item.desc}</div>
-            <div className="period">{item.period}</div>
-          </div>
-          <div className="role">역할 : {item.role}</div>
-          {item.detail && <div className="detail">{item.detail}</div>}
-          {item.tags && (
-            <Tags>
-              {item.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-            </Tags>
-          )}
-        </div>
-      </div>
     </div>
   );
 }
-
 function Portfolio(props) {
   const [data, setData] = useState(null);
   const [viewListType, setViewListType] = useState(true);
@@ -386,16 +444,8 @@ function Portfolio(props) {
               <List className="portfolio-list">
                 {data.map((item, i) => {
                   return (
-                    <li key={item.id} className={item.isMobile ? "mobile" : ""}>
-                      {item.url ? (
-                        <Link href={item.url} target="_blank">
-                          <Item item={item}></Item>
-                        </Link>
-                      ) : (
-                        <div>
-                          <Item item={item}></Item>
-                        </div>
-                      )}
+                    <li key={item.id} className={item.isMobile ? "mo" : ""}>
+                      <Box item={item} />
                     </li>
                   );
                 })}
