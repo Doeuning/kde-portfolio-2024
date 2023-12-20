@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-const customMediaQuery = (maxWidth) =>
+const customMediaQuery = ({ maxWidth }) =>
   css`
     @media (max-width: ${maxWidth}px);
   `;
@@ -11,9 +11,9 @@ const theme = {
     black: "#111",
     red: "red",
     coral: "coral",
-    blue: "cornflowerblue",
-    green: "yellowgreen",
-    main: "#C765E5",
+    blue: "#3C44ED",
+    green: "#00A76A",
+    main: "#F1CC2F",
     gray10: "#343a40",
     gray20: "#495057",
     gray30: "#868e96",
@@ -25,7 +25,7 @@ const theme = {
     gray90: "#f8f9fa",
   },
   MEDIA: {
-    custom: customMediaQuery,
+    /* custom: customMediaQuery, */
     pc: customMediaQuery(1440),
     tablet: customMediaQuery(768),
     mobile: customMediaQuery(576),
@@ -36,6 +36,9 @@ const theme = {
     `,
     fontOleoScript: css`
       font-family: "Oleo Script Swash Caps", cursive;
+    `,
+    D2Coding: css`
+      font-family: "D2Coding", sans-serif;
     `,
     clearFix: css`
       &:after {

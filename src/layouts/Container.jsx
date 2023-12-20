@@ -65,7 +65,7 @@ function Container({ bgColor, children }) {
       // animate="in"
       // {...direction}
       >
-        <Wrap bgColor={bgColor}>
+        <Wrap className="container" bgColor={bgColor}>
           <Inner>{children}</Inner>
         </Wrap>
       </motion.div>

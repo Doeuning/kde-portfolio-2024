@@ -12,7 +12,7 @@ const Button = styled.button`
   z-index: 1100;
   width: 50px;
   height: 50px;
-  background: ${({ theme }) => theme.COLORS.gray30};
+  background: ${({ theme }) => theme.COLORS.main};
   color: #fff;
   transition: all 0.3s;
   &::before {
@@ -22,7 +22,7 @@ const Button = styled.button`
     top: 15px;
     right: 10px;
     width: 30px;
-    height: 2px;
+    height: 5px;
     background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;
@@ -34,7 +34,7 @@ const Button = styled.button`
     top: 30px;
     right: 10px;
     width: 30px;
-    height: 2px;
+    height: 5px;
     background: ${({ theme }) => theme.COLORS.black};
     transition: all 0.3s;
     transform-origin: center center;
@@ -100,6 +100,9 @@ const Gnb = styled.div`
     a {
       flex: 0 0 auto;
       display: inline-block;
+      &.curr {
+        color: ${({ theme }) => theme.COLORS.main};
+      }
     }
   }
 `;
@@ -177,7 +180,7 @@ function HeaderWrap() {
 
   return (
     menu && (
-      <Header className={`header ${open && "is-open"}`}>
+      <Header className={`header${open ? " is-open" : ""}`}>
         <Inner>
           <Button type="button" onClick={handleClick}></Button>
           <Gnb className="gnb">
@@ -189,6 +192,7 @@ function HeaderWrap() {
                     onMouseMove={handleMove}
                     onMouseLeave={handleLeave}
                     key={item.url}
+                    className={router.route.includes(item.url) ? "curr" : ""}
                   >
                     <StyledLink>{item.title}</StyledLink>
                   </Link>

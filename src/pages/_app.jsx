@@ -51,7 +51,7 @@ const MyApp = ({ Component, pageProps }) => {
     <ErrorBoundary>
       <LayoutGroup>
         <ThemeProvider theme={theme}>
-          <div className={`smooth-wrap ${mobile ? "mobile" : "pc"}`}>
+          <div className={`smooth-wrap${mobile ? " mobile" : " pc"}`}>
             <SetLayout bgColor={SetBgColor} classNam="layout">
               <motion.div
                 key={router.route}

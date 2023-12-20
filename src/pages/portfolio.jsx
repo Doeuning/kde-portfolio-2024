@@ -54,7 +54,6 @@ const Table = styled.table`
   padding: 150px 0;
   tr {
     position: relative;
-
     &:last-child {
       td {
         border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray30};
@@ -62,7 +61,7 @@ const Table = styled.table`
     }
   }
   th {
-    border-top: 1px solid ${({ theme }) => theme.COLORS.gray90};
+    border-top: 1px solid ${({ theme }) => theme.COLORS.gray50};
     padding: 20px 10px;
     font-weight: 700;
     font-size: 14px;
@@ -97,6 +96,9 @@ const Table = styled.table`
       height: 200px;
       z-index: 100;
       font-size: 0;
+    }
+    .detail {
+      margin-top: 10px;
     }
   }
 `;
@@ -142,7 +144,6 @@ const List = styled.ul`
       width: 100%;
       min-height: 600px;
       height: 600px;
-      background: ${({ theme }) => theme.COLORS.gray50};
       color: ${({ theme }) => theme.COLORS.gray10};
       & > .detail,
       & > a > .detail {
@@ -166,6 +167,7 @@ const List = styled.ul`
         width: 100%;
         height: 100%;
         border-radius: 30px;
+        background: ${({ theme }) => theme.COLORS.gray60};
       }
       .dummyBg {
         display: flex;
@@ -206,12 +208,12 @@ const List = styled.ul`
           padding: 20px;
           background: ${({ theme }) => theme.COLORS.black};
         }
-        .type {
+        [class^="type"] {
           padding: 20px;
-          &.project {
+          &[class*="project"] {
             background: ${({ theme }) => theme.COLORS.blue};
           }
-          &.maintain {
+          &[class*="maintain"] {
             background: ${({ theme }) => theme.COLORS.green};
           }
         }
@@ -223,7 +225,6 @@ const List = styled.ul`
         position: absolute;
         inset: 0;
         z-index: 10;
-        background: #fff;
         opacity: 0;
         transition: all 0.6s;
         font-size: 20px;
@@ -327,7 +328,7 @@ function Item({ item }) {
           <div className="dummyBg">No Image</div>
         )}
         <div className="tit-box">
-          <div className={`type ${item.type}`}>
+          <div className={`type-${item.type}`}>
             {item.type === "project" ? "프로젝트" : "유지보수"}
           </div>
           <h2 className="tit-h2">{item.title}</h2>
@@ -374,7 +375,7 @@ function Box({ item }) {
   const [boxOver, setBoxOver] = useState(false);
   return (
     <div
-      className={`box ${boxOver && "hover"}`}
+      className={`box${boxOver ? " hover" : ""}`}
       onMouseEnter={() => {
         setBoxOver(true);
       }}
@@ -424,7 +425,7 @@ function Portfolio(props) {
   return (
     data && (
       <div>
-        <TypeBtn className={viewListType && "on"} onClick={changeType}>
+        <TypeBtn className={viewListType ? "on" : ""} onClick={changeType}>
           {viewListType ? "목록으로 보기" : "이미지로 보기"}
         </TypeBtn>
         <motion.div
@@ -459,7 +460,7 @@ function Portfolio(props) {
                 <col style={{ width: "12%" }} />
                 <col style={{ width: "8%" }} />
                 <col style={{ width: "auto" }} />
-                <col style={{ width: "20%" }} />
+                <col style={{ width: "15%" }} />
                 <col style={{ width: "0" }} />
               </colgroup>
               <thead>
@@ -483,7 +484,10 @@ function Portfolio(props) {
                       </td>
                       <td>{item.title}</td>
                       <td>{item.role}</td>
-                      <td className="desc">{item.desc}</td>
+                      <td className="desc">
+                        <div className="tit">{item.desc}</div>
+                        <div className="detail">{item.detail}</div>
+                      </td>
                       <td>
                         {item.tags.map((el, i) => {
                           if (i >= item.tags.length - 1) {

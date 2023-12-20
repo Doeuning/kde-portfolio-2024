@@ -291,10 +291,10 @@ export const gnbMenu = [
     url: "/portfolio",
     title: "Portfolio",
   },
-  // {
-  //   url: "/skills",
-  //   title: "Skills",
-  // },
+  {
+    url: "/arcade",
+    title: "Arcade",
+  },
   {
     url: "/contact",
     title: "Contact",
@@ -315,3 +315,32 @@ export const sns = [
     url: "https://github.com/Doeuning",
   },
 ];
+
+export const ArcadeData = {
+  games: [
+    // {
+    //   code: "dansorun",
+    //   title: "단소런",
+    //   component: "DansoRun",
+    // },
+    // {
+    //   code: "watermelon",
+    //   title: "수박게임",
+    //   component: "Watermelon",
+    // },
+    {
+      code: "puzzle2048",
+      title: "2048게임",
+      component: "Game2046",
+    },
+  ],
+  tests: [
+    {
+      wenman: {
+        title: "웬만해선 문제를 맞힐 수 없다",
+        desc: "시트콤 '웬만해선 그들을 막을 수 없다'의 팬이신가요? 웬만 피디도 100점 절대 안나오는 웬만퀴즈! 도전해보세요!",
+        url: "https://wenman-quiz.netlify.app",
+      },
+    },
+  ],
+};
