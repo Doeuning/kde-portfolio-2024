@@ -35,42 +35,35 @@ function Game2048() {
   const [newObj, setNewObj] = useState(null);
   useEffect(() => {
     // 페이지 로드
-    return () => {
-      setNumberArray((prev) => [
-        ...prev,
-        {
-          num: 2,
-          posX: 0,
-          posY: 0,
-          position: { top: 0, left: 0 },
-        },
-      ]);
-      console.log("load -------------", direction);
-    };
+    setNumberArray((prev) => [
+      ...prev,
+      {
+        num: 2,
+        posX: 0,
+        posY: 0,
+        position: { top: 0, left: 0 },
+      },
+    ]);
+    console.log("load -------------", direction, numberArray.length);
   }, []);
 
   // direction
   const [touchStart, setTouchStart] = useState([0, 0]);
   const [touchEnd, setTouchEnd] = useState([0, 0]);
   const [direction, setDirection] = useState(null);
-  const [clicked, setClicked] = useState(false);
 
   const handleMouseStart = (e) => {
     setTouchStart([e.clientX, e.clientY]);
-    setClicked(true);
   };
   const handleMouseEnd = (e) => {
     setTouchEnd([e.clientX, e.clientY]);
-    setClicked(false);
     detectDirection();
   };
   const handleTouchStart = (e) => {
     setTouchStart([e.touches[0].clientX, e.touches[0].clientY]);
-    setClicked(true);
   };
   const handleTouchEnd = (e) => {
     setTouchEnd([e.changedTouches[0].clientX, e.changedTouches[0].clientY]);
-    setClicked(false);
     detectDirection();
   };
   const detectDirection = () => {
@@ -82,14 +75,13 @@ function Game2048() {
       diffY > 0 ? setDirection("down") : setDirection("up");
     }
   };
+
   useEffect(() => {
     return () => {
       console.log("numberArray 길이", numberArray.length);
 
       // 문제구간
-      numberArray.length !== 1 && numberArray.length < 16
-        ? addNewNumber()
-        : finishGame();
+      numberArray.length < 16 ? addNewNumber() : finishGame();
       console.log("direction changed -------------", direction);
     };
   }, [direction]);
