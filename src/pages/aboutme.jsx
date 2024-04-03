@@ -1,33 +1,7 @@
-import Wave from "@components/Wave";
 import { useEffect } from "react";
 
-function Aboutme(props) {
-  useEffect(() => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+function Aboutme(props) {}
 
-    window.addEventListener("resize", init, false);
-
-    const stageWidth = document.body.clientWidth;
-    const stageHeight = document.body.clientHeight;
-    const init = () => {
-      ctx.width = stageWidth * 2;
-      ctx.height = stageHeight * 2;
-      ctx.scale(2, 2);
-    };
-
-    const animate = (t) => {
-      ctx.clearRect(0, 0, stageWidth, stageHeight);
-      requestAnimationFrame(animate);
-    };
-    init();
-    document.body.appendChild(canvas);
-  }, []);
-  return (
-    <div>
-      <Wave></Wave>
-    </div>
-  );
-}
+Aboutme.bgColor = "#111";
 
 export default Aboutme;

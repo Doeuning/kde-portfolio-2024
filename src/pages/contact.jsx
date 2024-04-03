@@ -1,21 +1,50 @@
-import useFetch from "../hooks/useFetch";
+import styled from "styled-components";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
-export default function Contact(props) {
-  const key = "c79521c72b6690785c671f45832e339b";
-  const { data, error, loading } = useFetch(
-    `/moviedb/3/tv/popular?api_key=${key}`
-  );
+const ContactWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+`;
+
+const List = styled.ul`
+  font-size: 20px;
+  color: #fff;
+  li ~ li {
+    margin-top: 30px;
+  }
+  .tit {
+    font-size: 16px;
+  }
+`;
+function Contact(props) {
   return (
-    <div>
-      {data ? (
-        <ul>
-          {data.results.map((item) => {
-            return <li key={item.id}>{item.original_name}</li>;
-          })}
-        </ul>
-      ) : (
-        <div>loading...</div>
-      )}
-    </div>
+    <motion.div
+      key={"contact"}
+      initial={{ opacity: 0, y: "100px" }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: "-100px" }}
+    >
+      <ContactWrap>
+        <List>
+          <li>
+            <div className="tit">Cell</div>
+            <a href="tel:010-6541-1552">010.6541.1552</a>
+          </li>
+          <li>
+            <div className="tit">Email</div>
+            <a href="mailto:doeuning@gmail.com">doeuning@gmail.com</a>
+          </li>
+        </List>
+      </ContactWrap>
+    </motion.div>
   );
 }
+
+Contact.bgColor = "#111";
+
+export default Contact;

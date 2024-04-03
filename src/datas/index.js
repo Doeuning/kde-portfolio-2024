@@ -291,10 +291,10 @@ export const gnbMenu = [
     url: "/portfolio",
     title: "Portfolio",
   },
-  {
-    url: "/arcade",
-    title: "Arcade",
-  },
+  // {
+  //   url: "/arcade",
+  //   title: "Arcade",
+  // },
   {
     url: "/contact",
     title: "Contact",

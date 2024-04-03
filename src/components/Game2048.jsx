@@ -32,7 +32,7 @@ const NumberBox = styled.div`
 function Game2048() {
   // number array
   const [numberArray, setNumberArray] = useState([]);
-  const [newObj, setNewObj] = useState(null);
+  const [newObj, setNewObj] = useState({});
   useEffect(() => {
     // 페이지 로드
     setNumberArray((prev) => [
@@ -97,6 +97,7 @@ function Game2048() {
 
     const num = getRandom(1, 2) * 2;
     let numX, numY;
+    let innerObj = {};
 
     const makePos = () => {
       numberArray.forEach((el) => {
@@ -105,7 +106,7 @@ function Game2048() {
           numY = getRandom(0, 3);
           if (el.posY !== numY) {
             console.log("포지선 정하기", numX, numY);
-            setNewObj({
+            innerObj = {
               num: num,
               posX: numX,
               posY: numY,
@@ -113,7 +114,16 @@ function Game2048() {
                 top: numY * 100,
                 left: numX * 100,
               },
-            });
+            };
+            // setNewObj(...prev, {
+            //   num: num,
+            //   posX: numX,
+            //   posY: numY,
+            //   position: {
+            //     top: numY * 100,
+            //     left: numX * 100,
+            //   },
+            // });
           } else {
             return false;
           }
@@ -124,7 +134,7 @@ function Game2048() {
     };
     makePos();
     console.log("숫자를 더할 위치입니다", numX, numY);
-    setNumberArray((prev) => [...prev, newObj]);
+    setNumberArray((prev) => [...prev, innerObj]);
   };
 
   // finish game
@@ -141,9 +151,13 @@ function Game2048() {
     >
       {numberArray.length &&
         numberArray.map((numObj, i) => {
+          // console.log("numberArray", numberArray);
           console.log("number object 생성", i, numObj);
           return (
-            <NumberBox key={i} style={numObj.position}>
+            <NumberBox
+              key={i}
+              style={{ top: numObj.position.top, left: numObj.position.left }}
+            >
               {numObj.num}
             </NumberBox>
           );
