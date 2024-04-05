@@ -37,8 +37,8 @@ const theme = {
     fontOleoScript: css`
       font-family: "Oleo Script Swash Caps", cursive;
     `,
-    D2Coding: css`
-      font-family: "D2Coding", sans-serif;
+    fontPixelifySans: css`
+      font-family: "Pixelify Sans", sans-serif;
     `,
     clearFix: css`
       &:after {
@@ -113,11 +113,17 @@ const theme = {
         }
       }
     `,
-    sprite: (url, repeat = "no-repeat", position = "0  0") => css`
-      background-image: url("#${url}");
+    sprite: (
+      url,
+      repeat = "no-repeat",
+      position = "0  0",
+      size = "auto auto"
+    ) => css`
+      /* background-image: url("#${url}"); */
+      background-image: url(${url});
       background-repeat: ${repeat};
       background-position: ${position};
-      background-size: 500px auto;
+      background-size: ${size};
     `,
   },
 };

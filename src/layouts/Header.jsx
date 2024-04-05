@@ -112,7 +112,7 @@ const StyledLink = styled.span`
   position: relative;
   margin: 0 auto;
   padding: 20px;
-  ${({ theme }) => theme.MIXINS.fontRaleway};
+  ${({ theme }) => theme.MIXINS.fontPixelifySans};
   font-weight: 700;
   font-size: 30px;
 `;

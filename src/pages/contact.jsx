@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const ContactWrap = styled.div`
+const Wrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@ function Contact(props) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: "-100px" }}
     >
-      <ContactWrap>
+      <Wrap>
         <List>
           <li>
             <div className="tit">Cell</div>
@@ -40,7 +40,7 @@ function Contact(props) {
             <a href="mailto:doeuning@gmail.com">doeuning@gmail.com</a>
           </li>
         </List>
-      </ContactWrap>
+      </Wrap>
     </motion.div>
   );
 }
