@@ -18,6 +18,7 @@ const Wrap = styled.div`
   width: 100%;
   min-height: 100vh;
   height: 100%;
+  box-sizing: border-box;
   /* ${({ theme }) =>
     theme.MIXINS.sprite(
       "/bg-aboutme.png",
@@ -33,12 +34,37 @@ const BgArea = styled.div`
   top: 0;
   right: 0;
   left: 0;
-  bottom: 0;
   width: 100%;
-  height: 100%;
-  background: url("/mountain2.gif") repeat-x center bottom / auto 160px,
-    url("/mountain1.gif") repeat-x center bottom / auto 300px,
-    url("/mountain0.gif") repeat-x center bottom / auto 400px;
+  min-height: 100%;
+  .bg {
+    z-index: -100;
+    width: 100%;
+    min-height: 100%;
+    background-color: #181653;
+  }
+  .dim {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 500;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+  }
+  .mountain {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: url("/mountain2.gif") repeat-x center bottom / auto 160px,
+      url("/mountain1.gif") repeat-x center bottom / auto 300px,
+      url("/mountain0.gif") repeat-x center bottom / auto 400px;
+  }
 `;
 
 const Sun = styled.div`
@@ -46,8 +72,8 @@ const Sun = styled.div`
   width: 64px;
   height: 64px;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 100%;
+  margin: -32px 0 0 -32px;
   background: url("/sun.gif") 0 0 / 100% auto no-repeat;
   transform: scale(1.3);
 `;
@@ -55,6 +81,7 @@ const Sun = styled.div`
 const ImageArea = styled.div`
   position: relative;
   flex: 0 1 100px;
+  min-height: 300vh;
   padding: 0 50px;
   ${({ theme }) =>
     theme.MIXINS.sprite(
@@ -76,30 +103,35 @@ const Me = styled.div`
 
 function Aboutme(props) {
   useEffect(() => {
-    let tl = gsap.timeline();
-    tl.to(".sun", {
-      y: `-=10`,
-      opacity: 1,
-      ease: "none",
+    let tl = gsap.timeline({
+      duration: 1,
       scrollTrigger: {
-        trigger: ".wrap",
+        trigger: ".tree",
         start: `top top`,
-        end: "+=1000",
+        end: "bottom bottom",
         scrub: 1,
+        // pin: true,
+        pin: true,
+        pinSpacing: true,
         invalidateOnRefresh: true,
         toggleActions: "play none none reverse",
         onToggle: (self) => {},
       },
     });
-    tl.fromTo(
-      ".bg",
-      {
-        backgroundColor: "#181653",
-      },
-      {
+    tl.to(".dim", {
+      opacity: 0,
+    })
+      .to(".bg", {
         backgroundColor: "#60C5F1",
-      }
-    );
+      })
+      .to(".sun", {
+        top: "50%",
+        ease: "none",
+      })
+      .to(".me", {
+        y: "100vh",
+        ease: "none",
+      });
   }, []);
 
   return (
@@ -111,11 +143,14 @@ function Aboutme(props) {
         exit={{ opacity: 0, y: "-100px" }}
       >
         <Wrap className="wrap">
-          <BgArea className="bg">
+          <BgArea>
+            <div className="bg"></div>
+            <div className="dim"></div>
+            <div className="mountain"></div>
             <Sun className="sun"></Sun>
           </BgArea>
-          <ImageArea>
-            <Me>
+          <ImageArea className="tree">
+            <Me className="me">
               <Image src={MyImage} fill />
             </Me>
           </ImageArea>
