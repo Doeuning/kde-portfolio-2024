@@ -12,9 +12,6 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import MyImage from "@public/me.gif";
 
 const Wrap = styled.div`
-  display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   width: 100%;
   min-height: 100vh;
   height: 100%;
@@ -29,6 +26,30 @@ const Wrap = styled.div`
   /* background: url("/plant.jpg") center center repeat-y; */
 `;
 
+const BgScroll = styled.div`
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0 -680px;
+  height: 400vh;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(10, 10, 80, 1) 0%,
+    rgba(18, 12, 86, 1) 24%,
+    rgba(146, 40, 181, 1) 81%,
+    rgba(255, 191, 38, 1) 100%
+  );
+  .test {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 50px;
+    height: 60px;
+    background: #fff;
+  }
+`;
+
 const BgArea = styled.div`
   position: fixed;
   top: 0;
@@ -36,12 +57,7 @@ const BgArea = styled.div`
   left: 0;
   width: 100%;
   min-height: 100%;
-  .bg {
-    z-index: -100;
-    width: 100%;
-    min-height: 100%;
-    background-color: #181653;
-  }
+
   .dim {
     position: fixed;
     top: 0;
@@ -58,12 +74,18 @@ const BgArea = styled.div`
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 100;
+    z-index: 300;
     width: 100%;
     height: 100%;
-    background: url("/mountain2.gif") repeat-x center bottom / auto 160px,
-      url("/mountain1.gif") repeat-x center bottom / auto 300px,
-      url("/mountain0.gif") repeat-x center bottom / auto 400px;
+    &.first {
+      background: url("/mountain0.gif") repeat-x center bottom / auto 400px;
+    }
+    &.second {
+      background: url("/mountain1.gif") repeat-x center bottom / auto 300px;
+    }
+    &.third {
+      background: url("/mountain2.gif") repeat-x center bottom / auto 160px;
+    }
   }
 `;
 
@@ -72,16 +94,26 @@ const Sun = styled.div`
   width: 64px;
   height: 64px;
   left: 50%;
-  top: 100%;
+  top: 40%;
+  z-index: 200;
   margin: -32px 0 0 -32px;
   background: url("/sun.gif") 0 0 / 100% auto no-repeat;
-  transform: scale(1.3);
+  transform: scale(1.3) translateY(50vh);
 `;
 
-const ImageArea = styled.div`
-  position: relative;
-  flex: 0 1 100px;
-  min-height: 300vh;
+const Star = styled.div`
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  width: 10px;
+  height: 10px;
+`;
+
+const Tree = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100px;
+  min-height: 100vh;
   padding: 0 50px;
   ${({ theme }) =>
     theme.MIXINS.sprite(
@@ -98,41 +130,126 @@ const Me = styled.div`
   right: 0;
   width: 100px;
   height: 200px;
-  transform: scale(1.1);
+  transform: scale(1.1) translateY(50vh);
 `;
 
 function Aboutme(props) {
+  const [stars, setStars] = useState([]);
+  const [starState, setStarState] = useState(false);
+  const getRandom = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
+  const makeStars = () => {
+    console.log(window.screen.width);
+    for (let i = 0; i < 30; i++) {
+      let offsetX = getRandom(0, window.screen.width);
+      let offsetY = getRandom(0, window.screen.height);
+      setStars((prev) => [...prev, [offsetX, offsetY]]);
+    }
+    setStarState(true);
+  };
+
   useEffect(() => {
-    let tl = gsap.timeline({
+    makeStars();
+
+    gsap.to(".dim", {
+      opacity: 0,
+      display: "none",
       duration: 1,
       scrollTrigger: {
-        trigger: ".tree",
-        start: `top top`,
+        trigger: ".bg",
+        start: "top top",
         end: "bottom bottom",
         scrub: 1,
-        // pin: true,
-        pin: true,
-        pinSpacing: true,
+        pin: false,
+        markers: true,
         invalidateOnRefresh: true,
         toggleActions: "play none none reverse",
-        onToggle: (self) => {},
       },
     });
-    tl.to(".dim", {
-      opacity: 0,
-    })
-      .to(".bg", {
-        backgroundColor: "#60C5F1",
-      })
-      .to(".sun", {
-        top: "50%",
-        ease: "none",
-      })
-      .to(".me", {
-        y: "100vh",
-        ease: "none",
-      });
+
+    gsap.to(".sun", {
+      y: "0",
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".bg",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        pin: false,
+        markers: true,
+        invalidateOnRefresh: true,
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    gsap.to(".mountain.second", {
+      y: "-70px",
+      duration: 1,
+      scrollTrigger: {
+        trigger: ".bg",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        pin: false,
+        markers: true,
+        invalidateOnRefresh: true,
+        toggleActions: "play none none reverse",
+      },
+    });
+    gsap.to(".mountain.first", {
+      y: "-120px",
+      scrollTrigger: {
+        trigger: ".bg",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+        pin: false,
+        markers: true,
+        invalidateOnRefresh: true,
+        toggleActions: "play none none reverse",
+      },
+    });
+
+    gsap.to(".me", {
+      y: "0",
+      scrollTrigger: {
+        trigger: ".bg",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 5,
+        pin: false,
+        markers: true,
+        invalidateOnRefresh: true,
+        toggleActions: "play none none reverse",
+      },
+      ease: "none",
+    });
+    console.log("page loaded");
   }, []);
+
+  useEffect(() => {
+    if (starState) {
+      const starArr = gsap.utils.toArray(".star");
+      starArr.forEach((element) => {
+        gsap.to(element, {
+          y: "-100vh",
+          scrollTrigger: {
+            trigger: ".bg",
+            start: "top top",
+            end: "max",
+            scrub: 5,
+            invalidateOnRefresh: true,
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
+      setStarState(false);
+      console.log("star state changed");
+    }
+  }, [starState]);
 
   return (
     <div>
@@ -143,17 +260,29 @@ function Aboutme(props) {
         exit={{ opacity: 0, y: "-100px" }}
       >
         <Wrap className="wrap">
+          <BgScroll className="bg">
+            <div className="test"></div>
+          </BgScroll>
           <BgArea>
-            <div className="bg"></div>
             <div className="dim"></div>
-            <div className="mountain"></div>
+            <div className="mountain first"></div>
+            <div className="mountain second"></div>
+            <div className="mountain third"></div>
             <Sun className="sun"></Sun>
+            {stars.map((pos) => {
+              return (
+                <Star
+                  className="star"
+                  style={{ top: pos[1], left: pos[0] }}
+                ></Star>
+              );
+            })}
           </BgArea>
-          <ImageArea className="tree">
+          <Tree className="tree">
             <Me className="me">
               <Image src={MyImage} fill />
             </Me>
-          </ImageArea>
+          </Tree>
         </Wrap>
       </motion.div>
     </div>

@@ -9,6 +9,7 @@ const theme = {
   COLORS: {
     white: "#fff",
     black: "#111",
+    realblack: "#000",
     red: "red",
     coral: "coral",
     blue: "#3C44ED",

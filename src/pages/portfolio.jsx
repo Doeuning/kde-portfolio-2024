@@ -154,7 +154,7 @@ const List = styled.ul`
         box-sizing: border-box;
         width: 400px;
         padding: 30px;
-        background: ${({ theme }) => theme.COLORS.gray30};
+        background: ${({ theme }) => theme.COLORS.realblack};
         font-size: 18px;
         color: ${({ theme }) => theme.COLORS.white};
         transition: all 0.3s 0.4s;
