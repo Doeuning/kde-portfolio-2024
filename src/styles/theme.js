@@ -39,7 +39,10 @@ const theme = {
       font-family: "Oleo Script Swash Caps", cursive;
     `,
     fontPixelifySans: css`
-      font-family: "Pixelify Sans", sans-serif;
+      font-family: "Pixelify Sans", "DungGeunMo", sans-serif;
+    `,
+    fontDungGeunMo: css`
+      font-family: "DungGeunMo";
     `,
     clearFix: css`
       &:after {

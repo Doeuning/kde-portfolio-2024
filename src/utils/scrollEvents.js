@@ -163,26 +163,44 @@ export const horizontalScroll = (getElements, type = "default") => {
 
 export const scrollFixElement = (getElements) => {
   const elements = gsap.utils.toArray(getElements);
-
+  ScrollTrigger.defaults({
+    scrub: 3,
+    immediateRender: false,
+    invalidateOnRefresh: true,
+    toggleActions: "play none none reverse",
+  });
   const moveFix = (element) => {
-    let tl = gsap.timeline();
-
-    ScrollTrigger.create({
-      trigger: element,
-      pin: element,
-      pinSpacing: "margin",
-      start: "center center",
-      end: "+=700",
-      scrub: 1,
-      invalidateOnRefresh: true,
-      toggleActions: "play none none reverse",
-    });
-    tl.from(element, {
-      opacity: 0,
-    }).to(element, {
-      opacity: 1,
+    gsap.to(element, {
+      duration: 5,
       ease: "none",
+      scrollTrigger: {
+        trigger: element,
+        pin: element,
+        pinSpacing: true,
+        anticipatePin: 1,
+        start: "center center",
+        end: "+=700",
+        scrub: 0.5,
+        toggleClass: "active",
+      },
     });
+
+    gsap.fromTo(
+      element,
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: element,
+          anticipatePin: 1,
+          start: "top bottom",
+          end: "+=100",
+        },
+      }
+    );
   };
   elements.forEach((element, i) => moveFix(element));
 };
