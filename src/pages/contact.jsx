@@ -13,7 +13,7 @@ const Wrap = styled.div`
 
 const List = styled.ul`
   font-size: 20px;
-  ${({ theme }) => theme.MIXINS.fontPixelifySans};
+  ${({ theme }) => theme.MIXINS.fontDungGeunMo};
   color: #fff;
   li ~ li {
     margin-top: 30px;

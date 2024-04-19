@@ -284,7 +284,7 @@ export const portfolioData = [
 
 export const gnbMenu = [
   {
-    url: "/aboutme",
+    url: "/",
     title: "About Me",
   },
   {
@@ -335,7 +335,7 @@ export const AboutMeData = [
     자격증: {
       정보처리기사: {
         취득일자: "2022.11.25",
-        취득기분: "상",
+        취득기분: "최상",
       },
     },
   },

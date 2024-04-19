@@ -12,14 +12,16 @@ const TypeBtn = styled.button`
   bottom: 100px;
   left: 0;
   z-index: 100;
-  width: 130px;
-  padding: 10px 20px;
-  background: ${({ theme }) => theme.COLORS.gray20};
+  width: 150px;
+  border: 4px solid #fff;
+  padding: 20px;
+  background: ${({ theme }) => theme.COLORS.gray10};
   font-weight: 700;
   font-size: 14px;
   color: ${({ theme }) => theme.COLORS.white};
   transition: all 0.3s;
   box-shadow: ${({ theme }) => theme.MIXINS.boxShadow};
+  ${({ theme }) => theme.MIXINS.fontDungGeunMo};
   &:hover {
     background: ${({ theme }) => theme.COLORS.gray50};
     color: ${({ theme }) => theme.COLORS.black};
@@ -27,7 +29,8 @@ const TypeBtn = styled.button`
 `;
 const BgText = styled.div`
   .txt {
-    ${({ theme }) => theme.MIXINS.fontPixelifySans};
+    ${({ theme }) => theme.MIXINS.fontDungGeunMo};
+
     opacity: 0.5;
     font-size: 150px;
     line-height: 100vh;
@@ -517,6 +520,6 @@ function Portfolio(props) {
   );
 }
 
-Portfolio.bgColor = "#777";
+Portfolio.bgColor = "#444";
 
 export default Portfolio;
