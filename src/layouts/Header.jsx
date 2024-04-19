@@ -10,8 +10,9 @@ const Button = styled.button`
   display: block;
   position: relative;
   z-index: 1100;
-  width: 50px;
-  height: 50px;
+  width: 58px;
+  height: 58px;
+  border: 4px solid ${({ theme }) => theme.COLORS.black};
   background: ${({ theme }) => theme.COLORS.main};
   color: #fff;
   transition: all 0.3s;
@@ -20,7 +21,7 @@ const Button = styled.button`
     content: "";
     position: absolute;
     top: 15px;
-    right: 10px;
+    right: 11px;
     width: 30px;
     height: 5px;
     background: ${({ theme }) => theme.COLORS.black};
@@ -32,7 +33,7 @@ const Button = styled.button`
     content: "";
     position: absolute;
     top: 30px;
-    right: 10px;
+    right: 11px;
     width: 30px;
     height: 5px;
     background: ${({ theme }) => theme.COLORS.black};
@@ -40,18 +41,19 @@ const Button = styled.button`
     transform-origin: center center;
   }
   .is-open & {
-    background: #fff;
-    color: #000;
-    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+    border-color: none;
+    background: none;
+    color: #fff;
+    /* box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px; */
     &::before {
-      margin-top: 5px;
+      margin-top: 7px;
       transform: rotate(45deg);
-      background: #000;
+      background: #fff;
     }
     &::after {
-      margin-top: -10px;
+      margin-top: -8px;
       transform: rotate(-45deg);
-      background: #000;
+      background: #fff;
     }
   }
 `;

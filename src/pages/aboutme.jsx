@@ -9,6 +9,7 @@ import usDetectDevice from "@src/hooks/usDetectDevice";
 import { gsap } from "gsap/dist/gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
+import { AboutMeData } from "../datas";
 import MyImage from "@public/aboutme/me.gif";
 
 ScrollTrigger.defaults({
@@ -139,39 +140,90 @@ const Me = styled.div`
   transform: scale(1.1) translateY(50vh);
 `;
 
-const TxtArea = styled.ul`
+const TxtArea = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   margin-left: 35%;
   z-index: 400;
   max-width: 500px;
-  padding-top: 100vh;
+  padding-top: 2000px;
   word-break: keep-all;
+  .inner {
+    position: fixed;
+    top: 25%;
+    width: 500px;
+  }
+`;
 
+const DataArea = styled.ul`
+  position: relative;
+  z-index: 5;
   li {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    position: relative;
-    flex: 0 0 auto;
-    max-width: 600px;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 200vh;
+    &:first-child {
+      position: relative;
+    }
     .box {
       opacity: 0;
-      /* min-height: 400px; */
+      ${({ theme }) => theme.MIXINS.fontDungGeunMo};
+      box-sizing: border-box;
+      max-width: 100%;
+      width: 100%;
+      min-height: 500px;
+      /* border: 4px solid ${({ theme }) => theme.COLORS.gray10}; */
       border: 4px solid #fff;
       padding: 20px;
-      background: #000;
+      background: #120c56;
       font-weight: 500;
       font-size: 16px;
       color: #fff;
+      pre {
+        white-space: pre-wrap;
+      }
+      &.on {
+        opacity: 1;
+      }
     }
-    &.mo {
+  }
+`;
+const Buttons = styled.ul`
+  position: absolute;
+  left: -120px;
+  li {
+    width: 120px;
+    &:last-child {
+      .btn {
+        margin-bottom: 0;
+        border-bottom-width: 4px;
+      }
+    }
+    .btn {
+      display: block;
+      position: relative;
+      z-index: 10;
+      box-sizing: border-box;
       width: 100%;
-      .box {
-        .info-inner {
-          padding: 30px;
-        }
+      margin-bottom: -4px;
+      border: solid ${({ theme }) => theme.COLORS.gray10};
+      border-width: 4px 0 4px 4px;
+      padding: 10px;
+      background: ${({ theme }) => theme.COLORS.gray20};
+      color: ${({ theme }) => theme.COLORS.gray40};
+      font-weight: 700;
+      font-size: 16px;
+      text-align: left;
+      transform-origin: right top;
+      &.on {
+        z-index: 20;
+        border-color: #fff;
+        border-right: none;
+        background: #120c56;
+        color: #fff;
+        transform: scale(1.15) translateX(4px);
       }
     }
   }
@@ -180,6 +232,8 @@ const TxtArea = styled.ul`
 function Aboutme(props) {
   const [stars, setStars] = useState([]);
   const [starState, setStarState] = useState(false);
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
   const starNum = 50;
   const getRandom = (min, max) => {
     min = Math.ceil(min);
@@ -195,58 +249,7 @@ function Aboutme(props) {
     }
     setStarState(true);
   };
-
-  useEffect(() => {
-    makeStars();
-
-    const boxes = gsap.utils.toArray(".txt .box");
-    boxes.forEach((element) => {
-      gsap.to(element, {
-        duration: 1,
-        scrollTrigger: {
-          trigger: element,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          start: "center center",
-          end: "+=600",
-          scrub: 5,
-        },
-      });
-
-      const tl = gsap.timeline({});
-      tl.fromTo(
-        element,
-        {
-          opacity: 0,
-          scale: 0.8,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: element,
-            anticipatePin: 1,
-            start: "top 60%",
-            end: "+=300",
-            scrub: 1,
-          },
-        }
-      );
-      tl.to(element, {
-        opacity: 0,
-        scale: 0.8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: element,
-          anticipatePin: 1,
-          start: "top 40%",
-          end: "+=300",
-          scrub: 1,
-        },
-      });
-    });
+  const bgAnimation = () => {
     gsap.to(".dim", {
       opacity: 0,
       display: "none",
@@ -317,8 +320,18 @@ function Aboutme(props) {
       },
       ease: "none",
     });
+  };
+  const pageOnAction = (num) => {
+    setPage(num);
+  };
+  useEffect(() => {
+    makeStars();
+    bgAnimation();
+    setData(AboutMeData);
     console.log("page loaded");
   }, []);
+
+  // useEffect(() => {}, [page]);
 
   useEffect(() => {
     if (starState) {
@@ -344,7 +357,7 @@ function Aboutme(props) {
   return (
     <div>
       <motion.div
-        key={"ddd"}
+        key={"aboutme"}
         initial={{ opacity: 0, y: "100px" }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: "-100px" }}
@@ -374,113 +387,41 @@ function Aboutme(props) {
             </Me>
           </Tree>
           <TxtArea className="txt">
-            <li>
-              <div className="box">
-                <pre>
-                  // 경력.js
-                  <br />
-                  <br />
-                  {`{
-  "경력": "5년 3개월"
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 기술.js
-                  <br />
-                  <br />
-                  {`{
-  "HTML": "상",
-  "CSS": "상",
-  "JS": "중",
-  "Vue": "하",
-  "React": "하",
-  "git": "중",
-  "svn": "중"
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 자격증.js
-                  <br />
-                  <br />
-                  {`{
-  "자격증": "정보처리기사"
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 강점.js
-                  <br />
-                  <br />
-                  {`{
-  "강점": [
-      "일정준수",
-      "고객 및 타 파트와 원활한 커뮤니케이션",
-      "끈기"
-    ]
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 특이사항.js
-                  <br />
-                  <br />
-                  {`{
-  "특이사항": [
-      "시각장애 경증",
-      "각막혼탁으로 흰 종이에 검은 글씨 및 
-      밝은 화면을 보는 데 어려움이 있음"      
-    ],
-  "선호 작업": "다크 모드"
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 취미.js
-                  <br />
-                  <br />
-                  {`{
-  "취미": [
-      "프리다이빙", "보드게임", "요리", "바둑(입문)", 
-      "그림", "여행", "수공예", "테스트만들기", "성대모사"
-    ]
-}`}
-                </pre>
-              </div>
-            </li>
-            <li>
-              <div className="box">
-                <pre>
-                  // 기타.js
-                  <br />
-                  <br />
-                  {`{
-  "좋아하는 것": [
-      "자연", "물", "동물", "푸른 하늘", "우주", "귀여운 것", "웃긴 것"
-    ],
-  "싫어하는 것": [
-      "거짓말", "가식", "억지 귀여움", "안 웃긴 것"
-    ]
-}`}
-                </pre>
-              </div>
-            </li>
+            <div className="inner">
+              <Buttons>
+                {data &&
+                  data.map((obj, i) => {
+                    return (
+                      <li key={`data-${i}`}>
+                        <button
+                          type="button"
+                          className={`btn${page === i ? " on" : ""}`}
+                          onClick={() => {
+                            pageOnAction(i);
+                          }}
+                        >
+                          {Object.keys(obj)[0]}
+                        </button>
+                      </li>
+                    );
+                  })}
+              </Buttons>
+              <DataArea>
+                {data &&
+                  data.map((obj, i) => {
+                    return (
+                      <li key={`data-${i}`}>
+                        <div className={`box${page === i ? " on" : ""}`}>
+                          <pre>
+                            <br />
+                            {JSON.stringify(obj, null, 4)}
+                          </pre>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </DataArea>
+            </div>
           </TxtArea>
         </Wrap>
       </motion.div>
