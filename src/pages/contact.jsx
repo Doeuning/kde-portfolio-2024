@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { motion } from "framer-motion";
 
 const Wrap = styled.div`
   display: flex;
@@ -34,25 +33,18 @@ const List = styled.ul`
 `;
 function Contact(props) {
   return (
-    <motion.div
-      key={"contact"}
-      initial={{ opacity: 0, y: "100px" }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: "-100px" }}
-    >
-      <Wrap>
-        <List>
-          <li>
-            <div className="tit cell">Cell</div>
-            <a href="tel:010-6541-1552">010.6541.1552</a>
-          </li>
-          <li>
-            <div className="tit email">Email</div>
-            <a href="mailto:doeuning@gmail.com">doeuning@gmail.com</a>
-          </li>
-        </List>
-      </Wrap>
-    </motion.div>
+    <Wrap>
+      <List>
+        <li>
+          <div className="tit cell">Cell</div>
+          <a href="tel:010-6541-1552">010.6541.1552</a>
+        </li>
+        <li>
+          <div className="tit email">Email</div>
+          <a href="mailto:doeuning@gmail.com">doeuning@gmail.com</a>
+        </li>
+      </List>
+    </Wrap>
   );
 }
 

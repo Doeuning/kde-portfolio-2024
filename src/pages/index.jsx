@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect, Fragment } from "react";
-import { motion } from "framer-motion";
 import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 import usDetectDevice from "@src/hooks/usDetectDevice";
@@ -277,7 +276,7 @@ function Aboutme(props) {
     setStarState(true);
   };
   const bgAnimation = () => {
-    const txt = gsap.utils.selector(".txt");
+    const txt = document.querySelector(".txt");
     gsap.to(".dim", {
       opacity: 0,
       display: "none",
@@ -336,7 +335,12 @@ function Aboutme(props) {
       },
       ease: "none",
     });
-
+    // 어디서 나온지 모를 356이란 높이...
+    console.log("bg scrollHeight", document.querySelector(".bg").clientHeight);
+    console.log(
+      "total height",
+      document.querySelector(".bg").scrollHeight + window.innerHeight
+    );
     gsap.to(".bg", {
       y: -document.querySelector(".bg").scrollHeight + window.innerHeight,
       scrollTrigger: {
@@ -345,12 +349,15 @@ function Aboutme(props) {
         end: "bottom bottom",
         scrub: 5,
         pin: false,
+        onUpdate: ({ progress, direction, isActive }) => {
+          console.log("update", direction, isActive, progress);
+        },
         onToggle: ({ progress, direction, isActive }) => {
-          console.log(direction);
+          console.log(direction, isActive, progress);
           if (!isActive && direction > 0) {
-            document.querySelector(".txt").classList.add("on");
+            txt.classList.add("on");
           } else {
-            document.querySelector(".txt").classList.remove("on");
+            txt.classList.remove("on");
           }
         },
       },
@@ -391,77 +398,65 @@ function Aboutme(props) {
   }, [starState]);
 
   return (
-    <div>
-      <motion.div
-        key={"aboutme"}
-        initial={{ opacity: 0, y: "100px" }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: "-100px" }}
-      >
-        <Wrap className="wrap">
-          <BgScroll className="bg">
-            <div className="test"></div>
-          </BgScroll>
-          <BgArea>
-            <div className="dim"></div>
-            <div className="mountain first"></div>
-            <div className="mountain second"></div>
-            <div className="mountain third"></div>
-            <Sun className="sun"></Sun>
-            {stars.map((pos) => {
-              return (
-                <Star
-                  className="star"
-                  style={{ top: pos[1], left: pos[0] }}
-                ></Star>
-              );
-            })}
-          </BgArea>
-          <Tree className="tree">
-            <Me className="me">
-              <Image src={MyImage} fill />
-            </Me>
-          </Tree>
-          <TxtArea className="txt">
-            <div className="inner">
-              <Buttons>
-                {data &&
-                  data.map((obj, i) => {
-                    return (
-                      <li key={`data-${i}`}>
-                        <button
-                          type="button"
-                          className={`btn${page === i ? " on" : ""}`}
-                          onClick={() => {
-                            pageOnAction(i);
-                          }}
-                        >
-                          {Object.keys(obj)[0]}
-                        </button>
-                      </li>
-                    );
-                  })}
-              </Buttons>
-              <DataArea>
-                {data &&
-                  data.map((obj, i) => {
-                    return (
-                      <li key={`data-${i}`}>
-                        <div className={`box${page === i ? " on" : ""}`}>
-                          <pre>
-                            <br />
-                            {JSON.stringify(obj, null, 4)}
-                          </pre>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </DataArea>
-            </div>
-          </TxtArea>
-        </Wrap>
-      </motion.div>
-    </div>
+    <Wrap className="wrap">
+      <BgScroll className="bg">
+        <div className="test"></div>
+      </BgScroll>
+      <BgArea>
+        <div className="dim"></div>
+        <div className="mountain first"></div>
+        <div className="mountain second"></div>
+        <div className="mountain third"></div>
+        <Sun className="sun"></Sun>
+        {stars.map((pos) => {
+          return (
+            <Star className="star" style={{ top: pos[1], left: pos[0] }}></Star>
+          );
+        })}
+      </BgArea>
+      <Tree className="tree">
+        <Me className="me">
+          <Image src={MyImage} fill />
+        </Me>
+      </Tree>
+      <TxtArea className="txt">
+        <div className="inner">
+          <Buttons>
+            {data &&
+              data.map((obj, i) => {
+                return (
+                  <li key={`data-${i}`}>
+                    <button
+                      type="button"
+                      className={`btn${page === i ? " on" : ""}`}
+                      onClick={() => {
+                        pageOnAction(i);
+                      }}
+                    >
+                      {Object.keys(obj)[0]}
+                    </button>
+                  </li>
+                );
+              })}
+          </Buttons>
+          <DataArea>
+            {data &&
+              data.map((obj, i) => {
+                return (
+                  <li key={`data-${i}`}>
+                    <div className={`box${page === i ? " on" : ""}`}>
+                      <pre>
+                        <br />
+                        {JSON.stringify(obj, null, 4)}
+                      </pre>
+                    </div>
+                  </li>
+                );
+              })}
+          </DataArea>
+        </div>
+      </TxtArea>
+    </Wrap>
   );
 }
 

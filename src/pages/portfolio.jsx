@@ -2,8 +2,11 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useState, useEffect, Fragment } from "react";
 import { portfolioData } from "../datas";
-import { motion } from "framer-motion";
-import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
+import {
+  parallaxElement,
+  scrollFixElement,
+  horizontalScroll,
+} from "@utils/scrollEvents";
 import Image from "next/image";
 import usDetectDevice from "@src/hooks/usDetectDevice";
 
@@ -398,20 +401,17 @@ function Portfolio(props) {
   const [viewListType, setViewListType] = useState(true);
   const changeType = () => {
     setViewListType((prevState) => !prevState);
-    console.log(window);
     window.scrollTo(0, 0);
   };
   const viewAction = () => {
     horizontalScroll(".horizontal-txt .txt", "background");
-    scrollFixElement(".portfolio-list .box");
+    scrollFixElement(".portfolio-list .box", ".portfolio-list");
+    // parallaxElement(".portfolio-list .box");
   };
 
   const stopViewAction = () => {
-    // 모드 변경 시 gsap 실행 수정중
-
     return () => {
       ScrollTrigger.refresh();
-      window.removeEventListener("scroll");
     };
   };
 
@@ -419,7 +419,7 @@ function Portfolio(props) {
     setData(portfolioData);
   }, []);
   useEffect(() => {
-    if (viewListType) {
+    if (data && viewListType) {
       viewAction();
     } else {
       stopViewAction();
@@ -432,89 +432,82 @@ function Portfolio(props) {
         <TypeBtn className={viewListType ? "on" : ""} onClick={changeType}>
           {viewListType ? "목록으로 보기" : "이미지로 보기"}
         </TypeBtn>
-        <motion.div
-          key={viewListType}
-          initial={{ opacity: 0, y: "100px" }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: "-100px" }}
-        >
-          {viewListType ? (
-            <div>
-              <BgText className="horizontal-txt">
-                <div className="txt">
-                  Success doesn’t come from what you do occasionally, but what
-                  you do consistently.
-                </div>
-              </BgText>
-              <List className="portfolio-list">
-                {data.map((item, i) => {
-                  return (
-                    <li key={item.id} className={item.isMobile ? "mo" : ""}>
-                      <Box item={item} />
-                    </li>
-                  );
-                })}
-              </List>
-            </div>
-          ) : (
-            <Table>
-              <colgroup>
-                <col style={{ width: "12%" }} />
-                <col style={{ width: "8%" }} />
-                <col style={{ width: "12%" }} />
-                <col style={{ width: "8%" }} />
-                <col style={{ width: "auto" }} />
-                <col style={{ width: "15%" }} />
-                <col style={{ width: "0" }} />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th>투입 기간</th>
-                  <th>타입</th>
-                  <th>프로젝트명</th>
-                  <th>역할</th>
-                  <th>설명</th>
-                  <th>사용 기술</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, i) => {
-                  return (
-                    <tr key={item.id}>
-                      <td>{item.period}</td>
+        {viewListType ? (
+          <div>
+            <BgText className="horizontal-txt">
+              <div className="txt">
+                Success doesn’t come from what you do occasionally, but what you
+                do consistently.
+              </div>
+            </BgText>
+            <List className="portfolio-list">
+              {data.map((item, i) => {
+                return (
+                  <li key={item.id} className={item.isMobile ? "mo" : ""}>
+                    <Box item={item} />
+                  </li>
+                );
+              })}
+            </List>
+          </div>
+        ) : (
+          <Table>
+            <colgroup>
+              <col style={{ width: "12%" }} />
+              <col style={{ width: "8%" }} />
+              <col style={{ width: "12%" }} />
+              <col style={{ width: "8%" }} />
+              <col style={{ width: "auto" }} />
+              <col style={{ width: "15%" }} />
+              <col style={{ width: "0" }} />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>투입 기간</th>
+                <th>타입</th>
+                <th>프로젝트명</th>
+                <th>역할</th>
+                <th>설명</th>
+                <th>사용 기술</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={item.id}>
+                    <td>{item.period}</td>
+                    <td>
+                      {item.type === "project" ? "Project" : "Maintenance"}
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.role}</td>
+                    <td className="desc">
+                      <div className="tit">{item.desc}</div>
+                      <div className="detail">{item.detail}</div>
+                    </td>
+                    <td>
+                      {item.tags.map((el, i) => {
+                        if (i >= item.tags.length - 1) {
+                          return el;
+                        } else {
+                          return el + ", ";
+                        }
+                      })}
+                    </td>
+                    {item.url ? (
                       <td>
-                        {item.type === "project" ? "Project" : "Maintenance"}
+                        <Link href={item.url} target="_blank"></Link>
                       </td>
-                      <td>{item.title}</td>
-                      <td>{item.role}</td>
-                      <td className="desc">
-                        <div className="tit">{item.desc}</div>
-                        <div className="detail">{item.detail}</div>
-                      </td>
-                      <td>
-                        {item.tags.map((el, i) => {
-                          if (i >= item.tags.length - 1) {
-                            return el;
-                          } else {
-                            return el + ", ";
-                          }
-                        })}
-                      </td>
-                      {item.url ? (
-                        <td>
-                          <Link href={item.url} target="_blank"></Link>
-                        </td>
-                      ) : (
-                        <td></td>
-                      )}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
-        </motion.div>
+                    ) : (
+                      <td></td>
+                    )}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
       </div>
     )
   );

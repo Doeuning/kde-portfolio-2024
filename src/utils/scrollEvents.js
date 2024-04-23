@@ -118,7 +118,7 @@ export const staggerText = (
   });
 };
 
-// type: default || background
+// type: default || background`
 export const horizontalScroll = (getElements, type = "default") => {
   const moveLeft = (element) => {
     const scrollLeft = element.scrollWidth; // + element.offsetWidth
@@ -140,7 +140,7 @@ export const horizontalScroll = (getElements, type = "default") => {
       .timeline({
         scrollTrigger: {
           trigger: wrap,
-          start: `center center`,
+          start: `top top`,
           end: `bottom+=${totalHeight} 50%`,
           scrub: 1,
           pin: true,
@@ -149,40 +149,73 @@ export const horizontalScroll = (getElements, type = "default") => {
           toggleActions: "play none none reverse",
         },
       })
-      .to(element, {
-        x: -scrollLeft,
-        y: "auto",
-        immediateRender: false,
-        overwrite: "auto",
-        duration: 1,
-      });
+      .fromTo(
+        element,
+        {
+          x: 0,
+        },
+        {
+          x: -scrollLeft,
+          immediateRender: false,
+          duration: 1,
+        }
+      );
   };
   const elements = gsap.utils.toArray(getElements);
   elements.forEach((element) => moveLeft(element));
 };
 
-export const scrollFixElement = (getElements) => {
+export const scrollFixElement = (getElements, parent) => {
   const elements = gsap.utils.toArray(getElements);
   ScrollTrigger.defaults({
-    scrub: 3,
+    scrub: 1,
     immediateRender: false,
     invalidateOnRefresh: true,
     toggleActions: "play none none reverse",
   });
   const moveFix = (element) => {
+    const tl = gsap.timeline();
+    tl.fromTo(
+      element,
+      {
+        yPercent: 50,
+      },
+      {
+        yPercent: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element,
+          start: "top bottom",
+          end: "center center",
+        },
+      }
+    )
+      .to(element, {
+        duration: 1,
+        scrollTrigger: {
+          trigger: element,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          start: "center center",
+          end: "+=" + window.innerHeight,
+          toggleClass: "active",
+          markers: true,
+        },
+      })
+      .to(element, {
+        yPercent: -50,
+        duration: 1,
+        scrollTrigger: {
+          trigger: element,
+          start: `center center+=${window.innerHeight}`,
+          end: "bottom top",
+        },
+      });
+
     gsap.to(element, {
       duration: 5,
       ease: "none",
-      scrollTrigger: {
-        trigger: element,
-        pin: element,
-        pinSpacing: true,
-        anticipatePin: 1,
-        start: "center center",
-        end: "+=700",
-        scrub: 0.5,
-        toggleClass: "active",
-      },
     });
 
     gsap.fromTo(
@@ -198,6 +231,7 @@ export const scrollFixElement = (getElements) => {
           anticipatePin: 1,
           start: "top bottom",
           end: "+=100",
+          scrub: false,
         },
       }
     );
