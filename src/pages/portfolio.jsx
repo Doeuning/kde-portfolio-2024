@@ -401,7 +401,7 @@ function Portfolio(props) {
   };
   const viewAction = () => {
     horizontalScroll(".horizontal-txt .txt", "background");
-    scrollFixElement(".portfolio-list .box", ".portfolio-list");
+    scrollFixElement(".portfolio-list .box");
   };
 
   const stopViewAction = () => {

@@ -163,10 +163,10 @@ export const horizontalScroll = (getElements, type = "default") => {
   elements.forEach((element) => moveLeft(element));
 };
 
-export const scrollFixElement = (getElements, parent) => {
+export const scrollFixElement = (getElements) => {
   const elements = gsap.utils.toArray(getElements);
   ScrollTrigger.defaults({
-    scrub: 1,
+    scrub: 10,
     immediateRender: false,
     invalidateOnRefresh: true,
     toggleActions: "play none none reverse",
@@ -181,34 +181,57 @@ export const scrollFixElement = (getElements, parent) => {
       },
       {
         yPercent: 0,
+        duration: 1,
         opacity: 1,
         scrollTrigger: {
           trigger: element,
           start: "top bottom",
-          end: "center 60%",
+          end: "center 55%",
+          markers: true,
+          // onEnter: () => {
+          //   console.log("   element enter start");
+          // },
+          // onLeave: () => {
+          //   console.log("   element enter end");
+          // },
         },
       }
-    )
-      .to(element, {
-        scrollTrigger: {
-          trigger: element,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-          start: "center center",
-          end: "+=700",
-          toggleClass: "active",
+    ).to(element, {
+      yPercent: 0,
+      duration: 1,
+      scrollTrigger: {
+        trigger: element,
+        start: "center center",
+        end: "+=700",
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        toggleClass: "active",
+        onEnter: () => {
+          console.log("   fix start");
         },
-      })
-      .to(element, {
-        yPercent: -50,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: element,
-          start: `center 40%`,
-          end: "bottom top",
+        onLeave: () => {
+          console.log("   fix end");
         },
-      });
+      },
+    });
+    gsap.to(element, {
+      yPercent: -50,
+      duration: 1,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: element,
+        start: `center 40%`,
+        end: "+=700",
+        markers: true,
+        onEnter: () => {
+          console.log("   out start");
+        },
+        onLeave: () => {
+          console.log("   out end");
+        },
+      },
+    });
   };
   elements.forEach((element, i) => moveFix(element));
 };
