@@ -61,14 +61,14 @@ const BgScroll = styled.div`
     rgba(77, 162, 178, 1) 70%,
     rgba(0, 142, 255, 1) 100%
   );
-  .test {
+  /* .test {
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 50px;
     height: 60px;
     background: #fff;
-  }
+  } */
 `;
 
 const BgArea = styled.div`
@@ -260,6 +260,10 @@ function Aboutme(props) {
   const [starState, setStarState] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
+  const [mousePos, setMousePos] = useState({
+    x: 0,
+    y: 0,
+  });
   const starNum = 50;
   const getRandom = (min, max) => {
     min = Math.ceil(min);
@@ -347,13 +351,18 @@ function Aboutme(props) {
         trigger: ".txt",
         start: "top top",
         end: "bottom bottom",
-        scrub: 5,
-        pin: false,
+        scrub: 1,
         onUpdate: ({ progress, direction, isActive }) => {
           console.log("update", direction, isActive, progress);
+          if (progress > 0.9 && direction > 0) {
+            console.log("progress is bigger than 0.9");
+            txt.classList.add("on");
+          } else {
+            txt.classList.remove("on");
+          }
         },
         onToggle: ({ progress, direction, isActive }) => {
-          console.log(direction, isActive, progress);
+          console.log("toggle done", direction, isActive, progress);
           if (!isActive && direction > 0) {
             txt.classList.add("on");
           } else {
@@ -367,14 +376,40 @@ function Aboutme(props) {
   const pageOnAction = (num) => {
     setPage(num);
   };
+
+  const handleMove = (e) => {
+    const diffX = e.clientX - mousePos.x;
+    const diffY = e.clientY - mousePos.y;
+    const target = e.target;
+
+    target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
+    if (mousePos.x !== 0 && mousePos.y !== 0) {
+      gsap.to(e.currentTarget, {
+        x: diffX * 10,
+        y: diffY * 5,
+        duration: 2,
+        scale: 2,
+        ease: "Expo.easeOut",
+      });
+    }
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
+  const handleLeave = (e) => {
+    gsap.to(e.currentTarget, {
+      x: 0,
+      y: 0,
+      duration: 2,
+      scale: 1,
+      ease: "Expo.easeOut",
+    });
+  };
+
   useEffect(() => {
     makeStars();
     bgAnimation();
     setData(AboutMeData);
     console.log("page loaded");
   }, []);
-
-  // useEffect(() => {}, [page]);
 
   useEffect(() => {
     if (starState) {
@@ -393,15 +428,12 @@ function Aboutme(props) {
         });
       });
       setStarState(false);
-      console.log("star state changed");
     }
   }, [starState]);
 
   return (
     <Wrap className="wrap">
-      <BgScroll className="bg">
-        <div className="test"></div>
-      </BgScroll>
+      <BgScroll className="bg"></BgScroll>
       <BgArea>
         <div className="dim"></div>
         <div className="mountain first"></div>

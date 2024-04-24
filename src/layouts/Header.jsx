@@ -122,40 +122,10 @@ const StyledLink = styled.span`
 function HeaderWrap() {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(null);
-  const [mousePos, setMousePos] = useState({
-    x: 0,
-    y: 0,
-  });
   const handleClick = () => {
     setOpen((prevState) => !prevState);
   };
   const router = useRouter();
-  const handleMove = (e) => {
-    const diffX = e.clientX - mousePos.x;
-    const diffY = e.clientY - mousePos.y;
-    const target = e.target;
-
-    target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
-    if (mousePos.x !== 0 && mousePos.y !== 0) {
-      gsap.to(e.currentTarget, {
-        x: diffX * 10,
-        y: diffY * 5,
-        duration: 2,
-        scale: 2,
-        ease: "Expo.easeOut",
-      });
-    }
-    setMousePos({ x: e.clientX, y: e.clientY });
-  };
-  const handleLeave = (e) => {
-    gsap.to(e.currentTarget, {
-      x: 0,
-      y: 0,
-      duration: 2,
-      scale: 1,
-      ease: "Expo.easeOut",
-    });
-  };
   const goToPage = (url) => {
     router.push({
       pathname: `/${url}`,

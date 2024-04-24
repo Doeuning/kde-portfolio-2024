@@ -2,11 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useState, useEffect, Fragment } from "react";
 import { portfolioData } from "../datas";
-import {
-  parallaxElement,
-  scrollFixElement,
-  horizontalScroll,
-} from "@utils/scrollEvents";
+import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 import usDetectDevice from "@src/hooks/usDetectDevice";
 
@@ -406,7 +402,6 @@ function Portfolio(props) {
   const viewAction = () => {
     horizontalScroll(".horizontal-txt .txt", "background");
     scrollFixElement(".portfolio-list .box", ".portfolio-list");
-    // parallaxElement(".portfolio-list .box");
   };
 
   const stopViewAction = () => {
