@@ -179,14 +179,16 @@ export const scrollFixElement = (getElements, parent) => {
       element,
       {
         yPercent: 50,
+        opacity: 0,
       },
       {
         yPercent: 0,
         duration: 1,
+        opacity: 1,
         scrollTrigger: {
           trigger: element,
           start: "top bottom",
-          end: "center center",
+          end: "center 60%",
         },
       }
     )
@@ -198,43 +200,38 @@ export const scrollFixElement = (getElements, parent) => {
           pinSpacing: true,
           anticipatePin: 1,
           start: "center center",
-          end: "+=" + window.innerHeight,
+          end: "+=700",
           toggleClass: "active",
-          markers: true,
         },
       })
       .to(element, {
         yPercent: -50,
         duration: 1,
+        opacity: 0,
         scrollTrigger: {
           trigger: element,
-          start: `center center+=${window.innerHeight}`,
+          start: `center 40%`,
           end: "bottom top",
         },
       });
 
-    gsap.to(element, {
-      duration: 5,
-      ease: "none",
-    });
-
-    gsap.fromTo(
-      element,
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: element,
-          anticipatePin: 1,
-          start: "top bottom",
-          end: "+=100",
-          scrub: false,
-        },
-      }
-    );
+    // gsap.fromTo(
+    //   element,
+    //   {
+    //     opacity: 0,
+    //   },
+    //   {
+    //     opacity: 1,
+    //     ease: "none",
+    //     scrollTrigger: {
+    //       trigger: element,
+    //       anticipatePin: 1,
+    //       start: "top bottom",
+    //       end: "+=100",
+    //       scrub: false,
+    //     },
+    //   }
+    // );
   };
   elements.forEach((element, i) => moveFix(element));
 };
