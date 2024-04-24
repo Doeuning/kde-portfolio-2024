@@ -1,4 +1,4 @@
-// function Wavetest() {
+function Wavetest() {
 //   useEffect(() => {
 //     const canvas = document.createElement("canvas");
 //     const ctx = canvas.getContext("2d");
@@ -25,6 +25,6 @@
 //       <Wave></Wave>
 //     </div>
 //   );
-// }
+}
 
-// export default Wavetest;
+export default Wavetest;
