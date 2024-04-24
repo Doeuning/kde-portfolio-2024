@@ -92,23 +92,22 @@ const BgArea = styled.div`
   }
   .mountain {
     position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: -50px;
+    right: -100px;
+    bottom: -50px;
+    left: -100px;
     z-index: 300;
-    width: 100%;
-    height: 100%;
     &.first {
-      background: url("/aboutme/mountain0.gif") repeat-x center bottom / auto
-        400px;
+      background: url("/aboutme/mountain0.gif") repeat-x center bottom 150px /
+        auto 400px;
     }
     &.second {
-      background: url("/aboutme/mountain1.gif") repeat-x center bottom / auto
-        300px;
+      background: url("/aboutme/mountain1.gif") repeat-x center bottom 100px /
+        auto 300px;
     }
     &.third {
-      background: url("/aboutme/mountain2.gif") repeat-x center bottom / auto
-        160px;
+      background: url("/aboutme/mountain2.gif") repeat-x center bottom 50px /
+        auto 160px;
     }
   }
 `;
@@ -123,6 +122,10 @@ const Sun = styled.div`
   margin: -32px 0 0 -32px;
   background: url("/aboutme/sun.gif") 0 0 / 100% auto no-repeat;
   transform: scale(1.3) translateY(110vh);
+`;
+const StarWrap = styled.div`
+  position: absolute;
+  z-index: 100;
 `;
 
 const Star = styled.div`
@@ -264,14 +267,13 @@ function Aboutme(props) {
     x: 0,
     y: 0,
   });
-  const starNum = 50;
+  const starNum = 100;
   const getRandom = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
   const makeStars = () => {
-    console.log(window.screen.width);
     for (let i = 0; i < starNum; i++) {
       let offsetX = getRandom(0, window.screen.width);
       let offsetY = getRandom(0, window.screen.height);
@@ -307,7 +309,7 @@ function Aboutme(props) {
     });
 
     gsap.to(".mountain.second", {
-      y: "-70px",
+      y: "-20px",
       duration: 1,
       scrollTrigger: {
         trigger: ".txt",
@@ -318,7 +320,7 @@ function Aboutme(props) {
       },
     });
     gsap.to(".mountain.first", {
-      y: "-120px",
+      y: "-30px",
       scrollTrigger: {
         trigger: ".txt",
         start: "top top",
@@ -339,12 +341,7 @@ function Aboutme(props) {
       },
       ease: "none",
     });
-    // 어디서 나온지 모를 356이란 높이...
-    console.log("bg scrollHeight", document.querySelector(".bg").clientHeight);
-    console.log(
-      "total height",
-      document.querySelector(".bg").scrollHeight + window.innerHeight
-    );
+
     gsap.to(".bg", {
       y: -document.querySelector(".bg").scrollHeight + window.innerHeight,
       scrollTrigger: {
@@ -353,16 +350,13 @@ function Aboutme(props) {
         end: "bottom bottom",
         scrub: 1,
         onUpdate: ({ progress, direction, isActive }) => {
-          console.log("update", direction, isActive, progress);
           if (progress > 0.9 && direction > 0) {
-            console.log("progress is bigger than 0.9");
             txt.classList.add("on");
           } else {
             txt.classList.remove("on");
           }
         },
         onToggle: ({ progress, direction, isActive }) => {
-          console.log("toggle done", direction, isActive, progress);
           if (!isActive && direction > 0) {
             txt.classList.add("on");
           } else {
@@ -380,22 +374,50 @@ function Aboutme(props) {
   const handleMove = (e) => {
     const diffX = e.clientX - mousePos.x;
     const diffY = e.clientY - mousePos.y;
-    const target = e.target;
+    const stars = document.querySelector(".star-wrap");
+    const mountain1 = document.querySelector(".mountain.first");
+    const mountain2 = document.querySelector(".mountain.second");
+    const mountain3 = document.querySelector(".mountain.third");
 
-    target.style.transform = `translate(${e.clientX}px, ${e.clientY}px, 0)`;
-    if (mousePos.x !== 0 && mousePos.y !== 0) {
-      gsap.to(e.currentTarget, {
-        x: diffX * 10,
-        y: diffY * 5,
-        duration: 2,
-        scale: 2,
-        ease: "Expo.easeOut",
-      });
+    if (
+      e.clientX > 0 &&
+      e.clientX < window.innerWidth &&
+      e.clientY > 0 &&
+      e.clientY < window.innerHeight
+    ) {
+      if (
+        mousePos.x !== 0 &&
+        mousePos.y !== 0 &&
+        Math.abs(diffX) < 30 &&
+        Math.abs(diffY) < 50
+      ) {
+        gsap.to(stars, {
+          x: -diffX * 10,
+          y: -diffY * 5,
+          duration: 30,
+        });
+        gsap.to(mountain1, {
+          x: -diffX,
+          duration: 1,
+          ease: "none",
+        });
+        gsap.to(mountain2, {
+          x: -diffX * 2,
+          duration: 1,
+          ease: "none",
+        });
+        gsap.to(mountain3, {
+          x: -diffX * 4,
+          duration: 1,
+          ease: "none",
+        });
+      }
+      setMousePos({ x: e.clientX, y: e.clientY });
     }
-    setMousePos({ x: e.clientX, y: e.clientY });
   };
   const handleLeave = (e) => {
-    gsap.to(e.currentTarget, {
+    const stars = document.querySelector(".star-wrap");
+    gsap.to(stars, {
       x: 0,
       y: 0,
       duration: 2,
@@ -408,15 +430,15 @@ function Aboutme(props) {
     makeStars();
     bgAnimation();
     setData(AboutMeData);
-    console.log("page loaded");
   }, []);
 
   useEffect(() => {
     if (starState) {
       const starArr = gsap.utils.toArray(".star");
       starArr.forEach((element) => {
+        const speed = getRandom(1, 5);
         gsap.to(element, {
-          y: "-150vh",
+          y: "-=" + 1000 * speed,
           scrollTrigger: {
             trigger: ".txt",
             start: "top top",
@@ -432,7 +454,7 @@ function Aboutme(props) {
   }, [starState]);
 
   return (
-    <Wrap className="wrap">
+    <Wrap className="wrap" onMouseMove={handleMove} onMouseLeave={handleLeave}>
       <BgScroll className="bg"></BgScroll>
       <BgArea>
         <div className="dim"></div>
@@ -440,11 +462,16 @@ function Aboutme(props) {
         <div className="mountain second"></div>
         <div className="mountain third"></div>
         <Sun className="sun"></Sun>
-        {stars.map((pos) => {
-          return (
-            <Star className="star" style={{ top: pos[1], left: pos[0] }}></Star>
-          );
-        })}
+        <StarWrap className="star-wrap">
+          {stars.map((pos) => {
+            return (
+              <Star
+                className="star"
+                style={{ top: pos[1], left: pos[0] }}
+              ></Star>
+            );
+          })}
+        </StarWrap>
       </BgArea>
       <Tree className="tree">
         <Me className="me">

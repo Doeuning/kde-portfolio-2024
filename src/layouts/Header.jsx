@@ -102,8 +102,21 @@ const Gnb = styled.div`
       flex: 0 0 auto;
       display: inline-block;
       text-align: left;
+      transform: translate3d(0, 0, 0);
       &.curr {
         color: ${({ theme }) => theme.COLORS.main};
+        transform: translate3d(20px, 0, 0) !important;
+        &::before {
+          display: block;
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 16px;
+          height: 16px;
+          background: url("/ico-16-curr.gif") center center no-repeat;
+          transform: translateY(-50%);
+        }
       }
     }
   }
@@ -138,7 +151,7 @@ function HeaderWrap() {
         y: 0,
         ease: "Expo.easeOut",
         onStart: () => {
-          staggerElement(".gnb .inner");
+          staggerElement(".gnb .inner", 0.2);
         },
       });
     } else {
@@ -168,8 +181,14 @@ function HeaderWrap() {
                   <button
                     className={`btn${router.route === item.url ? " curr" : ""}`}
                     type="button"
-                    onMouseMove={handleMove}
-                    onMouseLeave={handleLeave}
+                    onMouseEnter={(e) => {
+                      e.target.parentElement.classList.add("curr");
+                    }}
+                    onMouseLeave={(e) => {
+                      if (router.route !== item.url) {
+                        e.target.parentElement.classList.remove("curr");
+                      }
+                    }}
                     onClick={() => {
                       goToPage(item.url);
                     }}

@@ -134,8 +134,6 @@ export const horizontalScroll = (getElements, type = "default") => {
       html.offsetHeight
     );
 
-    // console.log("wrap", totalHeight);
-
     gsap
       .timeline({
         scrollTrigger: {
@@ -183,7 +181,6 @@ export const scrollFixElement = (getElements, parent) => {
       },
       {
         yPercent: 0,
-        duration: 1,
         opacity: 1,
         scrollTrigger: {
           trigger: element,
@@ -193,7 +190,6 @@ export const scrollFixElement = (getElements, parent) => {
       }
     )
       .to(element, {
-        duration: 1,
         scrollTrigger: {
           trigger: element,
           pin: true,
@@ -206,7 +202,6 @@ export const scrollFixElement = (getElements, parent) => {
       })
       .to(element, {
         yPercent: -50,
-        duration: 1,
         opacity: 0,
         scrollTrigger: {
           trigger: element,
@@ -214,24 +209,6 @@ export const scrollFixElement = (getElements, parent) => {
           end: "bottom top",
         },
       });
-
-    // gsap.fromTo(
-    //   element,
-    //   {
-    //     opacity: 0,
-    //   },
-    //   {
-    //     opacity: 1,
-    //     ease: "none",
-    //     scrollTrigger: {
-    //       trigger: element,
-    //       anticipatePin: 1,
-    //       start: "top bottom",
-    //       end: "+=100",
-    //       scrub: false,
-    //     },
-    //   }
-    // );
   };
   elements.forEach((element, i) => moveFix(element));
 };
