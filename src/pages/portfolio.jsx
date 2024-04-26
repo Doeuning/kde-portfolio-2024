@@ -112,6 +112,7 @@ const List = styled.ul`
     display: flex;
     flex-direction: column;
     align-content: center;
+    position: relative;
     min-height: 100vh;
     flex: 0 0 auto;
     max-width: 600px;
@@ -119,7 +120,6 @@ const List = styled.ul`
     margin-top: 100vh;
     margin-right: auto;
     margin-left: 0;
-    transform: translate3d(-500px, 0, 0);
     &.mo {
       width: 100%;
       .box {
@@ -128,11 +128,14 @@ const List = styled.ul`
         }
       }
     }
+    &:first-child {
+      margin-top: 0;
+    }
     &:nth-child(odd) {
       margin-right: 0;
       margin-left: auto;
-      transform: translate3d(500px, 0, 0);
       .box {
+        transform: translate3d(500px, 0, 0);
         .detail {
           left: calc(-400px + 20px);
           right: auto;
@@ -142,7 +145,7 @@ const List = styled.ul`
     }
     .box {
       display: block;
-      position: relative;
+      position: absolute;
       box-sizing: border-box;
       /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
       max-width: 600px;
@@ -151,6 +154,9 @@ const List = styled.ul`
       height: 600px;
       border: 5px solid ${({ theme }) => theme.COLORS.realblack};
       color: ${({ theme }) => theme.COLORS.gray10};
+      transform: translate3d(-500px, 0, 0);
+      opacity: 0;
+      transition: opacity 1s;
       & > .detail,
       & > a > .detail {
         position: absolute;
@@ -294,6 +300,7 @@ const List = styled.ul`
         }
       }
       &.active {
+        opacity: 1;
         box-shadow:
           rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
           rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
@@ -407,7 +414,7 @@ function Portfolio(props) {
   };
   const viewAction = () => {
     horizontalScroll(".horizontal-txt .txt", "background");
-    scrollFixElement(".portfolio-list > li", 1);
+    scrollFixElement(".portfolio-list .box", 1);
   };
 
   const stopViewAction = () => {

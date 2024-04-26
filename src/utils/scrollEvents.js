@@ -170,17 +170,64 @@ export const scrollFixElement = (getElements, delay) => {
   // setTimeout(() => {
   //   loaded();
   // }, 3000);
-  const loaded = () => {
-    elements.forEach((element, i) => {
-      const elementTop = element.offsetTop;
-      elementsTops.push(elementTop);
-    });
-    console.log(elementsTops);
-  };
+  elements.forEach((element, i) => {
+    const elementTop = element.getBoundingClientRect().top;
+    elementsTops.push(elementTop);
+  });
 
-  window.addEventListener("load", loaded);
   // console.log(elementsTops);
-  const moveElements = () => {};
+
+  const windowHeight = window.innerHeight;
+
+  let index = 0;
+  let prevScrollPos = 0;
+  let scrollAmount = 0;
+
+  const moveElements = () => {
+    let currentScrollPos = window.scrollY;
+    let scrollDifference = currentScrollPos - prevScrollPos;
+    let viewportBottom = currentScrollPos + windowHeight;
+
+    let currElViewportTop = elementsTops[index];
+
+    let startNum = 500;
+
+    console.log("viewportBottom", viewportBottom, currElViewportTop);
+
+    const resetPosition = (el) => {
+      el.style.transform = `translate3d(0, 0, 0)`;
+      el.style.opacity = 1;
+      scrollAmount = 0;
+      index++;
+      console.log("out", index, scrollAmount);
+    };
+    if (viewportBottom > currElViewportTop) {
+      if (index % 2 === 0) {
+        console.log("홀수임");
+        if (scrollAmount < startNum) {
+          scrollAmount += scrollDifference;
+          console.log("in", scrollAmount);
+          elements[index].style.transform =
+            `translate3d(${startNum - scrollAmount}px, 0, 0)`;
+          elements[index].classList.add("active");
+        } else {
+          resetPosition(elements[index]);
+        }
+      } else {
+        console.log("짝수임");
+        if (scrollAmount < startNum) {
+          scrollAmount += scrollDifference;
+          console.log("in", scrollAmount);
+          elements[index].style.transform =
+            `translate3d(-${startNum - scrollAmount}px, 0, 0)`;
+          elements[index].classList.add("active");
+        } else {
+          resetPosition(elements[index]);
+        }
+      }
+    }
+    prevScrollPos = currentScrollPos;
+  };
 
   // 윈도우가 스크롤을 할 때
   // <반복>
