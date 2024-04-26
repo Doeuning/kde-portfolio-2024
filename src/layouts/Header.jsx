@@ -41,7 +41,7 @@ const Button = styled.button`
     transform-origin: center center;
   }
   .is-open & {
-    border-color: none;
+    border-color: #000;
     background: #000;
     color: #fff;
     /* box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px; */
