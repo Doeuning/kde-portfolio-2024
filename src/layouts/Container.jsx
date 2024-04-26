@@ -5,7 +5,6 @@ import { LayoutGroup, motion, AnimatePresence } from "framer-motion";
 const Wrap = styled.div`
   width: 100%;
   min-height: 100vh;
-  background: ${(props) => props.bgColor};
 `;
 
 const Inner = styled.div`
@@ -19,6 +18,7 @@ const Inner = styled.div`
 
 function Container({ bgColor, children }) {
   const router = useRouter();
+
   return (
     <AnimatePresence
       mode="wait"
@@ -27,7 +27,7 @@ function Container({ bgColor, children }) {
     >
       <LayoutGroup>
         <motion.div
-          key={router.asPath}
+          key={`page-${router.asPath}`}
           initial={{ x: 0, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: 0, opacity: 0 }}
@@ -38,7 +38,7 @@ function Container({ bgColor, children }) {
           }}
           // {...direction}
         >
-          <Wrap className="container" bgColor={bgColor}>
+          <Wrap className="container" style={{ background: bgColor }}>
             <Inner>{children}</Inner>
           </Wrap>
         </motion.div>

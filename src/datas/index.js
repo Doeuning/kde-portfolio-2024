@@ -284,11 +284,11 @@ export const portfolioData = [
 
 export const gnbMenu = [
   {
-    url: "/",
+    url: "",
     title: "About Me",
   },
   {
-    url: "/portfolio",
+    url: "portfolio",
     title: "Portfolio",
   },
   // {
@@ -296,7 +296,7 @@ export const gnbMenu = [
   //   title: "Arcade",
   // },
   {
-    url: "/contact",
+    url: "contact",
     title: "Contact",
   },
   // {

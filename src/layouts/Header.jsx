@@ -67,6 +67,14 @@ const Header = styled.div`
   &.is-open {
     color: #fff;
   }
+  &:not(.is-open) {
+    .gnb {
+      .btn {
+        transition: opacity 0.3s;
+        opacity: 0 !important;
+      }
+    }
+  }
 `;
 
 const Inner = styled.div`
@@ -85,7 +93,7 @@ const Gnb = styled.div`
   bottom: 0;
   left: 0;
   z-index: 900;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
   transform: translate3d(0, -100%, 0);
   .inner {
     display: flex;
@@ -102,10 +110,10 @@ const Gnb = styled.div`
       flex: 0 0 auto;
       display: inline-block;
       text-align: left;
-      transform: translate3d(0, 0, 0);
+      transform: translateX(0) !important;
       &.curr {
         color: ${({ theme }) => theme.COLORS.main};
-        transform: translate3d(20px, 0, 0) !important;
+        transform: translateX(20px) !important;
         &::before {
           display: block;
           content: "";
@@ -138,6 +146,24 @@ function HeaderWrap() {
   const handleClick = () => {
     setOpen((prevState) => !prevState);
   };
+  const handleGnb = () => {
+    if (menu) {
+      if (open) {
+        gsap.to(".gnb", {
+          y: 0,
+          ease: "Expo.easeOut",
+          onStart: () => {
+            staggerElement(".gnb .inner", 0.2);
+          },
+        });
+      } else {
+        gsap.to(".gnb", {
+          y: "-100%",
+          ease: "Expo.easeOut",
+        });
+      }
+    }
+  };
   const router = useRouter();
   const goToPage = (url) => {
     router.push({
@@ -145,29 +171,18 @@ function HeaderWrap() {
       state: { prevPage: router.path }, // 이전 페이지의 정보를 state에 저장
     });
   };
+
   useEffect(() => {
-    if (open) {
-      gsap.to(".gnb", {
-        y: 0,
-        ease: "Expo.easeOut",
-        onStart: () => {
-          staggerElement(".gnb .inner", 0.2);
-        },
-      });
-    } else {
-      gsap.to(".gnb", {
-        y: "-100%",
-        ease: "Expo.easeOut",
-      });
-    }
-  }, [open]);
+    setMenu(gnbMenu);
+  }, []);
 
   useEffect(() => {
     setOpen(false);
   }, [router]);
+
   useEffect(() => {
-    setMenu(gnbMenu);
-  }, []);
+    handleGnb();
+  }, [open]);
 
   return (
     menu && (
@@ -179,6 +194,7 @@ function HeaderWrap() {
               {menu.map((item) => {
                 return (
                   <button
+                    key={item.url}
                     className={`btn${router.route === item.url ? " curr" : ""}`}
                     type="button"
                     onMouseEnter={(e) => {

@@ -105,18 +105,19 @@ const Table = styled.table`
   }
 `;
 const List = styled.ul`
-  position: relative;
-  width: 100%;
   padding: 50vh 0;
   & > li {
     display: flex;
     flex-direction: column;
     align-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
     min-height: 100vh;
     flex: 0 0 auto;
     max-width: 600px;
     width: 100%;
-    margin-top: 100vh;
+    margin-top: 50px;
     margin-right: auto;
     margin-left: 0;
     transform: translate3d(-500px, 0, 0);
@@ -333,12 +334,7 @@ function Item({ item }) {
       <div className="box-inner">
         {item.bgUrl ? (
           <div className="img">
-            <Image
-              src={item.bgUrl}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100%"
-              alt={item.title}
-            />
+            <Image src={item.bgUrl} fill alt={item.title} />
           </div>
         ) : (
           <div className="dummyBg">No Image</div>
@@ -355,7 +351,9 @@ function Item({ item }) {
               <Image
                 src={item.imgUrl}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 100%"
+                sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
                 alt={item.title}
               />
             </div>
@@ -407,7 +405,7 @@ function Portfolio(props) {
   };
   const viewAction = () => {
     horizontalScroll(".horizontal-txt .txt", "background");
-    scrollFixElement(".portfolio-list > li", 1);
+    scrollFixElement(".portfolio-list .box");
   };
 
   const stopViewAction = () => {

@@ -9,10 +9,9 @@ const Layout = styled.div`
   overflow: hidden;
   position: relative;
   min-height: 100vh;
-  background: black;
 `;
 
-export default function Index({ children, bgColor }) {
+export default function Index({ bgColor, children }) {
   const router = useRouter();
   useEffect(() => {
     ScrollTrigger.refresh();

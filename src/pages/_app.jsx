@@ -15,7 +15,7 @@ const layouts = {
 const MyApp = ({ Component, pageProps }) => {
   const mobile = usDetectDevice();
   const SetLayout = layouts[Component.layout] || layouts["default"];
-  const SetBgColor = Component.bgColor || "#fff";
+  const SetBgColor = Component.bgColor || "#000";
 
   return (
     <ErrorBoundary>
@@ -23,7 +23,6 @@ const MyApp = ({ Component, pageProps }) => {
         <div className={`smooth-wrap${mobile ? " mobile" : " pc"}`}>
           <SetLayout bgColor={SetBgColor} classNam="layout">
             <Component {...{ ...pageProps }} />
-            {/*history, prev */}
           </SetLayout>
         </div>
       </ThemeProvider>

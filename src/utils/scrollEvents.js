@@ -53,8 +53,9 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
       .fromTo(
         element.childNodes,
         {
-          y: 100,
+          y: -100,
           opacity: 0,
+          stagger: staggerNum,
         },
         {
           y: 0,
@@ -163,78 +164,107 @@ export const horizontalScroll = (getElements, type = "default") => {
   elements.forEach((element) => moveLeft(element));
 };
 
-export const scrollFixElement = (getElements) => {
-  const elements = gsap.utils.toArray(getElements);
-  ScrollTrigger.defaults({
-    scrub: 10,
-    immediateRender: false,
-    invalidateOnRefresh: true,
-    toggleActions: "play none none reverse",
-  });
-  const moveFix = (element) => {
-    const tl = gsap.timeline();
-    tl.fromTo(
-      element,
-      {
-        yPercent: 50,
-        opacity: 0,
-      },
-      {
-        yPercent: 0,
-        duration: 1,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: element,
-          start: "top bottom",
-          end: "center 55%",
-          markers: true,
-          // onEnter: () => {
-          //   console.log("   element enter start");
-          // },
-          // onLeave: () => {
-          //   console.log("   element enter end");
-          // },
-        },
-      }
-    ).to(element, {
-      yPercent: 0,
-      duration: 1,
-      scrollTrigger: {
-        trigger: element,
-        start: "center center",
-        end: "+=700",
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        toggleClass: "active",
-        onEnter: () => {
-          console.log("   fix start");
-        },
-        onLeave: () => {
-          console.log("   fix end");
-        },
-      },
+export const scrollFixElement = (getElements, delay) => {
+  const elements = document.querySelectorAll(getElements);
+  let elementsTops = [];
+  // setTimeout(() => {
+  //   loaded();
+  // }, 3000);
+  const loaded = () => {
+    elements.forEach((element, i) => {
+      const elementTop = element.offsetTop;
+      elementsTops.push(elementTop);
     });
-    gsap.to(element, {
-      yPercent: -50,
-      duration: 1,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: element,
-        start: `center 40%`,
-        end: "+=700",
-        markers: true,
-        onEnter: () => {
-          console.log("   out start");
-        },
-        onLeave: () => {
-          console.log("   out end");
-        },
-      },
-    });
+    console.log(elementsTops);
   };
-  elements.forEach((element, i) => moveFix(element));
+
+  window.addEventListener("load", loaded);
+  // console.log(elementsTops);
+  const moveElements = () => {};
+
+  // 윈도우가 스크롤을 할 때
+  // <반복>
+  // 1. 요소의 offsetTop이 viewport의 bottom에 닿으면
+  // 2. 가운데로 이동시킨다
+  // 3. 요소의 이동이 완료되면
+  // 4. 중간에서 고정시킨다
+  // 5. 다음 요소의 offsetTop이 viewport의 bottom에 닿으면
+  // 6. 이전 요소의 고정을 해제한다
+
+  window.addEventListener("scroll", moveElements);
 };
+// export const scrollFixElement = (getElements) => {
+//   const elements = gsap.utils.toArray(getElements);
+//   ScrollTrigger.defaults({
+//     scrub: 10,
+//     immediateRender: false,
+//     invalidateOnRefresh: true,
+//     toggleActions: "play none none reverse",
+//   });
+//   const moveFix = (element, i) => {
+//     const tl = gsap.timeline();
+//     ScrollTrigger.create({
+//       trigger: document.querySelector("body"),
+//       start: "top top",
+//       end: "bottom bottom",
+//       markers: true,
+//       animation: fadeIn,
+//       scrub: 1,
+//       invalidateOnRefresh: true,
+//       toggleActions: "play none none reverse",
+//       // onEnter: () => {
+//       //   console.log("   element enter start");
+//       // },
+//       // onLeave: () => {
+//       //   console.log("   element enter end");
+//       // },
+//     });
+//     const fadeIn = gsap.to(element, {
+//       x: 0,
+//       duration: 1,
+//       opacity: 1,
+//       stagger: 10,
+//     });
+//     // .to(element, {
+//     //   yPercent: 0,
+//     //   duration: 1,
+//     //   scrollTrigger: {
+//     //     trigger: element,
+//     //     start: "center center",
+//     //     end: "+=700",
+//     //     pin: true,
+//     //     pinSpacing: true,
+//     //     anticipatePin: 1,
+//     //     toggleClass: "active",
+//     //     onEnter: () => {
+//     //       console.log("   fix start");
+//     //     },
+//     //     onLeave: () => {
+//     //       console.log("   fix end");
+//     //     },
+//     //   },
+//     // })
+//     // .to(element, {
+//     //   yPercent: -50,
+//     //   duration: 1,
+//     //   opacity: 0,
+//     //   scrollTrigger: {
+//     //     trigger: element,
+//     //     // start: `center 40%`,
+//     //     end: "+=700",
+//     //     markers: true,
+//     //     onEnter: () => {
+//     //       console.log("   out start");
+//     //     },
+//     //     onLeave: () => {
+//     //       console.log("   out end");
+//     //     },
+//     //   },
+//     // });
+//     console.log("dd");
+//   };
+//   elements.forEach((element, i) => moveFix(element, i));
+// };
 
 export const parallaxElement = (getElements, type = "default") => {
   const elements = gsap.utils.toArray(getElements);

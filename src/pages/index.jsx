@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect, Fragment } from "react";
-import { scrollFixElement, horizontalScroll } from "@utils/scrollEvents";
 import Image from "next/image";
 import usDetectDevice from "@src/hooks/usDetectDevice";
 import { gsap } from "gsap/dist/gsap";
@@ -33,24 +32,6 @@ const BgScroll = styled.div`
   min-height: 100%;
   margin: 0 -680px;
   height: 400vh;
-  /* background: linear-gradient(
-    180deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(10, 10, 80, 1) 0%,
-    rgba(18, 12, 86, 1) 24%,
-    rgba(146, 40, 181, 1) 81%,
-    rgba(255, 191, 38, 1) 100%
-  ); */
-  /* background: linear-gradient(
-    180deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(10, 10, 80, 1) 0%,
-    rgba(18, 12, 86, 1) 15%,
-    rgba(146, 40, 181, 1) 36%,
-    rgba(255, 191, 38, 1) 61%,
-    rgba(39, 215, 247, 1) 83%,
-    rgba(0, 215, 255, 1) 100%
-  ); */
   background: linear-gradient(
     180deg,
     rgba(2, 0, 36, 1) 0%,
@@ -61,14 +42,6 @@ const BgScroll = styled.div`
     rgba(77, 162, 178, 1) 70%,
     rgba(0, 142, 255, 1) 100%
   );
-  /* .test {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 50px;
-    height: 60px;
-    background: #fff;
-  } */
 `;
 
 const BgArea = styled.div`
@@ -463,9 +436,10 @@ function Aboutme(props) {
         <div className="mountain third"></div>
         <Sun className="sun"></Sun>
         <StarWrap className="star-wrap">
-          {stars.map((pos) => {
+          {stars.map((pos, i) => {
             return (
               <Star
+                key={`star-${i}`}
                 className="star"
                 style={{ top: pos[1], left: pos[0] }}
               ></Star>
@@ -475,7 +449,7 @@ function Aboutme(props) {
       </BgArea>
       <Tree className="tree">
         <Me className="me">
-          <Image src={MyImage} fill />
+          <Image src={MyImage} alt="me as a worm" fill />
         </Me>
       </Tree>
       <TxtArea className="txt">
