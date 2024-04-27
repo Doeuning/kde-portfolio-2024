@@ -165,67 +165,106 @@ export const horizontalScroll = (getElements, type = "default") => {
 };
 
 export const scrollFixElement = (getElements, delay) => {
+  const windowHeight = window.innerHeight;
   const elements = document.querySelectorAll(getElements);
   let elementsTops = [];
-  // setTimeout(() => {
-  //   loaded();
-  // }, 3000);
   elements.forEach((element, i) => {
     const elementTop = element.getBoundingClientRect().top;
+    element.style.opacity = 0;
     elementsTops.push(elementTop);
   });
 
-  // console.log(elementsTops);
-
-  const windowHeight = window.innerHeight;
-
   let index = 0;
+  let opacity = 0;
   let prevScrollPos = 0;
   let scrollAmount = 0;
 
   const moveElements = () => {
     let currentScrollPos = window.scrollY;
     let scrollDifference = currentScrollPos - prevScrollPos;
-    let viewportBottom = currentScrollPos + windowHeight;
-
-    let currElViewportTop = elementsTops[index];
-
     let startNum = 500;
+    let isNegative = index % 2 === 0 ? 1 : -1;
+    const direction = scrollDifference > 0 ? "down" : "up";
+    const el = elements[index];
 
-    console.log("viewportBottom", viewportBottom, currElViewportTop);
+    console.log("index", index, "가 왜이래?");
+    const centerPosition = () => {
+      scrollAmount += scrollDifference;
+      el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
+      if (opacity < 1) {
+        opacity += scrollDifference * 0.001;
+      }
+      el.style.opacity = opacity;
+    };
 
-    const resetPosition = (el) => {
+    const compCenterPosition = () => {
       el.style.transform = `translate3d(0, 0, 0)`;
       el.style.opacity = 1;
+      el.classList.add("active");
       scrollAmount = 0;
+      // 추후 수정 왜이래?
+      // console.log(index, "의 움직임을 끝냈다 scrollAmout는 ", scrollAmount);
       index++;
-      console.log("out", index, scrollAmount);
+
+      // if (elements.length - 1 < index) {
+      //   index++;
+      // } else {
+      //   index = elements.length;
+      // }
     };
-    if (viewportBottom > currElViewportTop) {
-      if (index % 2 === 0) {
-        console.log("홀수임");
+
+    const resetPosition = () => {
+      scrollAmount += scrollDifference;
+      el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
+      if (opacity > 0) {
+        opacity -= scrollDifference * 0.001;
+      }
+      el.style.opacity = opacity;
+    };
+
+    const compResetPosition = () => {
+      el.style.transform = `translate3d(${isNegative * startNum}px, 0, 0)`;
+      el.style.opacity = 0;
+      el.classList.remove("active");
+      scrollAmount = startNum;
+      index > 0 ? index-- : (index = 0);
+    };
+    console.log(
+      "indexindexindexindexindexindexindexindexindexindexindexindex",
+      index
+    );
+
+    // 스크롤 다운
+    if (direction === "down") {
+      let viewportBottom = currentScrollPos + windowHeight;
+      let currElViewportTop = elementsTops[index];
+      if (viewportBottom > currElViewportTop) {
         if (scrollAmount < startNum) {
-          scrollAmount += scrollDifference;
-          console.log("in", scrollAmount);
-          elements[index].style.transform =
-            `translate3d(${startNum - scrollAmount}px, 0, 0)`;
-          elements[index].classList.add("active");
+          centerPosition();
         } else {
-          resetPosition(elements[index]);
-        }
-      } else {
-        console.log("짝수임");
-        if (scrollAmount < startNum) {
-          scrollAmount += scrollDifference;
-          console.log("in", scrollAmount);
-          elements[index].style.transform =
-            `translate3d(-${startNum - scrollAmount}px, 0, 0)`;
-          elements[index].classList.add("active");
-        } else {
-          resetPosition(elements[index]);
+          compCenterPosition();
         }
       }
     }
+    // 스크롤 업
+    else {
+      let viewportBottom = currentScrollPos + windowHeight;
+      let currElViewportBottom = elementsTops[index] + el.offsetHeight;
+
+      if (viewportBottom < currElViewportBottom) {
+        console.log("scroll up is activating in", index);
+        if (startNum > scrollAmount) {
+          resetPosition();
+          console.log("뒤돌아가기 시작", index);
+        } else {
+          compResetPosition();
+          console.log("다됨!", index);
+        }
+      } else {
+        index > 0 ? index-- : (index = 0);
+      }
+    }
+
     prevScrollPos = currentScrollPos;
   };
 

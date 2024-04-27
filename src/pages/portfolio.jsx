@@ -155,8 +155,6 @@ const List = styled.ul`
       border: 5px solid ${({ theme }) => theme.COLORS.realblack};
       color: ${({ theme }) => theme.COLORS.gray10};
       transform: translate3d(-500px, 0, 0);
-      opacity: 0;
-      transition: opacity 1s;
       & > .detail,
       & > a > .detail {
         position: absolute;
@@ -300,7 +298,7 @@ const List = styled.ul`
         }
       }
       &.active {
-        opacity: 1;
+        /* opacity: 1; */
         box-shadow:
           rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
           rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
