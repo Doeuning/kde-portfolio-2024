@@ -178,6 +178,14 @@ export const scrollFixElement = (getElements, delay) => {
   let opacity = 0;
   let prevScrollPos = 0;
   let scrollAmount = 0;
+  const indexView = document.createElement("h1");
+  indexView.textContent = index;
+  indexView.style.position = "fixed";
+  indexView.style.top = "50%";
+  indexView.style.left = "50px";
+  indexView.style.color = "lightgreen";
+  indexView.style.fontSize = "100px";
+  indexView.style.fontWeight = "700";
 
   const moveElements = () => {
     let currentScrollPos = window.scrollY;
@@ -186,82 +194,70 @@ export const scrollFixElement = (getElements, delay) => {
     let isNegative = index % 2 === 0 ? 1 : -1;
     const direction = scrollDifference > 0 ? "down" : "up";
     const el = elements[index];
+    // indexView.textContent = `${index} scrollAmount is ${scrollAmount} opacity is ${opacity}`;
+    // document.body.append(indexView);
 
-    console.log("index", index, "가 왜이래?");
-    const centerPosition = () => {
+    let viewportTop = currentScrollPos;
+    let viewportBottom = currentScrollPos + windowHeight;
+    let currElTop = elementsTops[index];
+    let currElBottom = elementsTops[index] + el.offsetHeight;
+
+    const movePosition = () => {
       scrollAmount += scrollDifference;
-      el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
-      if (opacity < 1) {
-        opacity += scrollDifference * 0.001;
+      opacity += scrollDifference * 0.002;
+
+      if (scrollAmount >= startNum) {
+        scrollAmount = startNum;
       }
-      el.style.opacity = opacity;
-    };
-
-    const compCenterPosition = () => {
-      el.style.transform = `translate3d(0, 0, 0)`;
-      el.style.opacity = 1;
-      el.classList.add("active");
-      scrollAmount = 0;
-      // 추후 수정 왜이래?
-      // console.log(index, "의 움직임을 끝냈다 scrollAmout는 ", scrollAmount);
-      index++;
-
-      // if (elements.length - 1 < index) {
-      //   index++;
-      // } else {
-      //   index = elements.length;
-      // }
-    };
-
-    const resetPosition = () => {
-      scrollAmount += scrollDifference;
-      el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
-      if (opacity > 0) {
-        opacity -= scrollDifference * 0.001;
+      if (scrollAmount <= 0) {
+        scrollAmount = 0;
       }
+      if (opacity >= 1) {
+        opacity = 1;
+      }
+      if (opacity <= 0) {
+        opacity = 0;
+      }
+      el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
       el.style.opacity = opacity;
+      if (scrollAmount >= startNum) {
+        el.classList.add("active");
+      } else {
+        el.classList.remove("active");
+      }
+    };
+    const changeIndex = () => {
+      if (scrollAmount >= 500) {
+        scrollAmount = 0;
+      } else {
+        scrollAmount = startNum;
+      }
+
+      if (opacity >= 1) {
+        opacity = 0;
+      } else {
+        opacity = 1;
+      }
     };
 
-    const compResetPosition = () => {
-      el.style.transform = `translate3d(${isNegative * startNum}px, 0, 0)`;
-      el.style.opacity = 0;
-      el.classList.remove("active");
-      scrollAmount = startNum;
-      index > 0 ? index-- : (index = 0);
-    };
-    console.log(
-      "indexindexindexindexindexindexindexindexindexindexindexindex",
-      index
-    );
-
-    // 스크롤 다운
+    // scroll down
     if (direction === "down") {
-      let viewportBottom = currentScrollPos + windowHeight;
-      let currElViewportTop = elementsTops[index];
-      if (viewportBottom > currElViewportTop) {
-        if (scrollAmount < startNum) {
-          centerPosition();
-        } else {
-          compCenterPosition();
-        }
+      if (viewportBottom > currElTop) {
+        movePosition();
+      }
+      if (viewportTop >= currElTop) {
+        index++;
+        changeIndex();
       }
     }
-    // 스크롤 업
+    // scroll up
     else {
-      let viewportBottom = currentScrollPos + windowHeight;
-      let currElViewportBottom = elementsTops[index] + el.offsetHeight;
-
-      if (viewportBottom < currElViewportBottom) {
-        console.log("scroll up is activating in", index);
-        if (startNum > scrollAmount) {
-          resetPosition();
-          console.log("뒤돌아가기 시작", index);
-        } else {
-          compResetPosition();
-          console.log("다됨!", index);
-        }
-      } else {
+      if (viewportBottom < currElBottom) {
+        movePosition();
+      }
+      if (viewportBottom < currElTop) {
         index > 0 ? index-- : (index = 0);
+        changeIndex();
       }
     }
 
@@ -290,7 +286,7 @@ export const scrollFixElement = (getElements, delay) => {
 //   const moveFix = (element, i) => {
 //     const tl = gsap.timeline();
 //     ScrollTrigger.create({
-//       trigger: document.querySelector("body"),
+//       trigger: document.body,
 //       start: "top top",
 //       end: "bottom bottom",
 //       markers: true,
@@ -373,7 +369,7 @@ export const parallaxElement = (getElements, type = "default") => {
         scrollTrigger: {
           scrub: 1,
         },
-        y: -document.querySelector("body").scrollHeight * speed,
+        y: -document.body.scrollHeight * speed,
         ease: "none",
       });
     } else {
