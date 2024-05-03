@@ -127,6 +127,7 @@ body {
   -webkit-print-color-adjust: exact;
   word-break: keep-all;
   background: #111;
+  backface-visibility: hidden;
 }
 ul,
 ol,

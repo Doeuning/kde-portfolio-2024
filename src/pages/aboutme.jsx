@@ -81,6 +81,7 @@ const BgArea = styled.div`
     z-index: 300;
     width: 100%;
     height: 100%;
+    backface-visibility: hidden;
     &.first {
       background: url("/aboutme/mountain0.gif") repeat-x center bottom / auto
         400px;
