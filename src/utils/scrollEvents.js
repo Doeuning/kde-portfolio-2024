@@ -32,7 +32,7 @@ export const transitionElement = (getElements) => {
         {
           y: 0,
           opacity: 1,
-        }
+        },
       );
   };
   const elements = gsap.utils.toArray(getElements);
@@ -61,7 +61,7 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
           y: 0,
           opacity: 1,
           stagger: staggerNum,
-        }
+        },
       );
   };
   const elements = gsap.utils.toArray(getElements);
@@ -71,7 +71,7 @@ export const staggerElement = (getElements, staggerNum = 0.1) => {
 export const staggerText = (
   getStringElements,
   staggerNum = 0.1,
-  yPosition = 20
+  yPosition = 20,
 ) => {
   const moveUp = (element) => {
     element.style.whiteSpace = "pre";
@@ -95,7 +95,7 @@ export const staggerText = (
           y: 0,
           opacity: 1,
           stagger: staggerNum,
-        }
+        },
       );
   };
   const elements = gsap.utils.toArray(getStringElements);
@@ -132,7 +132,7 @@ export const horizontalScroll = (getElements, type = "default") => {
       body.offsetHeight,
       html.clientHeight,
       html.scrollHeight,
-      html.offsetHeight
+      html.offsetHeight,
     );
 
     gsap
@@ -157,7 +157,7 @@ export const horizontalScroll = (getElements, type = "default") => {
           x: -scrollLeft,
           immediateRender: false,
           duration: 1,
-        }
+        },
       );
   };
   const elements = gsap.utils.toArray(getElements);
@@ -190,7 +190,7 @@ export const scrollFixElement = (getElements, delay) => {
   const moveElements = () => {
     let currentScrollPos = window.scrollY;
     let scrollDifference = currentScrollPos - prevScrollPos;
-    let startNum = 500;
+    let startNum = 700;
     let isNegative = index % 2 === 0 ? 1 : -1;
     const direction = scrollDifference > 0 ? "down" : "up";
     const el = elements[index];
@@ -220,6 +220,7 @@ export const scrollFixElement = (getElements, delay) => {
       }
       el.style.transform = `translate3d(${isNegative * (startNum - scrollAmount)}px, 0, 0)`;
       el.style.opacity = opacity;
+      console.log(scrollAmount, startNum);
       if (scrollAmount >= startNum) {
         el.classList.add("active");
       } else {

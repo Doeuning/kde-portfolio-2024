@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Link from "next/link";
+import styled from "styled-components"
+import Link from "next/link"
 
 const Wrap = styled.div`
   display: flex;
@@ -8,7 +8,7 @@ const Wrap = styled.div`
   width: 100%;
   min-height: 100vh;
   height: 100%;
-`;
+`
 
 const List = styled.ul`
   font-size: 20px;
@@ -18,7 +18,7 @@ const List = styled.ul`
     margin-top: 30px;
   }
   .tit {
-    font-size: 16px;
+    font-size: 18px;
     color: #f1cc2f;
     padding-left: 20px;
     margin-left: -20px;
@@ -30,7 +30,7 @@ const List = styled.ul`
       background-image: url(/ico-16-email.gif);
     }
   }
-`;
+`
 function Contact(props) {
   return (
     <Wrap>
@@ -45,9 +45,9 @@ function Contact(props) {
         </li>
       </List>
     </Wrap>
-  );
+  )
 }
 
-Contact.bgColor = "#111";
+Contact.bgColor = "#111"
 
-export default Contact;
+export default Contact

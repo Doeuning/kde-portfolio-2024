@@ -1,5 +1,20 @@
 export const portfolioData = [
   {
+    id: "hanjintravel",
+    imgUrl: "/logo-hanjintravel.svg",
+    bgUrl: "/bg-hanjintravel.png",
+    title: "한진트래블 차세대 시스템 구축",
+    desc: "적응형 웹, 모바일웹 사이트 신규 구축",
+    detail:
+      "PC, Mobile 사이트는 프로젝트 기획에 따라, 퍼블리싱 코드를 Vue 프레임워크로 감싸는 방식으로 작업했습니다. BO는 순수 Vue로 작업했으며, 컴포넌트를 재사용할 수 있도록 작업했습니다. 유지보수의 편의성을 위해 코드 컴포넌트화에 집중해 완성도를 높였습니다.",
+    period: "2025.04~2026.04",
+    url: "https://www.hanjintravel.com/",
+    type: "project",
+    role: "PA",
+    percentage: "40%",
+    tags: ["Vue3", "Nuxt3"],
+  },
+  {
     id: "groupware",
     imgUrl: "/logo-emotion.svg",
     bgUrl: "/bg-emotion.png",
@@ -291,6 +306,10 @@ export const gnbMenu = [
     url: "portfolio",
     title: "Portfolio",
   },
+  {
+    url: "toyProjects",
+    title: "Toy Projects",
+  },
   // {
   //   url: "/arcade",
   //   title: "Arcade",
@@ -318,17 +337,20 @@ export const sns = [
 
 export const AboutMeData = [
   {
-    경력: "5년 3개월",
+    경력: "6년 3개월",
   },
   {
     기술: {
       HTML: "상",
       CSS: "상",
+      SCSS: "상",
       JS: "중",
-      Vue: "중하",
-      React: "중하",
+      Vue: "중",
+      React: "중",
       git: "중",
       svn: "중",
+      figma: "중",
+      zeplin: "중",
     },
   },
   {
@@ -348,22 +370,16 @@ export const AboutMeData = [
     ],
   },
   {
-    특이사항: [
-      "시각장애 경증",
-      "각막혼탁으로 흰 종이에 검은 글씨 및 밝은 화면을 보는 데 어려움이 있음",
-    ],
-    "선호 작업": ["다크 모드", "어두운 배경의 디자인"],
+    특이사항: ["시각장애 경증", "우안 교정시력 0.5로 업무에 지장 없음"],
   },
   {
     취미: [
-      "프리다이빙",
       "보드게임",
       "요리",
-      "바둑(입문)",
       "그림",
       "여행",
       "수공예",
-      "테스트만들기",
+      "토이프로젝트 제작",
       "성대모사",
     ],
   },
@@ -379,6 +395,23 @@ export const AboutMeData = [
       "감자",
     ],
     "싫어하는 것": ["안 웃긴 것", "버섯"],
+  },
+];
+
+export const ToyProjectsData = [
+  {
+    id: "wenmanquiz",
+    title: "웬만해선 문제를 맞힐 수 없다",
+    desc: "시트콤 '웬만해선 그들을 막을 수 없다'의 팬이신가요? 웬만 피디도 100점 절대 안나오는 웬만퀴즈! 도전해보세요!",
+    url: "https://wenman-quiz.netlify.app",
+    imgUrl: "/toy-wenman.jpg",
+  },
+  {
+    id: "timer",
+    title: "퇴근런 타이머 🏃",
+    desc: "6시 땡 치자마자 달려야 대중교통 탑승 가능하신 분들을 위한 퇴근시간 알림. Setup.1.4.0.exe 파일을 다운로드 받아 실행하시면 됩니다. (윈도우 10 이상, 64비트 운영체제에서만 사용 가능합니다.)",
+    url: "https://github.com/Doeuning/timer/releases/tag/1.4.0",
+    imgUrl: "/toy-timer.png",
   },
 ];
 
@@ -398,15 +431,6 @@ export const ArcadeData = {
       code: "puzzle2048",
       title: "2048게임",
       component: "Game2046",
-    },
-  ],
-  tests: [
-    {
-      wenman: {
-        title: "웬만해선 문제를 맞힐 수 없다",
-        desc: "시트콤 '웬만해선 그들을 막을 수 없다'의 팬이신가요? 웬만 피디도 100점 절대 안나오는 웬만퀴즈! 도전해보세요!",
-        url: "https://wenman-quiz.netlify.app",
-      },
     },
   ],
 };
