@@ -337,7 +337,7 @@ export const sns = [
 
 export const AboutMeData = [
   {
-    경력: "6년 3개월",
+    경력: "6년 5개월",
   },
   {
     기술: {
